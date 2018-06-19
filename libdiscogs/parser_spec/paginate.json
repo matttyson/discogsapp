@@ -1,0 +1,57 @@
+{
+	"namespace": "paginate",
+	"header_name": "paginate",
+	"description": "Pagination support class for Discogs",
+	"classes": [
+		{
+			"json_name": "urls",
+			"class_name": "urls",
+			"definition": [
+				{
+					"name": "next",
+					"type": "string"
+				},
+				{
+					"name": "last",
+					"type": "string"
+				},
+				{
+					"name": "first",
+					"type": "string"
+				},
+				{
+					"name": "prev",
+					"type": "string"
+				}
+
+			]
+		},
+		{
+			"json_name": "pagination",
+			"class_name": "pagination",
+			"definition": [
+				{
+					"name": "per_page",
+					"type": "integer"
+				},
+				{
+					"name": "items",
+					"type": "integer"
+				},
+				{
+					"name": "page",
+					"type": "integer"
+				},
+				{
+					"name": "pages",
+					"type": "integer"
+				},
+				{
+					"name": "urls",
+					"type": "urls",
+					"impl": "links"
+				}
+			]
+		}
+	]
+}

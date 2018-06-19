@@ -1,0 +1,52 @@
+{
+	"namespace": "folder_releases",
+	"header_name": "folder_releases",
+	"parser_class": "parser",
+	"link": "https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-folder",
+	"description": "COLLECTION ITEMS BY FOLDER",
+	"import": [
+		"paginate.json",
+		"basic_information.json"
+	],
+	"parents": [
+		{
+			"json_name": "releases",
+			"impl": "release_",
+			"vector": true
+		},
+		{
+			"json_name": "pagination",
+			"impl": "pages"
+		}
+	],
+	"classes": [
+
+		{
+			"json_name": "releases",
+			"class_name": "release",
+			"definition": [
+				{
+					"name": "id",
+					"type": "integer"
+				},
+				{
+					"name": "instance_id",
+					"type": "integer"
+				},
+				{
+					"name": "rating",
+					"type": "integer"
+				},
+				{
+					"name": "date_added",
+					"type": "string"
+				},
+				{
+					"name": "basic_information",
+					"type": "basic_information",
+					"impl": "basic_information_"
+				}
+			]
+		}
+	]
+}

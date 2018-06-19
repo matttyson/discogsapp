@@ -1,0 +1,38 @@
+{
+	"namespace": "collection",
+	"header_name": "collection",
+	"parser_class": "parser",
+	"link": "https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection",
+	"description": "COLLECTION",
+	"parents": [
+		{
+			"json_name": "folders",
+			"impl": "folders_",
+			"vector": "true"
+		}
+	],
+	"classes": [
+		{
+			"json_name": "folders",
+			"class_name": "folder",
+			"definition": [
+				{
+					"name": "id",
+					"type": "integer"
+				},
+				{
+					"name": "count",
+					"type": "integer"
+				},
+				{
+					"name": "resource_url",
+					"type": "string"
+				},
+				{
+					"name": "name",
+					"type": "string"
+				}
+			]
+		}
+	]
+}

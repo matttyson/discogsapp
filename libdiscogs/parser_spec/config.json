@@ -1,0 +1,31 @@
+{
+	"definitions": [
+		"basic_information.json",
+		"paginate.json",
+		"folder_releases.json",
+		"wantlist.json",
+		"collection.json"
+	],
+	"class_headers": [
+		"class_fragment.h"
+	],
+	"parser_headers": [
+		"parser_fragment.h"
+	],
+	"parser_common_header": "parser_common.hpp",
+	"class_common_header": "class_common.hpp",
+	"parser_impl": "parser.cpp",
+	"hdr_extension": "hpp",
+	"namespace": [
+		"discogs",
+		"parser"
+	],
+	"typemapping": {
+		"integer": "int",
+		"string": "string_t",
+		"character": "char_t",
+		"boolean": "bool",
+		"hdr_enum": "unsigned short",
+		"rjs_chartype": "rjs_UTF_t"
+	}
+}

@@ -1,0 +1,166 @@
+{
+	"namespace": "basic_information",
+	"header_name": "basic_information",
+	"description": "basic_information template class",
+	"classes": [
+		{
+			"json_name": "labels",
+			"class_name": "label",
+			"definition": [
+				{
+					"name": "id",
+					"type": "integer"
+				},
+				{
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"name": "entity_type",
+					"type": "string"
+				},
+				{
+					"name": "catno",
+					"type": "string"
+				},
+				{
+					"name": "resource_url",
+					"type": "string"
+				},
+				{
+					"name": "entity_type_name",
+					"type": "string"
+				}
+			]
+		},
+		{
+			"json_name": "formats",
+			"class_name": "format",
+			"definition": [
+				{
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"name": "qty",
+					"type": "string"
+				},
+				{
+					"name": "text",
+					"type": "string"
+				},
+				{
+					"name": "descriptions",
+					"type": "string",
+					"vector": true
+				}
+			]
+		},
+		{
+			"json_name": "artists",
+			"class_name": "artist",
+			"definition": [
+				{
+					"name": "id",
+					"type": "integer"
+				},
+				{
+					"name": "join",
+					"type": "string"
+				},
+				{
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"name": "anv",
+					"type": "string"
+				},
+				{
+					"name": "tracks",
+					"type": "string"
+				},
+				{
+					"name": "role",
+					"type": "string"
+				},
+				{
+					"name": "resource_url",
+					"type": "string"
+				}
+			]
+		},
+		{
+			"json_name": "notes",
+			"class_name": "note",
+			"definition": [
+				{
+					"name": "field_id",
+					"type": "integer"
+				},
+				{
+					"name": "value",
+					"type": "string"
+				}
+			]
+		},
+		{
+			"json_name": "basic_information",
+			"class_name": "basic_information",
+			"definition": [
+				{
+					"name": "year",
+					"type": "integer"
+				},
+				{
+					"name": "id",
+					"type": "integer"
+				},
+				{
+					"name": "folder_id",
+					"type": "integer"
+				},
+				{
+					"name": "thumb",
+					"type": "string"
+				},
+				{
+					"name": "title",
+					"type": "string"
+				},
+				{
+					"name": "cover_image",
+					"type": "string"
+				},
+				{
+					"name": "resource_url",
+					"type": "string"
+				},
+				{
+					"name": "labels",
+					"type": "label",
+					"impl": "label_",
+					"vector": true
+				},
+				{
+					"name": "formats",
+					"type": "format",
+					"impl": "format_",
+					"vector": true
+				},
+				{
+					"name": "artists",
+					"type": "artist",
+					"impl": "artist_",
+					"vector": true
+				},
+				{
+					"name": "notes",
+					"type": "note",
+					"impl": "notes_",
+					"vector": true
+				}
+			]
+		}
+	]
+}
