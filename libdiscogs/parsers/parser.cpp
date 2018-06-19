@@ -7,11 +7,11 @@
 #include "basic_information.hpp"
 #include "paginate.hpp"
 #include "folder_releases.hpp"
-#include "../private_include/folder_releases_parser.hpp"
+#include "folder_releases_parser.hpp"
 #include "wantlist.hpp"
-#include "../private_include/wantlist_parser.hpp"
+#include "wantlist_parser.hpp"
 #include "collection.hpp"
-#include "../private_include/collection_parser.hpp"
+#include "collection_parser.hpp"
 
 namespace discogs {
 namespace parser {
