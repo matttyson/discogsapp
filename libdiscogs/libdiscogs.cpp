@@ -55,6 +55,8 @@ typedef rapidjson::Writer<Utf8StdStringBuffer> Utf8StdStringWriter;
 
 }
 
+const static std::string json_content_type = std::string("application/json; charset=utf-8", 31);
+
 using namespace discogs::parser;
 
 discogs::rest::rest(const string_t & user_agent, const string_t & base_url)
@@ -322,7 +324,7 @@ discogs::rest::update_wantlist(
 	writer.EndObject();
 
 	auto request = create_request(builder, web::http::methods::POST);
-	request.set_body(sb.MoveStdString(), std::string("application/json", 16));
+	request.set_body(sb.MoveStdString(), json_content_type);
 
 	auto result = m_client.request(request);
 
