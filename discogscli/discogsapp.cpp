@@ -14,18 +14,26 @@ int wmain(int argc, wchar_t *argv[])
 int main(int argc, char *argv[])
 #endif
 {
-	/*
+	client c(global_user_agent);
+	
 	discogs::char_t *dargv[] = {
 		(discogs::char_t*)STR("foobar"),
-		(discogs::char_t*)STR("--wantlist"),
+		(discogs::char_t*)STR("--wantlist-upd"),
 		(discogs::char_t*)STR("-u"),
-		(discogs::char_t*)STR("madabbot")
+		(discogs::char_t*)STR("madabbot"),
+		(discogs::char_t*)STR("-n"),
+		(discogs::char_t*)STR("foo stuffs"),
+		(discogs::char_t*)STR("-r"),
+		(discogs::char_t*)STR("148397"),
+		(discogs::char_t*)STR("-a"),
+		(discogs::char_t*)STR("4"),
 	};
 	int count = sizeof(dargv) / sizeof(void*);
 	return c.run(count, dargv);
 
-	*/
-	client c(global_user_agent);
+	/*
+	
 	return c.run(argc, argv);
+	*/
 }
 

@@ -14,10 +14,48 @@
 #include <cpprest/json.h>
 #include <cpprest/details/basic_types.h>
 
+#include <rapidjson/writer.h>
+
+
 #include <memory>
 
-using namespace discogs::parser;
+namespace discogs {
 
+class DiscogsStringBuffer : public rapidjson::GenericStringBuffer<rapidjson::UTF8<>> {
+public:
+	std::string GetStdString() {
+		return std::string(GetString(), GetLength());
+	}
+};
+
+template <typename Encoding>
+class StdStringBuffer {
+public:
+	typedef typename Encoding::Ch Ch;
+
+	StdStringBuffer() {}
+
+	void Put(Ch c) { str.push_back(c); }
+	void PutUnsafe(Ch c) { str.push_back(c); }
+	void Reserve(size_t sz) { str.reserve(sz); }
+
+	void Flush() {}
+
+	size_t GetSize() const { return str.capacity(); }
+	size_t GetLength() const { return str.length(); }
+
+	std::basic_string<Ch>&& MoveStdString() { return std::move(str); }
+
+private:
+	std::basic_string<Ch> str;
+};
+
+typedef StdStringBuffer<rapidjson::UTF8<> > Utf8StdStringBuffer;
+typedef rapidjson::Writer<Utf8StdStringBuffer> Utf8StdStringWriter;
+
+}
+
+using namespace discogs::parser;
 
 discogs::rest::rest(const string_t & user_agent, const string_t & base_url)
 	:m_per_page(100),m_user_agent(user_agent),m_client(base_url)
@@ -265,19 +303,26 @@ discogs::rest::update_wantlist(
 		.append_path(STR("wants"))
 		.append_path(to_string_t(release_id));
 
-	web::json::value obj;
+	Utf8StdStringBuffer sb;
+	Utf8StdStringWriter writer(sb);
+
+	writer.StartObject();
 
 	if(notes.length() > 0){
-		obj[STR("notes")] = web::json::value::string(notes);
+		std::string narrow = utility::conversions::to_utf8string(notes);
+		writer.Key("notes", 5);
+		writer.String(narrow);
 	}
 
 	if(rating > -1){
-		obj[STR("rating")] = web::json::value::number(rating);
+		writer.Key("rating", 6);
+		writer.Int(rating);
 	}
 
-	auto request = create_request(builder, web::http::methods::POST);
+	writer.EndObject();
 
-	request.set_body(obj);
+	auto request = create_request(builder, web::http::methods::POST);
+	request.set_body(sb.MoveStdString(), std::string("application/json", 16));
 
 	auto result = m_client.request(request);
 
