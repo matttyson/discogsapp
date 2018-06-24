@@ -57,6 +57,7 @@ typedef rapidjson::Writer<Utf8StdStringBuffer> Utf8StdStringWriter;
 
 const static std::string json_content_type = std::string("application/json; charset=utf-8", 31);
 
+using namespace web;
 using namespace discogs::parser;
 
 discogs::rest::rest(const string_t & user_agent, const string_t & base_url)
@@ -76,12 +77,12 @@ void discogs::rest::set_session_key(const string_t &session_key)
 	m_session_key.append(session_key);
 }
 
-web::http::http_request discogs::rest::create_request(
-	const web::uri_builder &url,
-	const web::http::method &method
+http::http_request discogs::rest::create_request(
+	const uri_builder &url,
+	const http::method &method
 )
 {
-	web::http::http_request request(method);
+	http::http_request request(method);
 	request.set_request_uri(url.to_string());
 
 	request.headers().add(STR("User-Agent"), m_user_agent);
@@ -95,10 +96,10 @@ web::http::http_request discogs::rest::create_request(
 }
 
 static pplx::task<utility::string_t>
-//do_basic_get(pplx::task<web::http::http_response> response_task)
-do_basic_get(web::http::http_response response)
+//do_basic_get(pplx::task<http::http_response> response_task)
+do_basic_get(http::http_response response)
 {
-	if (response.status_code() == web::http::status_codes::OK) {
+	if (response.status_code() == http::status_codes::OK) {
 		return (response.extract_string());
 	}
 	utility::string_t error = response.reason_phrase();
@@ -124,7 +125,7 @@ do_basic_parse(utility::string_t str)
 pplx::task<discogs::parser::collection::container>
 discogs::rest::collection(const string_t & username)
 {
-	web::uri_builder builder;
+	uri_builder builder;
 
 	builder.append_path(STR("users"))
 		.append_path(username, true)
@@ -156,7 +157,7 @@ discogs::rest::wantlist(
 )
 {
 	auto sz = sizeof(pplx::task<discogs::parser::wantlist::container>);
-	web::uri_builder builder;
+	uri_builder builder;
 
 	builder.append_path(STR("users"))
 		.append_path(username, true)
@@ -196,7 +197,7 @@ discogs::rest::folder_releases(
 	const string_t &folder_id,
 	int page_id)
 {
-	web::uri_builder builder;
+	uri_builder builder;
 
 	builder.append_path(STR("users"))
 		.append_path(username, true)
@@ -236,22 +237,22 @@ discogs::rest::delete_wantlist(
 	const string_t &username
 )
 {
-	web::uri_builder builder;
+	uri_builder builder;
 
 	builder.append_path(STR("users"))
 		.append_path(username,true)
 		.append_path(STR("wants"))
 		.append_path(to_string_t(release_id));
 
-	auto request = create_request(builder, web::http::methods::DEL);
+	auto request = create_request(builder, http::methods::DEL);
 
 	auto result = m_client.request(request);
 
 	return
-	result.then([](web::http::http_response resp) -> bool {
+	result.then([](http::http_response resp) -> bool {
 		const auto code = resp.status_code();
 
-		if(code == web::http::status_codes::NoContent){
+		if(code == http::status_codes::NoContent){
 			return true;
 		}
 
@@ -266,21 +267,21 @@ discogs::rest::add_wantlist(
 	const string_t &username
 )
 {
-	web::uri_builder builder;
+	uri_builder builder;
 
 	builder.append_path(STR("users"))
 		.append_path(username, true)
 		.append_path(STR("wants"))
 		.append_path(to_string_t(release_id));
 
-	auto request = create_request(builder, web::http::methods::PUT);
+	auto request = create_request(builder, http::methods::PUT);
 
 	auto result = m_client.request(request);
 
-	return result.then([](web::http::http_response resp) -> bool {
+	return result.then([](http::http_response resp) -> bool {
 		const auto code = resp.status_code();
 
-		if(code == web::http::status_codes::Created){
+		if(code == http::status_codes::Created){
 			return true;
 		}
 
@@ -298,7 +299,7 @@ discogs::rest::update_wantlist(
 	int rating
 )
 {
-	web::uri_builder builder;
+	uri_builder builder;
 
 	builder.append_path(STR("users"))
 		.append_path(username, true)
@@ -323,15 +324,15 @@ discogs::rest::update_wantlist(
 
 	writer.EndObject();
 
-	auto request = create_request(builder, web::http::methods::POST);
+	auto request = create_request(builder, http::methods::POST);
 	request.set_body(sb.MoveStdString(), json_content_type);
 
 	auto result = m_client.request(request);
 
-	return result.then([](web::http::http_response resp) -> bool {
+	return result.then([](http::http_response resp) -> bool {
 		const auto code = resp.status_code();
 
-		if(code == web::http::status_codes::OK){
+		if(code == http::status_codes::OK){
 			return true;
 		}
 
