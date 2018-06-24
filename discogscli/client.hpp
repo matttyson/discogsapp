@@ -23,13 +23,20 @@ private:
 	void list_collections();
 	void list_wantlist();
 	void test_parse();
+	void delete_wantlist();
+	void add_wantlist();
+	void update_wantlist();
 
 private:
 	ParserCommand m_command;
 	std::unique_ptr<discogs::rest> m_rest;
 	
 	// Arguments
+	int m_release_id;
+	int m_rating;
+
 	discogs::string_t m_username;
 	discogs::string_t m_folder_id;
+	discogs::string_t m_notes;
 };
 

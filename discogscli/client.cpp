@@ -150,6 +150,48 @@ void client::list_wantlist()
 
 }
 
+void client::delete_wantlist()
+{
+	auto result =
+	m_rest->delete_wantlist(m_release_id, m_username);
+
+	try {
+		result.wait();
+		dcout << STR("Deleted release ") << m_release_id << dendl;
+	}
+	catch(std::exception &e){
+		std::cout << e.what() << "\n";
+	}
+}
+
+void client::add_wantlist()
+{
+	auto result =
+		m_rest->add_wantlist(m_release_id, m_username);
+
+	try {
+		result.wait();
+		dcout << STR("Added release ") << m_release_id << dendl;
+	}
+	catch(std::exception &e){
+		std::cout << e.what() << "\n";
+	}
+}
+
+void client::update_wantlist()
+{
+	auto result =
+		m_rest->update_wantlist(m_release_id, m_username, m_notes, m_rating);
+
+	try {
+		result.wait();
+		dcout << STR("Updated release ") << m_release_id << dendl;
+	}
+	catch(std::exception &e){
+		std::cout << e.what() << "\n";
+	}
+}
+
 int client::run(int argc, discogs::char_t *argv[])
 {
 	if (process_args(argc, argv) != 0) {
@@ -167,6 +209,18 @@ int client::run(int argc, discogs::char_t *argv[])
 
 	case ParserCommand::wantlist:
 		list_wantlist();
+		break;
+
+	case ParserCommand::wantlist_del:
+		delete_wantlist();
+		break;
+
+	case ParserCommand::wantlist_add:
+		add_wantlist();
+		break;
+
+	case ParserCommand::wantlist_upd:
+		update_wantlist();
 		break;
 
 	case ParserCommand::NO_COMMAND:

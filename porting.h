@@ -16,7 +16,7 @@ typedef wchar_t char_t;
 #define STR(x) L ## x
 
 template <typename T,
-	typename std::enable_if<std::is_fundamental<T>::value, T>::type >
+	typename = std::enable_if<std::is_fundamental<T>::value, T>::type >
 static string_t
 to_string_t(T x)
 {

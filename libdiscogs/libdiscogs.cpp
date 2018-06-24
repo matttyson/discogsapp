@@ -188,3 +188,107 @@ discogs::rest::folder_releases(
 		);
 	});
 }
+
+
+pplx::task<bool>
+discogs::rest::delete_wantlist(
+	int release_id,
+	const string_t &username
+)
+{
+	web::uri_builder builder;
+
+	builder.append_path(STR("users"))
+		.append_path(username,true)
+		.append_path(STR("wants"))
+		.append_path(to_string_t(release_id));
+
+	auto request = create_request(builder, web::http::methods::DEL);
+
+	auto result = m_client.request(request);
+
+	return
+	result.then([](web::http::http_response resp) -> bool {
+		const auto code = resp.status_code();
+
+		if(code == web::http::status_codes::NoContent){
+			return true;
+		}
+
+		throw std::runtime_error("Nope");
+		return false;
+	});
+}
+
+pplx::task<bool>
+discogs::rest::add_wantlist(
+	int release_id,
+	const string_t &username
+)
+{
+	web::uri_builder builder;
+
+	builder.append_path(STR("users"))
+		.append_path(username, true)
+		.append_path(STR("wants"))
+		.append_path(to_string_t(release_id));
+
+	auto request = create_request(builder, web::http::methods::PUT);
+
+	auto result = m_client.request(request);
+
+	return result.then([](web::http::http_response resp) -> bool {
+		const auto code = resp.status_code();
+
+		if(code == web::http::status_codes::Created){
+			return true;
+		}
+
+		throw std::runtime_error("Nope");
+		return false;
+	});
+}
+
+
+pplx::task<bool>
+discogs::rest::update_wantlist(
+	int release_id,
+	const string_t &username,
+	const string_t &notes,
+	int rating
+)
+{
+	web::uri_builder builder;
+
+	builder.append_path(STR("users"))
+		.append_path(username, true)
+		.append_path(STR("wants"))
+		.append_path(to_string_t(release_id));
+
+	web::json::value obj;
+
+	if(notes.length() > 0){
+		obj[STR("notes")] = web::json::value::string(notes);
+	}
+
+	if(rating > -1){
+		obj[STR("rating")] = web::json::value::number(rating);
+	}
+
+	auto request = create_request(builder, web::http::methods::POST);
+
+	request.set_body(obj);
+
+	auto result = m_client.request(request);
+
+	return result.then([](web::http::http_response resp) -> bool {
+		const auto code = resp.status_code();
+
+		if(code == web::http::status_codes::OK){
+			return true;
+		}
+
+		throw std::runtime_error("Nope");
+		return false;
+	});
+}

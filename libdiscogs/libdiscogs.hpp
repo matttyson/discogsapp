@@ -37,13 +37,34 @@ public:
 		int page_id = 1
 	);
 
-	// Wantlist
+	// Get Wantlist
 	pplx::task<discogs::parser::wantlist::container>
 	wantlist(
 		const string_t &username,
 		int page_id = 1
 	);
-	
+
+	// Add to wantlist
+	pplx::task<bool>
+	add_wantlist(
+		int release_id,
+		const string_t &username
+	);
+
+	pplx::task<bool>
+	update_wantlist(
+		int release_id,
+		const string_t &username,
+		const string_t &notes,
+		int rating = -1
+	);
+
+	pplx::task<bool>
+	delete_wantlist(
+		int release_id,
+		const string_t &username
+	);
+
 private:
 	web::http::http_request create_request(
 		const web::uri_builder &url,

@@ -24,11 +24,17 @@ int client::process_args(int argc, discogs::char_t *argv[])
 		(STR("list-folder"), STR("List all the items in a folder, requires username, folder-id"))
 		(STR("collections"), STR("List all the collections for a user, requires username"))
 		(STR("wantlist"), STR("List the users wantlist, requires username"))
+		(STR("wantlist-add"), STR("Add a release to the wantlist"))
+		(STR("wantlist-del"), STR("Delete an item from the wantlist"))
+		(STR("wantlist-upd"), STR("Update wantlist item"))
 		;
 
 	options.add_options(STR("Ancillary"))
 		(STR("u,username"), STR("A username to query"), cxxopts::value<cxxopts::String>())
 		(STR("f,folder-id"), STR("The ID of the folder to process"), cxxopts::value<cxxopts::String>())
+		(STR("r,release"), STR("Release ID"), cxxopts::value<int>())
+		(STR("n,note"), STR("Notes"), cxxopts::value<cxxopts::String>())
+		(STR("a,rating"), STR("Rating number"), cxxopts::value<int>())
 		;
 
 	cxxopts::ParseResult r = options.parse(argc, argv);
@@ -52,6 +58,18 @@ int client::process_args(int argc, discogs::char_t *argv[])
 		m_command = ParserCommand::wantlist;
 	}
 
+	if(r.count(STR("wantlist-del"))){
+		m_command = ParserCommand::wantlist_del;
+	}
+
+	if(r.count(STR("wantlist-add"))){
+		m_command = ParserCommand::wantlist_add;
+	}
+
+	if(r.count(STR("wantlist-upd"))){
+		m_command = ParserCommand::wantlist_upd;
+	}
+
 	// Grab ancillary arguments
 	if (r.count(STR("username"))) {
 		m_username = r[STR("username")].as<cxxopts::String>();
@@ -59,6 +77,18 @@ int client::process_args(int argc, discogs::char_t *argv[])
 
 	if (r.count(STR("folder-id"))) {
 		m_folder_id = r[STR("folder-id")].as<cxxopts::String>();
+	}
+
+	if (r.count(STR("release"))) {
+		m_release_id = r[STR("release")].as<int>();
+	}
+
+	if (r.count(STR("note"))) {
+		m_notes = r[STR("note")].as<cxxopts::String>();
+	}
+
+	if (r.count(STR("rating"))) {
+		m_rating = r[STR("rating")].as<int>();
 	}
 
 

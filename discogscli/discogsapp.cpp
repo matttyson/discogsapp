@@ -14,7 +14,7 @@ int wmain(int argc, wchar_t *argv[])
 int main(int argc, char *argv[])
 #endif
 {
-   
+	/*
 	discogs::char_t *dargv[] = {
 		(discogs::char_t*)STR("foobar"),
 		(discogs::char_t*)STR("--wantlist"),
@@ -22,10 +22,10 @@ int main(int argc, char *argv[])
 		(discogs::char_t*)STR("madabbot")
 	};
 	int count = sizeof(dargv) / sizeof(void*);
-    
-
-	client c(global_user_agent);
 	return c.run(count, dargv);
-	//return c.run(argc, argv);
+
+	*/
+	client c(global_user_agent);
+	return c.run(argc, argv);
 }
 
