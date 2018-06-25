@@ -50,8 +50,14 @@ private:
 	std::basic_string<Ch> str;
 };
 
+
 typedef StdStringBuffer<rapidjson::UTF8<> > Utf8StdStringBuffer;
-typedef rapidjson::Writer<Utf8StdStringBuffer> Utf8StdStringWriter;
+
+#ifdef DISCOGS_WCHAR
+typedef rapidjson::Writer<Utf8StdStringBuffer, rapidjson::UTF16<>, rapidjson::UTF8<>> Utf8StdStringWriter;
+#else
+typedef rapidjson::Writer<Utf8StdStringBuffer, rapidjson::UTF8<>, rapidjson::UTF8<>> Utf8StdStringWriter;
+#endif
 
 }
 
@@ -312,13 +318,12 @@ discogs::rest::update_wantlist(
 	writer.StartObject();
 
 	if(notes.length() > 0){
-		std::string narrow = utility::conversions::to_utf8string(notes);
-		writer.Key("notes", 5);
-		writer.String(narrow);
+		writer.Key(STR("notes"), 5);
+		writer.String(notes);
 	}
 
 	if(rating > -1){
-		writer.Key("rating", 6);
+		writer.Key(STR("rating"), 6);
 		writer.Int(rating);
 	}
 
