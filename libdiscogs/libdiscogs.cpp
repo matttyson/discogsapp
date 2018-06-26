@@ -36,13 +36,8 @@ public:
 	StdStringBuffer() {}
 
 	void Put(Ch c) { str.push_back(c); }
-	void PutUnsafe(Ch c) { str.push_back(c); }
-	void Reserve(size_t sz) { str.reserve(sz); }
 
 	void Flush() {}
-
-	size_t GetSize() const { return str.capacity(); }
-	size_t GetLength() const { return str.length(); }
 
 	std::basic_string<Ch>&& MoveStdString() { return std::move(str); }
 
