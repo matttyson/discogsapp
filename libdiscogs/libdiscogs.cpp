@@ -21,13 +21,6 @@
 
 namespace discogs {
 
-class DiscogsStringBuffer : public rapidjson::GenericStringBuffer<rapidjson::UTF8<>> {
-public:
-	std::string GetStdString() {
-		return std::string(GetString(), GetLength());
-	}
-};
-
 template <typename Encoding>
 class StdStringBuffer {
 public:
