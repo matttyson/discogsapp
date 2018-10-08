@@ -15,8 +15,7 @@ typedef wchar_t char_t;
 #define dendl L"\r\n"
 #define STR(x) L ## x
 
-template <typename T,
-	typename = std::enable_if<std::is_fundamental<T>::value, T>::type >
+template <typename T>
 static string_t
 to_string_t(T x)
 {
@@ -31,8 +30,7 @@ typedef char char_t;
 #define dendl '\n'
 #define STR(x) x
 
-template <typename T,
-	typename std::enable_if<std::is_fundamental<T>::value, T>::type >
+template <typename T>
 static string_t
 to_string_t(T x)
 {
