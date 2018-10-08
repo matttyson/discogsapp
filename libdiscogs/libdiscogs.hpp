@@ -51,6 +51,7 @@ public:
 		const string_t &username
 	);
 
+	// Update notes or rating on the wantlist
 	pplx::task<bool>
 	update_wantlist(
 		int release_id,
@@ -59,6 +60,7 @@ public:
 		int rating = -1
 	);
 
+	// Delete a release from the wantlist.
 	pplx::task<bool>
 	delete_wantlist(
 		int release_id,
