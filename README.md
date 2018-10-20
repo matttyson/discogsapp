@@ -12,12 +12,27 @@ This is a C++ static library to talk to the [REST API](https://www.discogs.com/d
 
 This is a command line driver that makes use of the libdiscogs library
 
-## Requirements
+## Building
 
-* GCC 7 or Visual Studio 2017.
-* [Rapidjson](https://github.com/Tencent/rapidjson)
-* [cpprestsdk](https://github.com/Microsoft/cpprestsdk)
+This is built using CMake.  It's a bit tricky to build on Windows due to dependency issues at present.  I hope to get these resolved later.
+
+### CMake args:
+
+cxxopts can't be autoresolved by cmake and isn't packaged by distros, so you'll need to fetch that yourself.
+
+`-DCXXOPTS_INCLUDE_DIR=/path/to/cxxopts/include`
+
+### Windows:
+
+* Visual Studio 2017
+* vcpkg (rapidjson, cpprestsdk)
 * patched [cxxops](https://github.com/matttyson/cxxopts/tree/wstring) library, wstring branch.
+
+### Linux
+* GCC 8.
+* [Rapidjson](https://github.com/Tencent/rapidjson)
+* cpprestsdk
+* [cxxopts](https://github.com/jarro2783/cxxopts)
 
 ## TODO
 
