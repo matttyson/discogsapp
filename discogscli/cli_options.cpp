@@ -24,9 +24,9 @@ int client::process_args(int argc, discogs::char_t *argv[])
 		(STR("list-folder"), STR("List all the items in a folder, requires username, folder-id"))
 		(STR("collections"), STR("List all the collections for a user, requires username"))
 		(STR("wantlist"), STR("List the users wantlist, requires username"))
-		(STR("wantlist-add"), STR("Add a release to the wantlist"))
-		(STR("wantlist-del"), STR("Delete an item from the wantlist"))
-		(STR("wantlist-upd"), STR("Update wantlist item"))
+		(STR("wantlist-add"), STR("Add a release to the wantlist, requires username, release"))
+		(STR("wantlist-del"), STR("Delete an item from the wantlist, requires username, release"))
+		(STR("wantlist-upd"), STR("Update wantlist itemt, requires username, release [note, rating]"))
 		;
 
 	options.add_options(STR("Ancillary"))
@@ -90,8 +90,6 @@ int client::process_args(int argc, discogs::char_t *argv[])
 	if (r.count(STR("rating"))) {
 		m_rating = r[STR("rating")].as<int>();
 	}
-
-
 
 	return 0;
 }
