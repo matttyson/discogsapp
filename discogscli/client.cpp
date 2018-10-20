@@ -3,13 +3,21 @@
 #include "libdiscogs/libdiscogs.hpp"
 #include "client_private.hpp"
 
+#include <iostream>
+#include <string>
 
 client::client(const discogs::string_t &user_agent)
 	:m_command(ParserCommand::NO_COMMAND),
 	m_rest(std::make_unique<discogs::rest>(user_agent))
 {
-	// TODO - read this in from a config file
-	m_rest->set_session_key(STR(""));
+	// TODO - Make this better.  Also add OAuth support.
+	std::ifstream file;
+	file.open("apikey", std::ios::in);
+	if(file.is_open()){
+		std::string key;
+		getline(file, key);
+		m_rest->set_session_key(key);
+	}
 	m_rest->set_per_page(100);
 }
 
