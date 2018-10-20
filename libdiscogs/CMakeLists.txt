@@ -15,9 +15,10 @@ target_compile_definitions(libdiscogs PRIVATE
 )
 
 find_package(RapidJSON REQUIRED)
-target_include_directories(libdiscogs PRIVATE ${RAPIDJSON_INCLUDE_DIRS})
+target_include_directories(libdiscogs PRIVATE ${RAPIDJSON_INCLUDE_DIR})
 
 if(WIN32)
+	target_include_directories(libdiscogs PRIVATE ${CPPRESTSDK_INCLUDE_DIR})
 	target_compile_options(libdiscogs PRIVATE /permissive-)
 	# For linking against a static cpprestsdk on windows
 	set_property(TARGET libdiscogs APPEND PROPERTY COMPILE_DEFINITIONS _NO_ASYNCRTIMP)
@@ -25,7 +26,7 @@ endif()
 
 add_subdirectory(parsers)
 
-
+# Fix this.
 set_property(SOURCE "${CMAKE_CURRENT_LIST_DIR}/parsers/parser.cpp" APPEND PROPERTY
 	INCLUDE_DIRECTORIES
 		"${CMAKE_CURRENT_LIST_DIR}/include"

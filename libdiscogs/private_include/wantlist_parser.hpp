@@ -14,7 +14,7 @@ namespace wantlist {
 
 enum class StateKey;
 
-class state_parser : public rapidjson::BaseReaderHandler<rapidjson::UTF8<>, state_parser> {
+class state_parser : public rapidjson::BaseReaderHandler<rjs_UTF_t, state_parser> {
 public:
 	state_parser();
 	bool Null();

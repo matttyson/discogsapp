@@ -11,11 +11,16 @@ client::client(const discogs::string_t &user_agent)
 	m_rest(std::make_unique<discogs::rest>(user_agent)),
 	m_release_id(-1), m_rating(-1)
 {
-	// TODO - Make this better.  Also add OAuth support.
+	// TODO - Make the config load from a json file and
+	// not in the object constructor.
+#ifdef DISCOGS_WCHAR
+	std::wifstream file;
+#else
 	std::ifstream file;
+#endif
 	file.open("apikey", std::ios::in);
 	if(file.is_open()){
-		std::string key;
+		discogs::string_t key;
 		getline(file, key);
 		m_rest->set_session_key(key);
 	}
@@ -26,7 +31,6 @@ client::client(const discogs::string_t &user_agent)
 client::~client()
 {
 }
-
 
 void client::test_parse()
 {

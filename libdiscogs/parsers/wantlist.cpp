@@ -1,11 +1,10 @@
 /* clang-format off */
 #include "../private_include/wantlist_parser.hpp"
+#include "porting.h"
 
 namespace discogs {
 namespace parser {
 namespace wantlist {
-
-#define STR(x) (x)
 
 template <typename T>
 static inline int my_strcmp(const T *str1, const T *str2)
