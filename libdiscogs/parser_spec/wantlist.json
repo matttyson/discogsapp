@@ -1,55 +1,58 @@
 {
-	"namespace": "wantlist",
-	"header_name": "wantlist",
-	"parser_class": "parser",
-	"link": "https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-wantlist",
-	"description": "The Wantlist resource allows you to view and manage a user's wantlist.",
-	"import": [
-		"paginate.json",
-		"basic_information.json"
-	],
-	"parents": [
-		{
-			"json_name": "wants",
-			"impl": "wants_",
-			"vector": true
-		},
-		{
-			"json_name": "pagination",
-			"impl": "pages"
-		}
-	],
-	"classes": [
-		{
-			"json_name": "wants",
-			"class_name": "want",
-			"definition": [
-				{
-					"name": "id",
-					"type": "integer"
-				},
-				{
-					"name": "rating",
-					"type": "integer"
-				},
-				{
-					"name": "notes",
-					"type": "string"
-				},
-				{
-					"name": "date_added",
-					"type": "string"
-				},
-				{
-					"name": "resource_url",
-					"type": "string"
-				},
-				{
-					"name": "basic_information",
-					"type": "basic_information",
-					"impl": "basic_information_"
-				}
-			]
-		}
-	]
+    "namespace": [
+        "discogs",
+        "parser",
+        "wantlist"
+    ],
+    "filename": "wantlist",
+    "link": "https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-wantlist",
+    "description": "The Wantlist resource allows you to view and manage a user's wantlist.",
+    "import": [
+        "paginate.json",
+        "basic_information.json"
+    ],
+    "parents": [
+        {
+            "json_name": "wants",
+            "impl": "wants_",
+            "vector": true
+        },
+        {
+            "json_name": "pagination",
+            "impl": "pages"
+        }
+    ],
+    "classes": [
+        {
+            "json_name": "wants",
+            "class_name": "want",
+            "definition": [
+                {
+                    "name": "id",
+                    "type": "integer"
+                },
+                {
+                    "name": "rating",
+                    "type": "integer"
+                },
+                {
+                    "name": "notes",
+                    "type": "string"
+                },
+                {
+                    "name": "date_added",
+                    "type": "string"
+                },
+                {
+                    "name": "resource_url",
+                    "type": "string"
+                },
+                {
+                    "name": "basic_information",
+                    "type": "basic_information",
+                    "impl": "basic_information_"
+                }
+            ]
+        }
+    ]
 }

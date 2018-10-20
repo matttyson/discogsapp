@@ -4,10 +4,10 @@
 
 #include "include/folder_releases.hpp"
 #include "private_include/folder_releases_parser.hpp"
-#include "include/collection.hpp"
-#include "private_include/collection_parser.hpp"
-#include "include/wantlist.hpp"
-#include "private_include/wantlist_parser.hpp"
+//#include "include/collection.hpp"
+//#include "private_include/collection_parser.hpp"
+//#include "include/wantlist.hpp"
+//#include "private_include/wantlist_parser.hpp"
 
 #include <cpprest/http_client.h>
 #include <cpprest/filestream.h>
@@ -18,6 +18,7 @@
 
 
 #include <memory>
+#include <fstream>
 
 namespace discogs {
 
@@ -93,10 +94,14 @@ static pplx::task<utility::string_t>
 //do_basic_get(pplx::task<http::http_response> response_task)
 do_basic_get(http::http_response response)
 {
+//	std::cout << response.to_string();
+
 	if (response.status_code() == http::status_codes::OK) {
 		return (response.extract_string());
 	}
+
 	utility::string_t error = response.reason_phrase();
+	dcout << error << std::endl;
 	throw std::runtime_error("boom");
 	return pplx::task_from_result(string_t(STR("")));
 }
@@ -105,17 +110,30 @@ template <typename Parser>
 static pplx::task<std::shared_ptr<Parser>>
 do_basic_parse(utility::string_t str)
 {
+	/*
+	dcout << str << "\n";
+	std::ofstream file;
+	file.open("parse.json");
+	file << str;
+	file.close();
+	*/
+
 	std::shared_ptr<Parser> p = std::make_shared<Parser>();
 	rapidjson::GenericReader<
-		discogs::parser::rjs_UTF_t, discogs::parser::rjs_UTF_t> r;
-	rapidjson::GenericInsituStringStream<discogs::parser::rjs_UTF_t>
+		rjs_UTF_t, rjs_UTF_t> r;
+	rapidjson::GenericInsituStringStream<rjs_UTF_t>
 		iss(const_cast<char_t*>(str.c_str()));
 
 	rapidjson::ParseResult pr = r.Parse<rapidjson::kParseInsituFlag>(iss, *p);
 
+	if(pr.IsError()){
+		std::cout << "Parse Error!\n";
+	}
+
 	return pplx::task_from_result(p);
 }
 
+/*
 pplx::task<discogs::parser::collection::container>
 discogs::rest::collection(const string_t & username)
 {
@@ -143,7 +161,9 @@ discogs::rest::collection(const string_t & username)
 		);
 	});
 }
+*/
 
+/*
 pplx::task<discogs::parser::wantlist::container>
 discogs::rest::wantlist(
 	const string_t &username,
@@ -182,10 +202,10 @@ discogs::rest::wantlist(
 		);
 	});
 }
+*/
 
 
-
-pplx::task<discogs::parser::folder_releases::container>
+pplx::task<discogs::parser::folder_release::folder_releases>
 discogs::rest::folder_releases(
 	const string_t & username,
 	const string_t &folder_id,
@@ -211,14 +231,14 @@ discogs::rest::folder_releases(
 
 	auto z = m_client.request(request);
 	return z.then(do_basic_get)
-			.then(do_basic_parse<folder_releases::parser>)
-			.then([](std::shared_ptr<folder_releases::parser> p) ->
-				pplx::task<folder_releases::container>
+			.then(do_basic_parse<parser::folder_release::super_parser>)
+			.then([](std::shared_ptr<parser::folder_release::super_parser> p) ->
+				pplx::task<parser::folder_release::folder_releases>
 	{
 		return pplx::task_from_result(
-			folder_releases::container(
-				std::move(p->release_),
-				std::move(p->pages)
+			parser::folder_release::folder_releases(
+				std::move(p->folder_release.release_),
+				std::move(p->folder_release.pages)
 			)
 		);
 	});

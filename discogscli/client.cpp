@@ -41,7 +41,7 @@ static bool has_more_pages(const discogs::parser::paginate::pagination &p)
 
 void client::list_folder()
 {
-	std::vector<discogs::parser::folder_releases::release> releases;
+	std::vector<discogs::parser::folder_release::release> releases;
 
 	bool keep_going = false;
 	int page_id = 1;
@@ -59,7 +59,6 @@ void client::list_folder()
 
 		auto c = foo.get();
 
-		releases.reserve(releases.capacity() + c.release_.size());
 		releases.insert(releases.end(),
 			std::make_move_iterator(c.release_.begin()),
 			std::make_move_iterator(c.release_.end()));
@@ -72,8 +71,8 @@ void client::list_folder()
 	} while (keep_going);
 
 	std::sort(releases.begin(), releases.end(), [](
-			const discogs::parser::folder_releases::release &lhs,
-			const discogs::parser::folder_releases::release &rhs) -> bool
+			const discogs::parser::folder_release::release &lhs,
+			const discogs::parser::folder_release::release &rhs) -> bool
 	{
 		return lhs.basic_information_.title < rhs.basic_information_.title;
 	});
@@ -86,6 +85,7 @@ void client::list_folder()
 
 void client::list_collections()
 {
+	/*
 	auto result = m_rest->collection(m_username);
 
 	try {
@@ -105,10 +105,12 @@ void client::list_collections()
 		dcout << STR("\tcount: ") << col.count << dendl;
 		dcout << STR("\tid: ") << col.id << dendl dendl;
 	}
+	*/
 }
 
 void client::list_wantlist()
 {
+	/*
 	int page_id = 1;
 	bool keep_going = false;
 
@@ -147,7 +149,7 @@ void client::list_wantlist()
 	for(const auto &w : want_list){
 		dcout << w.basic_information_.title << dendl;
 	}
-
+	*/
 }
 
 void client::delete_wantlist()

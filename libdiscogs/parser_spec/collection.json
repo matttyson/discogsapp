@@ -1,38 +1,41 @@
 {
-	"namespace": "collection",
-	"header_name": "collection",
-	"parser_class": "parser",
-	"link": "https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection",
-	"description": "COLLECTION",
-	"parents": [
-		{
-			"json_name": "folders",
-			"impl": "folders_",
-			"vector": "true"
-		}
-	],
-	"classes": [
-		{
-			"json_name": "folders",
-			"class_name": "folder",
-			"definition": [
-				{
-					"name": "id",
-					"type": "integer"
-				},
-				{
-					"name": "count",
-					"type": "integer"
-				},
-				{
-					"name": "resource_url",
-					"type": "string"
-				},
-				{
-					"name": "name",
-					"type": "string"
-				}
-			]
-		}
-	]
+    "namespace": [
+        "discogs",
+        "parser",
+        "collection"
+    ],
+    "filename": "collection",
+    "link": "https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection",
+    "description": "COLLECTION",
+    "parents": [
+        {
+            "json_name": null,
+            "impl_name": "folders",
+            "data_type": "folder",
+            "array": true
+        }
+    ],
+    "classes": [
+        {
+            "class_name": "folder",
+            "definition": [
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "count",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "name",
+                    "data_type": "string"
+                }
+            ]
+        }
+    ]
 }

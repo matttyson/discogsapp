@@ -11,7 +11,7 @@ if(WIN32)
 	add_definitions(/DDISCOGS_WCHAR /DRJSP_WIDE_CHAR)
 endif()
 
-project ("discogsapp")
+project ("discogsapp" CXX)
 
 
 # Include sub-projects.

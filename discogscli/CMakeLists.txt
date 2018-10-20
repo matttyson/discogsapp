@@ -7,30 +7,30 @@ cmake_minimum_required (VERSION 3.8)
 
 add_executable (discogsapp "discogsapp.cpp" "client.cpp" "cli_options.cpp")
 
-
 target_link_libraries(discogsapp libdiscogs)
 
-target_include_directories(discogsapp PRIVATE ${CXXOPTSINC})
-target_include_directories(discogsapp PRIVATE ${CPPSDKINC})
 target_include_directories(discogsapp PRIVATE ..)
+
+target_include_directories(discogsapp PRIVATE ${CXXOPTS_INCLUDE_DIR})
 
 
 if(WIN32)
-	target_link_libraries(discogsapp ${CPPSDKLIB})
-	target_link_libraries(discogsapp ${ZLIBLIB})
-	target_link_libraries(discogsapp WinHttp bcrypt crypt32)
-	target_compile_options(discogsapp PRIVATE /permissive-)
-	find_package(OpenSSL REQUIRED)
-	target_link_libraries(discogsapp ${OPENSSL_CRYPTO_LIBRARY} ${OPENSSL_SSL_LIBRARY})
-	target_link_libraries(discogsapp ${BOOST_SYSTEMLIB})
+	find_package(cpprestsdk CONFIG REQUIRED)
+
+	target_link_libraries(discogsapp PRIVATE
+		cpprestsdk::cpprest
+		cpprestsdk::cpprestsdk_zlib_internal
+		cpprestsdk::cpprestsdk_boost_internal
+		cpprestsdk::cpprestsdk_openssl_internal
+	)
+
+	target_link_libraries(discogsapp PRIVATE ${BOOST_SYSTEM_LIB})
 endif()
+
 
 if(UNIX)
 	find_package(OpenSSL REQUIRED)
 	target_link_libraries(discogsapp ${OPENSSL_CRYPTO_LIBRARY})
-	target_link_libraries(discogsapp cpprest)
-	target_link_libraries(discogsapp pthread)
-	target_link_libraries(discogsapp boost_system)
+	target_link_libraries(discogsapp cpprest pthread boost_system)
 endif()
 
-# TODO: Add tests and install targets if needed.

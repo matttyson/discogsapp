@@ -1,57 +1,58 @@
 {
-	"namespace": "paginate",
-	"header_name": "paginate",
-	"description": "Pagination support class for Discogs",
-	"classes": [
-		{
-			"json_name": "urls",
-			"class_name": "urls",
-			"definition": [
-				{
-					"name": "next",
-					"type": "string"
-				},
-				{
-					"name": "last",
-					"type": "string"
-				},
-				{
-					"name": "first",
-					"type": "string"
-				},
-				{
-					"name": "prev",
-					"type": "string"
-				}
-
-			]
-		},
-		{
-			"json_name": "pagination",
-			"class_name": "pagination",
-			"definition": [
-				{
-					"name": "per_page",
-					"type": "integer"
-				},
-				{
-					"name": "items",
-					"type": "integer"
-				},
-				{
-					"name": "page",
-					"type": "integer"
-				},
-				{
-					"name": "pages",
-					"type": "integer"
-				},
-				{
-					"name": "urls",
-					"type": "urls",
-					"impl": "links"
-				}
-			]
-		}
-	]
+    "namespace": [
+        "discogs",
+        "parser",
+        "paginate"
+    ],
+    "header": "paginate",
+    "description": "Pagination support class for Discogs",
+    "classes": [
+        {
+            "class_name": "urls",
+            "definition": [
+                {
+                    "json_name": "next",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "last",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "first",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "prev",
+                    "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "pagination",
+            "definition": [
+                {
+                    "json_name": "per_page",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "items",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "page",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "pages",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "urls",
+                    "data_type": "urls",
+                    "impl_name": "links"
+                }
+            ]
+        }
+    ]
 }

@@ -1,24 +1,21 @@
 include_directories(..)
 include_directories(include)
 
-add_library(libdiscogs STATIC)
-
-target_sources(libdiscogs PRIVATE
+add_library(libdiscogs STATIC
 	${CMAKE_CURRENT_LIST_DIR}/libdiscogs.cpp
 	${CMAKE_CURRENT_LIST_DIR}/libdiscogs.hpp
 )
 
 find_package(RapidJSON REQUIRED)
 
-target_include_directories(libdiscogs PRIVATE ${RapidJSON_INCLUDE_DIR})
-target_include_directories(libdiscogs PRIVATE ${CPPSDKINC})
-
 target_compile_definitions(libdiscogs PRIVATE
-	RAPIDJSON_SSE42
 	RAPIDJSON_HAS_CXX11_TYPETRAITS
 	RAPIDJSON_HAS_CXX11_NOEXCEPT
 	RAPIDJSON_HAS_STDSTRING
 )
+
+find_package(RapidJSON REQUIRED)
+target_include_directories(libdiscogs PRIVATE ${RAPIDJSON_INCLUDE_DIRS})
 
 if(WIN32)
 	target_compile_options(libdiscogs PRIVATE /permissive-)

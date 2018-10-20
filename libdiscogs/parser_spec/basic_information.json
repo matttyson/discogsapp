@@ -1,166 +1,93 @@
 {
-	"namespace": "basic_information",
-	"header_name": "basic_information",
-	"description": "basic_information template class",
-	"classes": [
-		{
-			"json_name": "labels",
-			"class_name": "label",
-			"definition": [
-				{
-					"name": "id",
-					"type": "integer"
-				},
-				{
-					"name": "name",
-					"type": "string"
-				},
-				{
-					"name": "entity_type",
-					"type": "string"
-				},
-				{
-					"name": "catno",
-					"type": "string"
-				},
-				{
-					"name": "resource_url",
-					"type": "string"
-				},
-				{
-					"name": "entity_type_name",
-					"type": "string"
-				}
-			]
-		},
-		{
-			"json_name": "formats",
-			"class_name": "format",
-			"definition": [
-				{
-					"name": "name",
-					"type": "string"
-				},
-				{
-					"name": "qty",
-					"type": "string"
-				},
-				{
-					"name": "text",
-					"type": "string"
-				},
-				{
-					"name": "descriptions",
-					"type": "string",
-					"vector": true
-				}
-			]
-		},
-		{
-			"json_name": "artists",
-			"class_name": "artist",
-			"definition": [
-				{
-					"name": "id",
-					"type": "integer"
-				},
-				{
-					"name": "join",
-					"type": "string"
-				},
-				{
-					"name": "name",
-					"type": "string"
-				},
-				{
-					"name": "anv",
-					"type": "string"
-				},
-				{
-					"name": "tracks",
-					"type": "string"
-				},
-				{
-					"name": "role",
-					"type": "string"
-				},
-				{
-					"name": "resource_url",
-					"type": "string"
-				}
-			]
-		},
-		{
-			"json_name": "notes",
-			"class_name": "note",
-			"definition": [
-				{
-					"name": "field_id",
-					"type": "integer"
-				},
-				{
-					"name": "value",
-					"type": "string"
-				}
-			]
-		},
-		{
-			"json_name": "basic_information",
-			"class_name": "basic_information",
-			"definition": [
-				{
-					"name": "year",
-					"type": "integer"
-				},
-				{
-					"name": "id",
-					"type": "integer"
-				},
-				{
-					"name": "folder_id",
-					"type": "integer"
-				},
-				{
-					"name": "thumb",
-					"type": "string"
-				},
-				{
-					"name": "title",
-					"type": "string"
-				},
-				{
-					"name": "cover_image",
-					"type": "string"
-				},
-				{
-					"name": "resource_url",
-					"type": "string"
-				},
-				{
-					"name": "labels",
-					"type": "label",
-					"impl": "label_",
-					"vector": true
-				},
-				{
-					"name": "formats",
-					"type": "format",
-					"impl": "format_",
-					"vector": true
-				},
-				{
-					"name": "artists",
-					"type": "artist",
-					"impl": "artist_",
-					"vector": true
-				},
-				{
-					"name": "notes",
-					"type": "note",
-					"impl": "notes_",
-					"vector": true
-				}
-			]
-		}
-	]
+    "namespace": [
+        "discogs",
+        "parser",
+        "common"
+    ],
+    "header": "basic_information",
+    "description": "basic_information template class",
+    "classes": [
+        {
+            "class_name": "note",
+            "definition": [
+                {
+                    "json_name": "field_id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "value",
+                    "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "basic_information",
+            "definition": [
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "master_id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "year",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "folder_id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "thumb",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "name",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "title",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "cover_image",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "master_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "labels",
+                    "data_type": "label",
+                    "impl_name": "label_",
+                    "array": true
+                },
+                {
+                    "json_name": "formats",
+                    "data_type": "format",
+                    "impl_name": "format_",
+                    "array": true
+                },
+                {
+                    "json_name": "artists",
+                    "data_type": "artist",
+                    "impl_name": "artist_",
+                    "array": true
+                },
+                {
+                    "json_name": "notes",
+                    "data_type": "note",
+                    "impl_name": "notes_",
+                    "array": true
+                }
+            ]
+        }
+    ]
 }
