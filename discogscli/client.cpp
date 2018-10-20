@@ -8,7 +8,8 @@
 
 client::client(const discogs::string_t &user_agent)
 	:m_command(ParserCommand::NO_COMMAND),
-	m_rest(std::make_unique<discogs::rest>(user_agent))
+	m_rest(std::make_unique<discogs::rest>(user_agent)),
+	m_release_id(-1), m_rating(-1)
 {
 	// TODO - Make this better.  Also add OAuth support.
 	std::ifstream file;
