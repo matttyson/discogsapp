@@ -1,0 +1,391 @@
+{
+    "description": "Classes that can be reused in most endpoints",
+    "namespace": [
+        "discogs",
+        "parser",
+        "common"
+    ],
+    "header": "base_classes",
+    "classes": [
+        {
+            "class_name": "contributor",
+            "definition": [
+                {
+                    "json_name": "username",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "identifier",
+            "definition": [
+                {
+                    "json_name": "type",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "value",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "description",
+                    "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "label",
+            "definition": [
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "name",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "entity_type",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "catno",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "entity_type_name",
+                    "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "video",
+            "definition": [
+                {
+                    "json_name": "duration",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "embed",
+                    "data_type": "boolean"
+                },
+                {
+                    "json_name": "description",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "title",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "uri",
+                    "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "company",
+            "definition": [
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "name",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "entity_type",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "catno",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "entity_type_name",
+                    "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "rating",
+            "definition": [
+                {
+                    "json_name": "count",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "average",
+                    "data_type": "float"
+                }
+            ]
+        },
+        {
+            "class_name": "submitter",
+            "definition": [
+                {
+                    "json_name": "username",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "artist",
+            "definition": [
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "join",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "name",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "anv",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "tracks",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "role",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "image",
+            "definition": [
+                {
+                    "json_name": "height",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "width",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "uri",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "type",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "uri150",
+                    "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "track",
+            "definition": [
+                {
+                    "json_name": "duration",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "position",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "type_",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "title",
+                    "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "note",
+            "definition": [
+                {
+                    "json_name": "field_id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "value",
+                    "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "format",
+            "definition": [
+                {
+                    "json_name": "name",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "qty",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "text",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "descriptions",
+                    "data_type": "string",
+                    "array": true
+                }
+            ]
+        },
+        {
+            "class_name": "community",
+            "definition": [
+                {
+                    "json_name": "want",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "have",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "status",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "data_quality",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "submitter",
+                    "data_type": "submitter",
+                    "impl_name": "sumbitter_"
+                },
+                {
+                    "json_name": "rating",
+                    "data_type": "rating",
+                    "impl_name": "rating_"
+                },
+                {
+                    "json_name": "contributors",
+                    "data_type": "contributor",
+                    "array": true
+                }
+            ]
+        },
+        {
+            "class_name": "basic_information",
+            "definition": [
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "master_id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "year",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "thumb",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "title",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "cover_image",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "master_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "labels",
+                    "data_type": "label",
+                    "impl_name": "label_",
+                    "array": true
+                },
+                {
+                    "json_name": "formats",
+                    "data_type": "format",
+                    "impl_name": "format_",
+                    "array": true
+                },
+                {
+                    "json_name": "artists",
+                    "data_type": "artist",
+                    "impl_name": "artist_",
+                    "array": true
+                },
+                {
+                    "json_name": "notes",
+                    "data_type": "note",
+                    "impl_name": "notes_",
+                    "array": true
+                }
+            ]
+        },
+        {
+            "class_name": "want",
+            "definition": [
+                {
+                    "json_name": "rating",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "date_added",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "basic_information",
+                    "data_type": "basic_information",
+                    "impl_name": "basic_information_"
+                }
+            ]
+        }
+    ]
+}

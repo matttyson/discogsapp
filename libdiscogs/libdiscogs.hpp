@@ -8,6 +8,7 @@
 
 #include "include/folder_releases.hpp"
 #include "include/collection.hpp"
+#include "include/wantlist.hpp"
 
 
 namespace discogs {
@@ -33,6 +34,13 @@ public:
 	folder_releases(
 		const string_t &username,
 		const string_t &folder_id,
+		int page_id = 1
+	);
+
+	// Get Wantlist
+	pplx::task<discogs::parser::wantlist::wantlist>
+	wantlist(
+		const string_t &username,
 		int page_id = 1
 	);
 

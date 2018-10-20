@@ -9,48 +9,29 @@
     "description": "The Wantlist resource allows you to view and manage a user's wantlist.",
     "import": [
         "paginate.json",
-        "basic_information.json"
+        "base_classes.json"
     ],
     "parents": [
         {
-            "json_name": "wants",
-            "impl": "wants_",
-            "vector": true
-        },
-        {
-            "json_name": "pagination",
-            "impl": "pages"
+            "json_name": null,
+            "data_type": "wantlist",
+            "impl_name": "wantlist_"
         }
     ],
     "classes": [
         {
-            "json_name": "wants",
-            "class_name": "want",
+            "class_name": "wantlist",
             "definition": [
                 {
-                    "name": "id",
-                    "type": "integer"
+                    "json_name": "pagination",
+                    "data_type": "pagination",
+                    "impl_name": "pages"
                 },
                 {
-                    "name": "rating",
-                    "type": "integer"
-                },
-                {
-                    "name": "notes",
-                    "type": "string"
-                },
-                {
-                    "name": "date_added",
-                    "type": "string"
-                },
-                {
-                    "name": "resource_url",
-                    "type": "string"
-                },
-                {
-                    "name": "basic_information",
-                    "type": "basic_information",
-                    "impl": "basic_information_"
+                    "json_name": "wants",
+                    "data_type": "want",
+                    "impl_name": "want_",
+                    "array": true
                 }
             ]
         }

@@ -6,7 +6,6 @@
 #include "class_common.hpp"
 #include "paginate.hpp"
 #include "base_classes.hpp"
-#include "basic_information.hpp"
 
 namespace discogs {
 namespace parser {

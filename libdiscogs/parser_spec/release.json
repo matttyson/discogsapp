@@ -1,0 +1,177 @@
+{
+    "namespace": [
+        "discogs",
+        "parser",
+        "release"
+    ],
+    "filename": "release",
+    "link": "https://www.discogs.com/developers/#page:database,header:database-release",
+    "description": "RELEASE",
+    "import": [
+        "base_classes.json"
+    ],
+    "parents": [
+        {
+            "json_name": null,
+            "data_type": "release",
+            "impl_name": "release_"
+        }
+    ],
+    "classes": [
+        {
+            "class_name": "release",
+            "definition": [
+                {
+                    "json_name": "year",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "num_for_sale",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "master_id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "format_quantity",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "estimated_weight",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "lowest_price",
+                    "data_type": "float"
+                },
+                {
+                    "json_name": "artists_sort",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "country",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "notes",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "thumb",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "title",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "date_changed",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "status",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "released_formatted",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "master_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "released",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "date_added",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "uri",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "data_quality",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "community",
+                    "data_type": "community",
+                    "impl_name": "community_"
+                },
+                {
+                    "json_name": "series",
+                    "data_type": "string",
+                    "array": true
+                },
+                {
+                    "json_name": "styles",
+                    "data_type": "string",
+                    "array": true
+                },
+                {
+                    "json_name": "genres",
+                    "data_type": "string",
+                    "array": true
+                },
+                {
+                    "json_name": "videos",
+                    "data_type": "video",
+                    "array": true
+                },
+                {
+                    "json_name": "labels",
+                    "data_type": "label",
+                    "array": true
+                },
+                {
+                    "json_name": "artists",
+                    "data_type": "artist",
+                    "array": true
+                },
+                {
+                    "json_name": "images",
+                    "data_type": "image",
+                    "array": true
+                },
+                {
+                    "json_name": "tracklist",
+                    "data_type": "track",
+                    "array": true
+                },
+                {
+                    "json_name": "extraartists",
+                    "data_type": "artist",
+                    "impl_name": "extra_artists",
+                    "array": true
+                },
+                {
+                    "json_name": "companies",
+                    "data_type": "company",
+                    "array": true
+                },
+                {
+                    "json_name": "formats",
+                    "data_type": "format",
+                    "array": true
+                },
+                {
+                    "json_name": "identifiers",
+                    "data_type": "identifier",
+                    "array": true
+                }
+            ]
+        }
+    ]
+}

@@ -110,11 +110,10 @@ void client::list_collections()
 
 void client::list_wantlist()
 {
-	/*
 	int page_id = 1;
 	bool keep_going = false;
 
-	std::vector<discogs::parser::wantlist::want> want_list;
+	std::vector<discogs::parser::common::want> want_list;
 
 	do {
 		auto result = m_rest->wantlist(m_username, page_id);
@@ -132,15 +131,15 @@ void client::list_wantlist()
 		//keep_going = has_more_pages(c.pages);
 
 		want_list.insert(want_list.end(),
-			std::make_move_iterator(c.wants_.begin()),
-			std::make_move_iterator(c.wants_.end())
+			std::make_move_iterator(c.want_.begin()),
+			std::make_move_iterator(c.want_.end())
 		);
 		page_id++;
 	} while (keep_going);
 
 	std::sort(want_list.begin(), want_list.end(),[](
-		const discogs::parser::wantlist::want &lhs,
-		const discogs::parser::wantlist::want &rhs) -> bool
+		const discogs::parser::common::want &lhs,
+		const discogs::parser::common::want &rhs) -> bool
 	{
 		return lhs.basic_information_.title < rhs.basic_information_.title;
 	}
@@ -149,7 +148,6 @@ void client::list_wantlist()
 	for(const auto &w : want_list){
 		dcout << w.basic_information_.title << dendl;
 	}
-	*/
 }
 
 void client::delete_wantlist()

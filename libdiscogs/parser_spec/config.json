@@ -8,7 +8,7 @@
     "parsers": [
         "release.json",
         "folder_releases.json",
-        "collection.json"
+        "wantlist.json"
     ],
     "hdr_extension": "hpp",
     "cpp_extension": "cpp",

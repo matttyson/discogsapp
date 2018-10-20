@@ -4,10 +4,8 @@
 
 #include "include/folder_releases.hpp"
 #include "private_include/folder_releases_parser.hpp"
-//#include "include/collection.hpp"
-//#include "private_include/collection_parser.hpp"
-//#include "include/wantlist.hpp"
-//#include "private_include/wantlist_parser.hpp"
+#include "include/wantlist.hpp"
+#include "private_include/wantlist_parser.hpp"
 
 #include <cpprest/http_client.h>
 #include <cpprest/filestream.h>
@@ -163,14 +161,13 @@ discogs::rest::collection(const string_t & username)
 }
 */
 
-/*
-pplx::task<discogs::parser::wantlist::container>
+
+pplx::task<discogs::parser::wantlist::wantlist>
 discogs::rest::wantlist(
 	const string_t &username,
 	int page_id
 )
 {
-	auto sz = sizeof(pplx::task<discogs::parser::wantlist::container>);
 	uri_builder builder;
 
 	builder.append_path(STR("users"))
@@ -190,19 +187,19 @@ discogs::rest::wantlist(
 	auto response = m_client.request(request);
 
 	return response.then(do_basic_get)
-		.then(do_basic_parse<wantlist::parser>)
-		.then([](std::shared_ptr<wantlist::parser> p) ->
-			pplx::task<wantlist::container>
+		.then(do_basic_parse<discogs::parser::wantlist::state_parser>)
+		.then([](std::shared_ptr<discogs::parser::wantlist::state_parser> p) ->
+			pplx::task<discogs::parser::wantlist::wantlist>
 	{
 		return pplx::task_from_result(
-			wantlist::container(
-				std::move(p->wants_),
-				std::move(p->pages)
+			wantlist::wantlist(
+				std::move(p->wantlist_.pages),
+				std::move(p->wantlist_.want_)
 			)
 		);
 	});
 }
-*/
+
 
 
 pplx::task<discogs::parser::folder_release::folder_releases>
