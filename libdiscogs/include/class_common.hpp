@@ -5,7 +5,7 @@
 #include <string>
 #include <memory>
 
-#ifdef RJSP_WIDE_CHAR
+#ifdef DISCOGS_WCHAR
 typedef std::wstring string_t;
 typedef wchar_t char_t;
 #else

@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 if(WIN32)
 	add_definitions(/D_UNICODE /DUNICODE)
 	add_definitions(/D_CRT_SECURE_NO_DEPRECATE /D_CRT_SECURE_NO_WARNINGS /D_CRT_NONSTDC_NO_WARNINGS)
-	add_definitions(/DDISCOGS_WCHAR /DRJSP_WIDE_CHAR)
+	add_definitions(/DDISCOGS_WCHAR)
 endif()
 
 project ("discogsapp" CXX)
