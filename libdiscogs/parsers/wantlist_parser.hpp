@@ -3,10 +3,10 @@
 #include <rapidjson/rapidjson.h>
 #include <rapidjson/reader.h>
 
-#include "./wantlist_parser.hpp"
+#include "wantlist.hpp"
+
 
 #include "parser_common.hpp"
-#include "../include/wantlist.hpp"
 
 namespace discogs {
 namespace parser {

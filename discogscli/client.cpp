@@ -101,6 +101,10 @@ void client::list_folder()
 
 	for (const auto &e : releases) {
 		const auto &bi = e.basic_information_;
+		if(e.basic_information_.artists.size() > 0){
+			const auto &a = e.basic_information_.artists[0];
+			dcout << a.name << STR(" - ");
+		}
 		dcout << bi.title << dendl;
 	}
 }

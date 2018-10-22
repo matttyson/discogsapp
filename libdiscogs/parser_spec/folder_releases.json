@@ -2,15 +2,14 @@
     "namespace": [
         "discogs",
         "parser",
-        "folder_releases"
+        "folder_release"
     ],
     "filename": "folder_releases",
     "link": "https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-folder",
     "description": "COLLECTION ITEMS BY FOLDER",
     "import": [
         "paginate.json",
-        "base_classes.json",
-        "basic_information.json"
+        "base_classes.json"
     ],
     "parents": [
         {
@@ -36,8 +35,17 @@
                     "data_type": "integer"
                 },
                 {
+                    "json_name": "folder_id",
+                    "data_type": "integer"
+                },
+                {
                     "json_name": "date_added",
                     "data_type": "string"
+                },
+                {
+                    "json_name": "notes",
+                    "data_type": "note",
+                    "array": true
                 },
                 {
                     "json_name": "basic_information",
@@ -46,21 +54,21 @@
                 }
             ]
         },
-        {
-            "class_name": "container",
-            "definition": [
-                {
-                    "json_name": "pagination",
-                    "data_type": "pagination",
-                    "impl_name": "pages"
-                },
-                {
-                    "json_name": "releases",
-                    "data_type": "release",
-                    "impl_name": "release_",
-                    "array": true
-                }
-            ]
-        }
+      {
+        "class_name": "folder_releases",
+        "definition": [
+          {
+            "json_name": "pagination",
+            "data_type": "pagination",
+            "impl_name": "pages"
+          },
+          {
+            "json_name": "releases",
+            "data_type": "release",
+            "impl_name": "release_",
+            "array": true
+          }
+        ]
+      }
     ]
 }

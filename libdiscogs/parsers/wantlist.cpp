@@ -1,10 +1,11 @@
 /* clang-format off */
 #include "wantlist_parser.hpp"
-#include "porting.h"
-
 namespace discogs {
 namespace parser {
 namespace wantlist {
+
+
+#define STR(x) L ## x
 
 template <typename T>
 static inline int my_strcmp(const T *str1, const T *str2)
@@ -67,11 +68,6 @@ enum class StateKey {
 	wantlist_wants_basic_information_notes_field_id,
 	wantlist_wants_basic_information_notes_value,
 };
-
-bool state_parser::Null()
-{
-    return false;
-}
 
 bool state_parser::Int(int value)
 {
@@ -137,15 +133,15 @@ bool state_parser::Number(int value)
 		m_state = StateKey::wantlist_wants_basic_information;
 		break;
 	case StateKey::wantlist_wants_basic_information_labels_id:
-		wantlist_.want_.back().basic_information_.label_.back().id = value;
+		wantlist_.want_.back().basic_information_.labels.back().id = value;
 		m_state = StateKey::wantlist_wants_basic_information_labels;
 		break;
 	case StateKey::wantlist_wants_basic_information_artists_id:
-		wantlist_.want_.back().basic_information_.artist_.back().id = value;
+		wantlist_.want_.back().basic_information_.artists.back().id = value;
 		m_state = StateKey::wantlist_wants_basic_information_artists;
 		break;
 	case StateKey::wantlist_wants_basic_information_notes_field_id:
-		wantlist_.want_.back().basic_information_.notes_.back().field_id = value;
+		wantlist_.want_.back().basic_information_.notes.back().field_id = value;
 		m_state = StateKey::wantlist_wants_basic_information_notes;
 		break;
 	default:
@@ -201,66 +197,66 @@ bool state_parser::String(const Ch* value, rapidjson::SizeType length, bool copy
 		m_state = StateKey::wantlist_wants_basic_information;
 		break;
 	case StateKey::wantlist_wants_basic_information_labels_name:
-		wantlist_.want_.back().basic_information_.label_.back().name = string_t(value, length);
+		wantlist_.want_.back().basic_information_.labels.back().name = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_labels;
 		break;
 	case StateKey::wantlist_wants_basic_information_labels_entity_type:
-		wantlist_.want_.back().basic_information_.label_.back().entity_type = string_t(value, length);
+		wantlist_.want_.back().basic_information_.labels.back().entity_type = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_labels;
 		break;
 	case StateKey::wantlist_wants_basic_information_labels_catno:
-		wantlist_.want_.back().basic_information_.label_.back().catno = string_t(value, length);
+		wantlist_.want_.back().basic_information_.labels.back().catno = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_labels;
 		break;
 	case StateKey::wantlist_wants_basic_information_labels_resource_url:
-		wantlist_.want_.back().basic_information_.label_.back().resource_url = string_t(value, length);
+		wantlist_.want_.back().basic_information_.labels.back().resource_url = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_labels;
 		break;
 	case StateKey::wantlist_wants_basic_information_labels_entity_type_name:
-		wantlist_.want_.back().basic_information_.label_.back().entity_type_name = string_t(value, length);
+		wantlist_.want_.back().basic_information_.labels.back().entity_type_name = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_labels;
 		break;
 	case StateKey::wantlist_wants_basic_information_formats_name:
-		wantlist_.want_.back().basic_information_.format_.back().name = string_t(value, length);
+		wantlist_.want_.back().basic_information_.formats.back().name = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_formats;
 		break;
 	case StateKey::wantlist_wants_basic_information_formats_qty:
-		wantlist_.want_.back().basic_information_.format_.back().qty = string_t(value, length);
+		wantlist_.want_.back().basic_information_.formats.back().qty = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_formats;
 		break;
 	case StateKey::wantlist_wants_basic_information_formats_text:
-		wantlist_.want_.back().basic_information_.format_.back().text = string_t(value, length);
+		wantlist_.want_.back().basic_information_.formats.back().text = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_formats;
 		break;
 	case StateKey::wantlist_wants_basic_information_formats_descriptions:
-		wantlist_.want_.back().basic_information_.format_.back().descriptions.emplace_back(value, length);
+		wantlist_.want_.back().basic_information_.formats.back().descriptions.emplace_back(value, length);
 		break;
 	case StateKey::wantlist_wants_basic_information_artists_join:
-		wantlist_.want_.back().basic_information_.artist_.back().join = string_t(value, length);
+		wantlist_.want_.back().basic_information_.artists.back().join = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_artists;
 		break;
 	case StateKey::wantlist_wants_basic_information_artists_name:
-		wantlist_.want_.back().basic_information_.artist_.back().name = string_t(value, length);
+		wantlist_.want_.back().basic_information_.artists.back().name = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_artists;
 		break;
 	case StateKey::wantlist_wants_basic_information_artists_anv:
-		wantlist_.want_.back().basic_information_.artist_.back().anv = string_t(value, length);
+		wantlist_.want_.back().basic_information_.artists.back().anv = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_artists;
 		break;
 	case StateKey::wantlist_wants_basic_information_artists_tracks:
-		wantlist_.want_.back().basic_information_.artist_.back().tracks = string_t(value, length);
+		wantlist_.want_.back().basic_information_.artists.back().tracks = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_artists;
 		break;
 	case StateKey::wantlist_wants_basic_information_artists_role:
-		wantlist_.want_.back().basic_information_.artist_.back().role = string_t(value, length);
+		wantlist_.want_.back().basic_information_.artists.back().role = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_artists;
 		break;
 	case StateKey::wantlist_wants_basic_information_artists_resource_url:
-		wantlist_.want_.back().basic_information_.artist_.back().resource_url = string_t(value, length);
+		wantlist_.want_.back().basic_information_.artists.back().resource_url = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_artists;
 		break;
 	case StateKey::wantlist_wants_basic_information_notes_value:
-		wantlist_.want_.back().basic_information_.notes_.back().value = string_t(value, length);
+		wantlist_.want_.back().basic_information_.notes.back().value = string_t(value, length);
 		m_state = StateKey::wantlist_wants_basic_information_notes;
 		break;
 	default:
@@ -281,6 +277,153 @@ bool state_parser::Double(double value)
 	switch(m_state){
 	default:
 		return false;
+	}
+	return true;
+}
+bool state_parser::Null()
+{
+	switch(m_state){
+		case StateKey::wantlist_pagination:
+			m_state = StateKey::wantlist;
+			break;
+		case StateKey::wantlist_pagination_per_page:
+			m_state = StateKey::wantlist_pagination;
+			break;
+		case StateKey::wantlist_pagination_items:
+			m_state = StateKey::wantlist_pagination;
+			break;
+		case StateKey::wantlist_pagination_page:
+			m_state = StateKey::wantlist_pagination;
+			break;
+		case StateKey::wantlist_pagination_pages:
+			m_state = StateKey::wantlist_pagination;
+			break;
+		case StateKey::wantlist_pagination_urls:
+			m_state = StateKey::wantlist_pagination;
+			break;
+		case StateKey::wantlist_pagination_urls_next:
+			m_state = StateKey::wantlist_pagination_urls;
+			break;
+		case StateKey::wantlist_pagination_urls_last:
+			m_state = StateKey::wantlist_pagination_urls;
+			break;
+		case StateKey::wantlist_pagination_urls_first:
+			m_state = StateKey::wantlist_pagination_urls;
+			break;
+		case StateKey::wantlist_pagination_urls_prev:
+			m_state = StateKey::wantlist_pagination_urls;
+			break;
+		case StateKey::wantlist_wants:
+			m_state = StateKey::wantlist;
+			break;
+		case StateKey::wantlist_wants_rating:
+			m_state = StateKey::wantlist_wants;
+			break;
+		case StateKey::wantlist_wants_id:
+			m_state = StateKey::wantlist_wants;
+			break;
+		case StateKey::wantlist_wants_resource_url:
+			m_state = StateKey::wantlist_wants;
+			break;
+		case StateKey::wantlist_wants_date_added:
+			m_state = StateKey::wantlist_wants;
+			break;
+		case StateKey::wantlist_wants_basic_information:
+			m_state = StateKey::wantlist_wants;
+			break;
+		case StateKey::wantlist_wants_basic_information_id:
+			m_state = StateKey::wantlist_wants_basic_information;
+			break;
+		case StateKey::wantlist_wants_basic_information_master_id:
+			m_state = StateKey::wantlist_wants_basic_information;
+			break;
+		case StateKey::wantlist_wants_basic_information_year:
+			m_state = StateKey::wantlist_wants_basic_information;
+			break;
+		case StateKey::wantlist_wants_basic_information_thumb:
+			m_state = StateKey::wantlist_wants_basic_information;
+			break;
+		case StateKey::wantlist_wants_basic_information_title:
+			m_state = StateKey::wantlist_wants_basic_information;
+			break;
+		case StateKey::wantlist_wants_basic_information_cover_image:
+			m_state = StateKey::wantlist_wants_basic_information;
+			break;
+		case StateKey::wantlist_wants_basic_information_resource_url:
+			m_state = StateKey::wantlist_wants_basic_information;
+			break;
+		case StateKey::wantlist_wants_basic_information_master_url:
+			m_state = StateKey::wantlist_wants_basic_information;
+			break;
+		case StateKey::wantlist_wants_basic_information_labels:
+			m_state = StateKey::wantlist_wants_basic_information;
+			break;
+		case StateKey::wantlist_wants_basic_information_labels_id:
+			m_state = StateKey::wantlist_wants_basic_information_labels;
+			break;
+		case StateKey::wantlist_wants_basic_information_labels_name:
+			m_state = StateKey::wantlist_wants_basic_information_labels;
+			break;
+		case StateKey::wantlist_wants_basic_information_labels_entity_type:
+			m_state = StateKey::wantlist_wants_basic_information_labels;
+			break;
+		case StateKey::wantlist_wants_basic_information_labels_catno:
+			m_state = StateKey::wantlist_wants_basic_information_labels;
+			break;
+		case StateKey::wantlist_wants_basic_information_labels_resource_url:
+			m_state = StateKey::wantlist_wants_basic_information_labels;
+			break;
+		case StateKey::wantlist_wants_basic_information_labels_entity_type_name:
+			m_state = StateKey::wantlist_wants_basic_information_labels;
+			break;
+		case StateKey::wantlist_wants_basic_information_formats:
+			m_state = StateKey::wantlist_wants_basic_information;
+			break;
+		case StateKey::wantlist_wants_basic_information_formats_name:
+			m_state = StateKey::wantlist_wants_basic_information_formats;
+			break;
+		case StateKey::wantlist_wants_basic_information_formats_qty:
+			m_state = StateKey::wantlist_wants_basic_information_formats;
+			break;
+		case StateKey::wantlist_wants_basic_information_formats_text:
+			m_state = StateKey::wantlist_wants_basic_information_formats;
+			break;
+		case StateKey::wantlist_wants_basic_information_formats_descriptions:
+			m_state = StateKey::wantlist_wants_basic_information_formats;
+			break;
+		case StateKey::wantlist_wants_basic_information_artists:
+			m_state = StateKey::wantlist_wants_basic_information;
+			break;
+		case StateKey::wantlist_wants_basic_information_artists_id:
+			m_state = StateKey::wantlist_wants_basic_information_artists;
+			break;
+		case StateKey::wantlist_wants_basic_information_artists_join:
+			m_state = StateKey::wantlist_wants_basic_information_artists;
+			break;
+		case StateKey::wantlist_wants_basic_information_artists_name:
+			m_state = StateKey::wantlist_wants_basic_information_artists;
+			break;
+		case StateKey::wantlist_wants_basic_information_artists_anv:
+			m_state = StateKey::wantlist_wants_basic_information_artists;
+			break;
+		case StateKey::wantlist_wants_basic_information_artists_tracks:
+			m_state = StateKey::wantlist_wants_basic_information_artists;
+			break;
+		case StateKey::wantlist_wants_basic_information_artists_role:
+			m_state = StateKey::wantlist_wants_basic_information_artists;
+			break;
+		case StateKey::wantlist_wants_basic_information_artists_resource_url:
+			m_state = StateKey::wantlist_wants_basic_information_artists;
+			break;
+		case StateKey::wantlist_wants_basic_information_notes:
+			m_state = StateKey::wantlist_wants_basic_information;
+			break;
+		case StateKey::wantlist_wants_basic_information_notes_field_id:
+			m_state = StateKey::wantlist_wants_basic_information_notes;
+			break;
+		case StateKey::wantlist_wants_basic_information_notes_value:
+			m_state = StateKey::wantlist_wants_basic_information_notes;
+			break;
 	}
 	return true;
 }
@@ -550,16 +693,16 @@ bool state_parser::StartObject()
 		wantlist_.want_.emplace_back();
 		break;
 	case StateKey::wantlist_wants_basic_information_labels:
-		wantlist_.want_.back().basic_information_.label_.emplace_back();
+		wantlist_.want_.back().basic_information_.labels.emplace_back();
 		break;
 	case StateKey::wantlist_wants_basic_information_formats:
-		wantlist_.want_.back().basic_information_.format_.emplace_back();
+		wantlist_.want_.back().basic_information_.formats.emplace_back();
 		break;
 	case StateKey::wantlist_wants_basic_information_artists:
-		wantlist_.want_.back().basic_information_.artist_.emplace_back();
+		wantlist_.want_.back().basic_information_.artists.emplace_back();
 		break;
 	case StateKey::wantlist_wants_basic_information_notes:
-		wantlist_.want_.back().basic_information_.notes_.emplace_back();
+		wantlist_.want_.back().basic_information_.notes.emplace_back();
 		break;
 	}
 	return true;

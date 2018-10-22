@@ -262,8 +262,8 @@ class basic_information {
 public:
 	basic_information():id(0),master_id(0),year(0){}
 	basic_information
-		(int id__, int master_id__, int year__, string_t &&thumb__, string_t &&title__, string_t &&cover_image__, string_t &&resource_url__, string_t &&master_url__, std::vector<label> &&label___, std::vector<format> &&format___, std::vector<artist> &&artist___, std::vector<note> &&notes___) noexcept
-		:id(id__), master_id(master_id__), year(year__), thumb(thumb__), title(title__), cover_image(cover_image__), resource_url(resource_url__), master_url(master_url__), label_(label___), format_(format___), artist_(artist___), notes_(notes___) {}
+		(int id__, int master_id__, int year__, string_t &&thumb__, string_t &&title__, string_t &&cover_image__, string_t &&resource_url__, string_t &&master_url__, std::vector<label> &&labels__, std::vector<format> &&formats__, std::vector<artist> &&artists__, std::vector<note> &&notes__) noexcept
+		:id(id__), master_id(master_id__), year(year__), thumb(thumb__), title(title__), cover_image(cover_image__), resource_url(resource_url__), master_url(master_url__), labels(labels__), formats(formats__), artists(artists__), notes(notes__) {}
 	~basic_information(){}
 	basic_information(const basic_information &rhs) = default;
 	basic_information(basic_information &&rhs) noexcept = default;
@@ -278,10 +278,10 @@ public:
 	string_t cover_image;
 	string_t resource_url;
 	string_t master_url;
-	std::vector<label> label_;
-	std::vector<format> format_;
-	std::vector<artist> artist_;
-	std::vector<note> notes_;
+	std::vector<label> labels;
+	std::vector<format> formats;
+	std::vector<artist> artists;
+	std::vector<note> notes;
 };
 
 

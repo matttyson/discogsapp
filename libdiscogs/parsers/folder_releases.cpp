@@ -1,11 +1,11 @@
 /* clang-format off */
 #include "folder_releases_parser.hpp"
-#include "porting.h"
-
 namespace discogs {
 namespace parser {
 namespace folder_release {
 
+
+#define STR(x) L ## x
 
 template <typename T>
 static inline int my_strcmp(const T *str1, const T *str2)
@@ -73,191 +73,31 @@ enum class StateKey {
 	folder_releases_releases_basic_information_notes_value,
 };
 
-bool super_parser::Null()
-{
-	switch (m_state) {
-	case StateKey::folder_releases_pagination:
-		m_state = StateKey::folder_releases;
-		break;
-	case StateKey::folder_releases_pagination_per_page:
-		m_state = StateKey::folder_releases_pagination;
-		break;
-	case StateKey::folder_releases_pagination_items:
-		m_state = StateKey::folder_releases_pagination;
-		break;
-	case StateKey::folder_releases_pagination_page:
-		m_state = StateKey::folder_releases_pagination;
-		break;
-	case StateKey::folder_releases_pagination_pages:
-		m_state = StateKey::folder_releases_pagination;
-		break;
-	case StateKey::folder_releases_pagination_urls:
-		m_state = StateKey::folder_releases_pagination;
-		break;
-	case StateKey::folder_releases_pagination_urls_next:
-		m_state = StateKey::folder_releases_pagination_urls;
-		break;
-	case StateKey::folder_releases_pagination_urls_last:
-		m_state = StateKey::folder_releases_pagination_urls;
-		break;
-	case StateKey::folder_releases_pagination_urls_first:
-		m_state = StateKey::folder_releases_pagination_urls;
-		break;
-	case StateKey::folder_releases_pagination_urls_prev:
-		m_state = StateKey::folder_releases_pagination_urls;
-		break;
-	case StateKey::folder_releases_releases:
-		m_state = StateKey::folder_releases;
-		break;
-	case StateKey::folder_releases_releases_id:
-		m_state = StateKey::folder_releases_releases;
-		break;
-	case StateKey::folder_releases_releases_instance_id:
-		m_state = StateKey::folder_releases_releases;
-		break;
-	case StateKey::folder_releases_releases_rating:
-		m_state = StateKey::folder_releases_releases;
-		break;
-	case StateKey::folder_releases_releases_folder_id:
-		m_state = StateKey::folder_releases_releases;
-		break;
-	case StateKey::folder_releases_releases_date_added:
-		m_state = StateKey::folder_releases_releases;
-		break;
-	case StateKey::folder_releases_releases_notes:
-		m_state = StateKey::folder_releases_releases;
-		break;
-	case StateKey::folder_releases_releases_notes_field_id:
-		m_state = StateKey::folder_releases_releases_notes;
-		break;
-	case StateKey::folder_releases_releases_notes_value:
-		m_state = StateKey::folder_releases_releases_notes;
-		break;
-	case StateKey::folder_releases_releases_basic_information:
-		m_state = StateKey::folder_releases_releases;
-		break;
-	case StateKey::folder_releases_releases_basic_information_id:
-		m_state = StateKey::folder_releases_releases_basic_information;
-		break;
-	case StateKey::folder_releases_releases_basic_information_master_id:
-		m_state = StateKey::folder_releases_releases_basic_information;
-		break;
-	case StateKey::folder_releases_releases_basic_information_year:
-		m_state = StateKey::folder_releases_releases_basic_information;
-		break;
-	case StateKey::folder_releases_releases_basic_information_thumb:
-		m_state = StateKey::folder_releases_releases_basic_information;
-		break;
-	case StateKey::folder_releases_releases_basic_information_title:
-		m_state = StateKey::folder_releases_releases_basic_information;
-		break;
-	case StateKey::folder_releases_releases_basic_information_cover_image:
-		m_state = StateKey::folder_releases_releases_basic_information;
-		break;
-	case StateKey::folder_releases_releases_basic_information_resource_url:
-		m_state = StateKey::folder_releases_releases_basic_information;
-		break;
-	case StateKey::folder_releases_releases_basic_information_master_url:
-		m_state = StateKey::folder_releases_releases_basic_information;
-		break;
-	case StateKey::folder_releases_releases_basic_information_labels:
-		m_state = StateKey::folder_releases_releases_basic_information;
-		break;
-	case StateKey::folder_releases_releases_basic_information_labels_id:
-		m_state = StateKey::folder_releases_releases_basic_information_labels;
-		break;
-	case StateKey::folder_releases_releases_basic_information_labels_name:
-		m_state = StateKey::folder_releases_releases_basic_information_labels;
-		break;
-	case StateKey::folder_releases_releases_basic_information_labels_entity_type:
-		m_state = StateKey::folder_releases_releases_basic_information_labels;
-		break;
-	case StateKey::folder_releases_releases_basic_information_labels_catno:
-		m_state = StateKey::folder_releases_releases_basic_information_labels;
-		break;
-	case StateKey::folder_releases_releases_basic_information_labels_resource_url:
-		m_state = StateKey::folder_releases_releases_basic_information_labels;
-		break;
-	case StateKey::folder_releases_releases_basic_information_labels_entity_type_name:
-		m_state = StateKey::folder_releases_releases_basic_information_labels;
-		break;
-	case StateKey::folder_releases_releases_basic_information_formats:
-		m_state = StateKey::folder_releases_releases_basic_information;
-		break;
-	case StateKey::folder_releases_releases_basic_information_formats_name:
-		m_state = StateKey::folder_releases_releases_basic_information_formats;
-		break;
-	case StateKey::folder_releases_releases_basic_information_formats_qty:
-		m_state = StateKey::folder_releases_releases_basic_information_formats;
-		break;
-	case StateKey::folder_releases_releases_basic_information_formats_text:
-		m_state = StateKey::folder_releases_releases_basic_information_formats;
-		break;
-	case StateKey::folder_releases_releases_basic_information_formats_descriptions:
-		m_state = StateKey::folder_releases_releases_basic_information_formats;
-		break;
-	case StateKey::folder_releases_releases_basic_information_artists:
-		m_state = StateKey::folder_releases_releases_basic_information;
-		break;
-	case StateKey::folder_releases_releases_basic_information_artists_id:
-		m_state = StateKey::folder_releases_releases_basic_information_artists;
-		break;
-	case StateKey::folder_releases_releases_basic_information_artists_join:
-		m_state = StateKey::folder_releases_releases_basic_information_artists;
-		break;
-	case StateKey::folder_releases_releases_basic_information_artists_name:
-		m_state = StateKey::folder_releases_releases_basic_information_artists;
-		break;
-	case StateKey::folder_releases_releases_basic_information_artists_anv:
-		m_state = StateKey::folder_releases_releases_basic_information_artists;
-		break;
-	case StateKey::folder_releases_releases_basic_information_artists_tracks:
-		m_state = StateKey::folder_releases_releases_basic_information_artists;
-		break;
-	case StateKey::folder_releases_releases_basic_information_artists_role:
-		m_state = StateKey::folder_releases_releases_basic_information_artists;
-		break;
-	case StateKey::folder_releases_releases_basic_information_artists_resource_url:
-		m_state = StateKey::folder_releases_releases_basic_information_artists;
-		break;
-	case StateKey::folder_releases_releases_basic_information_notes:
-		m_state = StateKey::folder_releases_releases_basic_information;
-		break;
-	case StateKey::folder_releases_releases_basic_information_notes_field_id:
-		m_state = StateKey::folder_releases_releases_basic_information_notes;
-		break;
-	case StateKey::folder_releases_releases_basic_information_notes_value:
-		m_state = StateKey::folder_releases_releases_basic_information_notes;
-		break;
-	}
-	return true;
-}
-
-bool super_parser::Int(int value)
+bool state_parser::Int(int value)
 {
     return Number((int)value);
 }
 
-bool super_parser::Uint(unsigned int value)
+bool state_parser::Uint(unsigned int value)
 {
     return Number((int)value);
 }
 
-bool super_parser::Int64(int64_t i)
+bool state_parser::Int64(int64_t i)
 {
     return false;
 }
 
-bool super_parser::Uint64(uint64_t i)
+bool state_parser::Uint64(uint64_t i)
 {
     return false;
 }
 
-bool super_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
+bool state_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
 {
 	return false;
 }
-bool super_parser::Number(int value)
+bool state_parser::Number(int value)
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination_per_page:
@@ -309,15 +149,15 @@ bool super_parser::Number(int value)
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_id:
-		folder_release.release_.back().basic_information_.label_.back().id = value;
+		folder_release.release_.back().basic_information_.labels.back().id = value;
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_id:
-		folder_release.release_.back().basic_information_.artist_.back().id = value;
+		folder_release.release_.back().basic_information_.artists.back().id = value;
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_notes_field_id:
-		folder_release.release_.back().basic_information_.notes_.back().field_id = value;
+		folder_release.release_.back().basic_information_.notes.back().field_id = value;
 		m_state = StateKey::folder_releases_releases_basic_information_notes;
 		break;
 	default:
@@ -325,7 +165,7 @@ bool super_parser::Number(int value)
 	}
 	return true;
 }
-bool super_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
+bool state_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination_urls_next:
@@ -373,66 +213,66 @@ bool super_parser::String(const Ch* value, rapidjson::SizeType length, bool copy
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_name:
-		folder_release.release_.back().basic_information_.label_.back().name = string_t(value, length);
+		folder_release.release_.back().basic_information_.labels.back().name = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_entity_type:
-		folder_release.release_.back().basic_information_.label_.back().entity_type = string_t(value, length);
+		folder_release.release_.back().basic_information_.labels.back().entity_type = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_catno:
-		folder_release.release_.back().basic_information_.label_.back().catno = string_t(value, length);
+		folder_release.release_.back().basic_information_.labels.back().catno = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_resource_url:
-		folder_release.release_.back().basic_information_.label_.back().resource_url = string_t(value, length);
+		folder_release.release_.back().basic_information_.labels.back().resource_url = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_entity_type_name:
-		folder_release.release_.back().basic_information_.label_.back().entity_type_name = string_t(value, length);
+		folder_release.release_.back().basic_information_.labels.back().entity_type_name = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats_name:
-		folder_release.release_.back().basic_information_.format_.back().name = string_t(value, length);
+		folder_release.release_.back().basic_information_.formats.back().name = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_formats;
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats_qty:
-		folder_release.release_.back().basic_information_.format_.back().qty = string_t(value, length);
+		folder_release.release_.back().basic_information_.formats.back().qty = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_formats;
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats_text:
-		folder_release.release_.back().basic_information_.format_.back().text = string_t(value, length);
+		folder_release.release_.back().basic_information_.formats.back().text = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_formats;
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats_descriptions:
-		folder_release.release_.back().basic_information_.format_.back().descriptions.emplace_back(value, length);
+		folder_release.release_.back().basic_information_.formats.back().descriptions.emplace_back(value, length);
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_join:
-		folder_release.release_.back().basic_information_.artist_.back().join = string_t(value, length);
+		folder_release.release_.back().basic_information_.artists.back().join = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_name:
-		folder_release.release_.back().basic_information_.artist_.back().name = string_t(value, length);
+		folder_release.release_.back().basic_information_.artists.back().name = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_anv:
-		folder_release.release_.back().basic_information_.artist_.back().anv = string_t(value, length);
+		folder_release.release_.back().basic_information_.artists.back().anv = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_tracks:
-		folder_release.release_.back().basic_information_.artist_.back().tracks = string_t(value, length);
+		folder_release.release_.back().basic_information_.artists.back().tracks = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_role:
-		folder_release.release_.back().basic_information_.artist_.back().role = string_t(value, length);
+		folder_release.release_.back().basic_information_.artists.back().role = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_resource_url:
-		folder_release.release_.back().basic_information_.artist_.back().resource_url = string_t(value, length);
+		folder_release.release_.back().basic_information_.artists.back().resource_url = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_notes_value:
-		folder_release.release_.back().basic_information_.notes_.back().value = string_t(value, length);
+		folder_release.release_.back().basic_information_.notes.back().value = string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_notes;
 		break;
 	default:
@@ -440,7 +280,7 @@ bool super_parser::String(const Ch* value, rapidjson::SizeType length, bool copy
 	}
 	return true;
 }
-bool super_parser::Bool(bool value)
+bool state_parser::Bool(bool value)
 {
 	switch(m_state){
 	default:
@@ -448,7 +288,7 @@ bool super_parser::Bool(bool value)
 	}
 	return true;
 }
-bool super_parser::Double(double value)
+bool state_parser::Double(double value)
 {
 	switch(m_state){
 	default:
@@ -456,7 +296,166 @@ bool super_parser::Double(double value)
 	}
 	return true;
 }
-bool super_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
+bool state_parser::Null()
+{
+	switch(m_state){
+		case StateKey::folder_releases_pagination:
+			m_state = StateKey::folder_releases;
+			break;
+		case StateKey::folder_releases_pagination_per_page:
+			m_state = StateKey::folder_releases_pagination;
+			break;
+		case StateKey::folder_releases_pagination_items:
+			m_state = StateKey::folder_releases_pagination;
+			break;
+		case StateKey::folder_releases_pagination_page:
+			m_state = StateKey::folder_releases_pagination;
+			break;
+		case StateKey::folder_releases_pagination_pages:
+			m_state = StateKey::folder_releases_pagination;
+			break;
+		case StateKey::folder_releases_pagination_urls:
+			m_state = StateKey::folder_releases_pagination;
+			break;
+		case StateKey::folder_releases_pagination_urls_next:
+			m_state = StateKey::folder_releases_pagination_urls;
+			break;
+		case StateKey::folder_releases_pagination_urls_last:
+			m_state = StateKey::folder_releases_pagination_urls;
+			break;
+		case StateKey::folder_releases_pagination_urls_first:
+			m_state = StateKey::folder_releases_pagination_urls;
+			break;
+		case StateKey::folder_releases_pagination_urls_prev:
+			m_state = StateKey::folder_releases_pagination_urls;
+			break;
+		case StateKey::folder_releases_releases:
+			m_state = StateKey::folder_releases;
+			break;
+		case StateKey::folder_releases_releases_id:
+			m_state = StateKey::folder_releases_releases;
+			break;
+		case StateKey::folder_releases_releases_instance_id:
+			m_state = StateKey::folder_releases_releases;
+			break;
+		case StateKey::folder_releases_releases_rating:
+			m_state = StateKey::folder_releases_releases;
+			break;
+		case StateKey::folder_releases_releases_folder_id:
+			m_state = StateKey::folder_releases_releases;
+			break;
+		case StateKey::folder_releases_releases_date_added:
+			m_state = StateKey::folder_releases_releases;
+			break;
+		case StateKey::folder_releases_releases_notes:
+			m_state = StateKey::folder_releases_releases;
+			break;
+		case StateKey::folder_releases_releases_notes_field_id:
+			m_state = StateKey::folder_releases_releases_notes;
+			break;
+		case StateKey::folder_releases_releases_notes_value:
+			m_state = StateKey::folder_releases_releases_notes;
+			break;
+		case StateKey::folder_releases_releases_basic_information:
+			m_state = StateKey::folder_releases_releases;
+			break;
+		case StateKey::folder_releases_releases_basic_information_id:
+			m_state = StateKey::folder_releases_releases_basic_information;
+			break;
+		case StateKey::folder_releases_releases_basic_information_master_id:
+			m_state = StateKey::folder_releases_releases_basic_information;
+			break;
+		case StateKey::folder_releases_releases_basic_information_year:
+			m_state = StateKey::folder_releases_releases_basic_information;
+			break;
+		case StateKey::folder_releases_releases_basic_information_thumb:
+			m_state = StateKey::folder_releases_releases_basic_information;
+			break;
+		case StateKey::folder_releases_releases_basic_information_title:
+			m_state = StateKey::folder_releases_releases_basic_information;
+			break;
+		case StateKey::folder_releases_releases_basic_information_cover_image:
+			m_state = StateKey::folder_releases_releases_basic_information;
+			break;
+		case StateKey::folder_releases_releases_basic_information_resource_url:
+			m_state = StateKey::folder_releases_releases_basic_information;
+			break;
+		case StateKey::folder_releases_releases_basic_information_master_url:
+			m_state = StateKey::folder_releases_releases_basic_information;
+			break;
+		case StateKey::folder_releases_releases_basic_information_labels:
+			m_state = StateKey::folder_releases_releases_basic_information;
+			break;
+		case StateKey::folder_releases_releases_basic_information_labels_id:
+			m_state = StateKey::folder_releases_releases_basic_information_labels;
+			break;
+		case StateKey::folder_releases_releases_basic_information_labels_name:
+			m_state = StateKey::folder_releases_releases_basic_information_labels;
+			break;
+		case StateKey::folder_releases_releases_basic_information_labels_entity_type:
+			m_state = StateKey::folder_releases_releases_basic_information_labels;
+			break;
+		case StateKey::folder_releases_releases_basic_information_labels_catno:
+			m_state = StateKey::folder_releases_releases_basic_information_labels;
+			break;
+		case StateKey::folder_releases_releases_basic_information_labels_resource_url:
+			m_state = StateKey::folder_releases_releases_basic_information_labels;
+			break;
+		case StateKey::folder_releases_releases_basic_information_labels_entity_type_name:
+			m_state = StateKey::folder_releases_releases_basic_information_labels;
+			break;
+		case StateKey::folder_releases_releases_basic_information_formats:
+			m_state = StateKey::folder_releases_releases_basic_information;
+			break;
+		case StateKey::folder_releases_releases_basic_information_formats_name:
+			m_state = StateKey::folder_releases_releases_basic_information_formats;
+			break;
+		case StateKey::folder_releases_releases_basic_information_formats_qty:
+			m_state = StateKey::folder_releases_releases_basic_information_formats;
+			break;
+		case StateKey::folder_releases_releases_basic_information_formats_text:
+			m_state = StateKey::folder_releases_releases_basic_information_formats;
+			break;
+		case StateKey::folder_releases_releases_basic_information_formats_descriptions:
+			m_state = StateKey::folder_releases_releases_basic_information_formats;
+			break;
+		case StateKey::folder_releases_releases_basic_information_artists:
+			m_state = StateKey::folder_releases_releases_basic_information;
+			break;
+		case StateKey::folder_releases_releases_basic_information_artists_id:
+			m_state = StateKey::folder_releases_releases_basic_information_artists;
+			break;
+		case StateKey::folder_releases_releases_basic_information_artists_join:
+			m_state = StateKey::folder_releases_releases_basic_information_artists;
+			break;
+		case StateKey::folder_releases_releases_basic_information_artists_name:
+			m_state = StateKey::folder_releases_releases_basic_information_artists;
+			break;
+		case StateKey::folder_releases_releases_basic_information_artists_anv:
+			m_state = StateKey::folder_releases_releases_basic_information_artists;
+			break;
+		case StateKey::folder_releases_releases_basic_information_artists_tracks:
+			m_state = StateKey::folder_releases_releases_basic_information_artists;
+			break;
+		case StateKey::folder_releases_releases_basic_information_artists_role:
+			m_state = StateKey::folder_releases_releases_basic_information_artists;
+			break;
+		case StateKey::folder_releases_releases_basic_information_artists_resource_url:
+			m_state = StateKey::folder_releases_releases_basic_information_artists;
+			break;
+		case StateKey::folder_releases_releases_basic_information_notes:
+			m_state = StateKey::folder_releases_releases_basic_information;
+			break;
+		case StateKey::folder_releases_releases_basic_information_notes_field_id:
+			m_state = StateKey::folder_releases_releases_basic_information_notes;
+			break;
+		case StateKey::folder_releases_releases_basic_information_notes_value:
+			m_state = StateKey::folder_releases_releases_basic_information_notes;
+			break;
+	}
+	return true;
+}
+bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination_urls:
@@ -706,11 +705,11 @@ bool super_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 	}
 	return true;
 }
-bool super_parser::StartArray()
+bool state_parser::StartArray()
 {
 	return true;
 }
-bool super_parser::EndArray(rapidjson::SizeType memberCount)
+bool state_parser::EndArray(rapidjson::SizeType memberCount)
 {
 	switch(m_state){
 	case StateKey::folder_releases_releases:
@@ -734,13 +733,11 @@ bool super_parser::EndArray(rapidjson::SizeType memberCount)
 	case StateKey::folder_releases_releases_basic_information_notes:
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
-	default:
-		return false;
 	}
 	return true;
 }
 
-bool super_parser::StartObject()
+bool state_parser::StartObject()
 {
 	switch(m_state){
 	case StateKey::folder_releases_releases:
@@ -750,22 +747,22 @@ bool super_parser::StartObject()
 		folder_release.release_.back().notes.emplace_back();
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels:
-		folder_release.release_.back().basic_information_.label_.emplace_back();
+		folder_release.release_.back().basic_information_.labels.emplace_back();
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats:
-		folder_release.release_.back().basic_information_.format_.emplace_back();
+		folder_release.release_.back().basic_information_.formats.emplace_back();
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists:
-		folder_release.release_.back().basic_information_.artist_.emplace_back();
+		folder_release.release_.back().basic_information_.artists.emplace_back();
 		break;
 	case StateKey::folder_releases_releases_basic_information_notes:
-		folder_release.release_.back().basic_information_.notes_.emplace_back();
+		folder_release.release_.back().basic_information_.notes.emplace_back();
 		break;
 	}
 	return true;
 }
 
-bool super_parser::EndObject(rapidjson::SizeType memberCount)
+bool state_parser::EndObject(rapidjson::SizeType memberCount)
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination:
@@ -781,7 +778,7 @@ bool super_parser::EndObject(rapidjson::SizeType memberCount)
 	return true;
 }
 
-super_parser::super_parser()
+state_parser::state_parser()
 {
 	m_state = StateKey::folder_releases;
 }

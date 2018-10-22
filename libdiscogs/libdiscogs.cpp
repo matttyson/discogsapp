@@ -197,7 +197,7 @@ discogs::rest::wantlist(
 			pplx::task<discogs::parser::wantlist::wantlist>
 	{
 		return pplx::task_from_result(
-			wantlist::wantlist(
+			parser::wantlist::wantlist(
 				std::move(p->wantlist_.pages),
 				std::move(p->wantlist_.want_)
 			)
@@ -233,14 +233,14 @@ discogs::rest::folder_releases(
 
 	auto z = m_client.request(request);
 	return z.then(do_basic_get)
-			.then(do_basic_parse<parser::folder_release::super_parser>)
-			.then([](std::shared_ptr<parser::folder_release::super_parser> p) ->
+			.then(do_basic_parse<parser::folder_release::state_parser>)
+			.then([](std::shared_ptr<parser::folder_release::state_parser> p) ->
 				pplx::task<parser::folder_release::folder_releases>
 	{
 		return pplx::task_from_result(
 			parser::folder_release::folder_releases(
-				std::move(p->folder_release.release_),
-				std::move(p->folder_release.pages)
+				std::move(p->folder_release.pages),
+				std::move(p->folder_release.release_)
 			)
 		);
 	});

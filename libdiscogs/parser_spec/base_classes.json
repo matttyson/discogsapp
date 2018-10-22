@@ -338,25 +338,25 @@
                 {
                     "json_name": "labels",
                     "data_type": "label",
-                    "impl_name": "label_",
+                    "impl_name": "labels",
                     "array": true
                 },
                 {
                     "json_name": "formats",
                     "data_type": "format",
-                    "impl_name": "format_",
+                    "impl_name": "formats",
                     "array": true
                 },
                 {
                     "json_name": "artists",
                     "data_type": "artist",
-                    "impl_name": "artist_",
+                    "impl_name": "artists",
                     "array": true
                 },
                 {
                     "json_name": "notes",
                     "data_type": "note",
-                    "impl_name": "notes_",
+                    "impl_name": "notes",
                     "array": true
                 }
             ]

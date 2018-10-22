@@ -5,6 +5,7 @@
 
 #include "folder_releases.hpp"
 
+
 #include "parser_common.hpp"
 
 namespace discogs {
@@ -13,9 +14,9 @@ namespace folder_release {
 
 enum class StateKey;
 
-class super_parser : public rapidjson::BaseReaderHandler<rjs_UTF_t, super_parser> {
+class state_parser : public rapidjson::BaseReaderHandler<rjs_UTF_t, state_parser> {
 public:
-	super_parser();
+	state_parser();
 	bool Null();
 	bool Bool(bool b);
 	bool Int(int value);
@@ -31,8 +32,8 @@ public:
 	bool EndArray(rapidjson::SizeType elementCount);
 	bool RawNumber(const Ch * str, rapidjson::SizeType length, bool copy);
 public:
-	bool Number(int value);
-	StateKey m_state;
+    bool Number(int value);
+    StateKey m_state;
 	folder_releases folder_release;
 };
 

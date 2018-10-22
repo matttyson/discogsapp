@@ -3,19 +3,20 @@
 #include <rapidjson/rapidjson.h>
 #include <rapidjson/reader.h>
 
-#include "collection.hpp"
+#include "release.hpp"
+
 
 #include "parser_common.hpp"
 
 namespace discogs {
 namespace parser {
-namespace collection {
+namespace release {
 
 enum class StateKey;
 
-class super_parser : public rapidjson::BaseReaderHandler<rjs_UTF_t, super_parser> {
+class state_parser : public rapidjson::BaseReaderHandler<rjs_UTF_t, state_parser> {
 public:
-	super_parser();
+	state_parser();
 	bool Null();
 	bool Bool(bool b);
 	bool Int(int value);
@@ -31,11 +32,11 @@ public:
 	bool EndArray(rapidjson::SizeType elementCount);
 	bool RawNumber(const Ch * str, rapidjson::SizeType length, bool copy);
 public:
-	bool Number(int value);
-	StateKey m_state;
-	folder folders;
+    bool Number(int value);
+    StateKey m_state;
+	release release_;
 };
 
 } // namespace discogs
 } // namespace parser
-} // namespace collection
+} // namespace release

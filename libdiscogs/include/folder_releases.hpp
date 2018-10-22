@@ -14,6 +14,9 @@ namespace folder_release {
 class release {
 public:
 	release():id(0),instance_id(0),rating(0),folder_id(0){}
+	release
+		(int id__, int instance_id__, int rating__, int folder_id__, string_t &&date_added__, std::vector<common::note> &&notes__, common::basic_information &&basic_information___) noexcept
+		:id(id__), instance_id(instance_id__), rating(rating__), folder_id(folder_id__), date_added(date_added__), notes(notes__), basic_information_(basic_information___) {}
 	~release(){}
 	release(const release &rhs) = default;
 	release(release &&rhs) noexcept = default;
@@ -33,9 +36,9 @@ public:
 class folder_releases {
 public:
 	folder_releases(){}
-	folder_releases(std::vector<release> &&release__, paginate::pagination &&pages__) noexcept
-		:release_(release__), pages(pages__)
-	{}
+	folder_releases
+		(paginate::pagination &&pages__, std::vector<release> &&release___) noexcept
+		:pages(pages__), release_(release___) {}
 	~folder_releases(){}
 	folder_releases(const folder_releases &rhs) = default;
 	folder_releases(folder_releases &&rhs) noexcept = default;
