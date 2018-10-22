@@ -1,5 +1,5 @@
 /* clang-format off */
-#include "../private_include/wantlist_parser.hpp"
+#include "wantlist_parser.hpp"
 #include "porting.h"
 
 namespace discogs {

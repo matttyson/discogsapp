@@ -1,5 +1,5 @@
 /* clang-format off */
-#include "../private_include/folder_releases_parser.hpp"
+#include "folder_releases_parser.hpp"
 #include "porting.h"
 
 namespace discogs {

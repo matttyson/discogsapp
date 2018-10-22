@@ -3,9 +3,9 @@
 #include "libdiscogs.hpp"
 
 #include "include/folder_releases.hpp"
-#include "private_include/folder_releases_parser.hpp"
+#include "parsers/folder_releases_parser.hpp"
 #include "include/wantlist.hpp"
-#include "private_include/wantlist_parser.hpp"
+#include "parsers/wantlist_parser.hpp"
 
 #include <cpprest/http_client.h>
 #include <cpprest/http_msg.h>

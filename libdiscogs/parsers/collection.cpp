@@ -1,5 +1,5 @@
 /* clang-format off */
-#include "../private_include/collection_parser.hpp"
+#include "collection_parser.hpp"
 #include "porting.h"
 
 namespace discogs {
