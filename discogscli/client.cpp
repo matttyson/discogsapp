@@ -295,8 +295,11 @@ void client::release_print()
 	dcout << STR("Tracks: ") << dendl;
 	for(const auto &t: release.tracklist){
 		dcout << STR("  ") << t.position
-			<< STR(" - ") << t.title
-			<< STR(" [") << t.duration << STR(']') << dendl;
+			<< STR(" - ") << t.title;
+		if(t.duration.length() > 0){
+			dcout << STR(" [") << t.duration << STR(']');
+		}
+		dcout << dendl;
 	}
 }
 
