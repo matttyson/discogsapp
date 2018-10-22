@@ -60,7 +60,7 @@ static bool has_more_pages(const discogs::parser::paginate::pagination &p)
 
 void client::folder_list()
 {
-	std::vector<discogs::parser::folder_release::release> releases;
+	std::vector<discogs::parser::folder_release_item> releases;
 
 	bool keep_going = false;
 	int page_id = 1;
@@ -93,8 +93,8 @@ void client::folder_list()
 	} while (keep_going);
 
 	std::sort(releases.begin(), releases.end(), [](
-			const discogs::parser::folder_release::release &lhs,
-			const discogs::parser::folder_release::release &rhs) -> bool
+			const discogs::parser::folder_release_item &lhs,
+			const discogs::parser::folder_release_item &rhs) -> bool
 	{
 		return lhs.basic_information_.title < rhs.basic_information_.title;
 	});

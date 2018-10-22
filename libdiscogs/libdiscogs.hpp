@@ -31,11 +31,11 @@ public:
 	release(int release_id);
 
 	// COLLECTION
-	pplx::task<discogs::parser::collection::folder_list>
+	pplx::task<discogs::parser::folder_list>
 	collection(const string_t &username);
 
 	// COLLECTION ITEMS BY FOLDER
-	pplx::task<discogs::parser::folder_release::folder_releases>
+	pplx::task<discogs::parser::folder_releases>
 	folder_releases(
 		const string_t &username,
 		const string_t &folder_id,
@@ -43,7 +43,7 @@ public:
 	);
 
 	// Get Wantlist
-	pplx::task<discogs::parser::wantlist::wantlist>
+	pplx::task<discogs::parser::wantlist>
 	wantlist(
 		const string_t &username,
 		int page_id = 1

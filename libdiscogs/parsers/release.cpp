@@ -125,31 +125,31 @@ enum class StateKey {
 	release_identifiers_description,
 };
 
-bool state_parser::Int(int value)
+bool release_parser::Int(int value)
 {
     return Number((int)value);
 }
 
-bool state_parser::Uint(unsigned int value)
+bool release_parser::Uint(unsigned int value)
 {
     return Number((int)value);
 }
 
-bool state_parser::Int64(int64_t i)
+bool release_parser::Int64(int64_t i)
 {
     return false;
 }
 
-bool state_parser::Uint64(uint64_t i)
+bool release_parser::Uint64(uint64_t i)
 {
     return false;
 }
 
-bool state_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
+bool release_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
 {
 	return false;
 }
-bool state_parser::Number(int value)
+bool release_parser::Number(int value)
 {
 	switch(m_state){
 	case StateKey::release_year:
@@ -233,7 +233,7 @@ bool state_parser::Number(int value)
 	}
 	return true;
 }
-bool state_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
+bool release_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::release_artists_sort:
@@ -554,7 +554,7 @@ bool state_parser::String(const Ch* value, rapidjson::SizeType length, bool copy
 	}
 	return true;
 }
-bool state_parser::Bool(bool value)
+bool release_parser::Bool(bool value)
 {
 	switch(m_state){
 	case StateKey::release_videos_embed:
@@ -566,7 +566,7 @@ bool state_parser::Bool(bool value)
 	}
 	return true;
 }
-bool state_parser::Double(double value)
+bool release_parser::Double(double value)
 {
 	switch(m_state){
 	case StateKey::release_lowest_price:
@@ -582,7 +582,7 @@ bool state_parser::Double(double value)
 	}
 	return true;
 }
-bool state_parser::Null()
+bool release_parser::Null()
 {
 	switch(m_state){
 		case StateKey::release_year:
@@ -939,7 +939,7 @@ bool state_parser::Null()
 	}
 	return true;
 }
-bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
+bool release_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::release_community_submitter:
@@ -1481,11 +1481,11 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 	}
 	return true;
 }
-bool state_parser::StartArray()
+bool release_parser::StartArray()
 {
 	return true;
 }
-bool state_parser::EndArray(rapidjson::SizeType memberCount)
+bool release_parser::EndArray(rapidjson::SizeType memberCount)
 {
 	switch(m_state){
 	case StateKey::release_community_contributors:
@@ -1540,7 +1540,7 @@ bool state_parser::EndArray(rapidjson::SizeType memberCount)
 	return true;
 }
 
-bool state_parser::StartObject()
+bool release_parser::StartObject()
 {
 	switch(m_state){
 	case StateKey::release_community_contributors:
@@ -1586,7 +1586,7 @@ bool state_parser::StartObject()
 	return true;
 }
 
-bool state_parser::EndObject(rapidjson::SizeType memberCount)
+bool release_parser::EndObject(rapidjson::SizeType memberCount)
 {
 	switch(m_state){
 	case StateKey::release_community:
@@ -1602,7 +1602,7 @@ bool state_parser::EndObject(rapidjson::SizeType memberCount)
 	return true;
 }
 
-state_parser::state_parser()
+release_parser::release_parser()
 {
 	m_state = StateKey::release;
 }

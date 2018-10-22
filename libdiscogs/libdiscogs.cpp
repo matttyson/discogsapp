@@ -152,8 +152,8 @@ discogs::rest::release(int release_id)
 	auto response = m_client.request(request);
 
 	return response.then(do_basic_get)
-		.then(do_basic_parse<discogs::parser::state_parser>)
-		.then([](pplx::task<std::shared_ptr<discogs::parser::state_parser>> task_p) ->
+		.then(do_basic_parse<discogs::parser::release_parser>)
+		.then([](pplx::task<std::shared_ptr<discogs::parser::release_parser>> task_p) ->
 			pplx::task<discogs::parser::release>
 	{
 		auto p = task_p.get();
@@ -164,7 +164,7 @@ discogs::rest::release(int release_id)
 }
 
 
-pplx::task<discogs::parser::collection::folder_list>
+pplx::task<discogs::parser::folder_list>
 discogs::rest::collection(const string_t & username)
 {
 	uri_builder builder;
@@ -179,13 +179,13 @@ discogs::rest::collection(const string_t & username)
 	auto response = m_client.request(request);
 
 	return response.then(do_basic_get)
-		.then(do_basic_parse<collection::state_parser>)
-		.then([](pplx::task<std::shared_ptr<collection::state_parser>> task_p) ->
-			pplx::task<discogs::parser::collection::folder_list>
+		.then(do_basic_parse<parser::collection_parser>)
+		.then([](pplx::task<std::shared_ptr<parser::collection_parser>> task_p) ->
+			pplx::task<discogs::parser::folder_list>
 	{
 		auto p = task_p.get();
 		return pplx::task_from_result(
-			collection::folder_list(
+			parser::folder_list(
 				std::move(p->folder_list_.folders)
 			)
 		);
@@ -194,7 +194,7 @@ discogs::rest::collection(const string_t & username)
 
 
 
-pplx::task<discogs::parser::wantlist::wantlist>
+pplx::task<discogs::parser::wantlist>
 discogs::rest::wantlist(
 	const string_t &username,
 	int page_id
@@ -219,12 +219,12 @@ discogs::rest::wantlist(
 	auto response = m_client.request(request);
 
 	return response.then(do_basic_get)
-		.then(do_basic_parse<discogs::parser::wantlist::state_parser>)
-		.then([](std::shared_ptr<discogs::parser::wantlist::state_parser> p) ->
-			pplx::task<discogs::parser::wantlist::wantlist>
+		.then(do_basic_parse<discogs::parser::wantlist_parser>)
+		.then([](std::shared_ptr<discogs::parser::wantlist_parser> p) ->
+			pplx::task<discogs::parser::wantlist>
 	{
 		return pplx::task_from_result(
-			parser::wantlist::wantlist(
+			parser::wantlist(
 				std::move(p->wantlist_.pages),
 				std::move(p->wantlist_.want_)
 			)
@@ -234,7 +234,7 @@ discogs::rest::wantlist(
 
 
 
-pplx::task<discogs::parser::folder_release::folder_releases>
+pplx::task<discogs::parser::folder_releases>
 discogs::rest::folder_releases(
 	const string_t & username,
 	const string_t &folder_id,
@@ -260,12 +260,12 @@ discogs::rest::folder_releases(
 
 	auto z = m_client.request(request);
 	return z.then(do_basic_get)
-			.then(do_basic_parse<parser::folder_release::state_parser>)
-			.then([](std::shared_ptr<parser::folder_release::state_parser> p) ->
-				pplx::task<parser::folder_release::folder_releases>
+			.then(do_basic_parse<parser::folder_releases_parser>)
+			.then([](std::shared_ptr<parser::folder_releases_parser> p) ->
+				pplx::task<parser::folder_releases>
 	{
 		return pplx::task_from_result(
-			parser::folder_release::folder_releases(
+			parser::folder_releases(
 				std::move(p->folder_release.pages),
 				std::move(p->folder_release.release_)
 			)

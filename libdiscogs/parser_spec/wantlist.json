@@ -1,9 +1,9 @@
 {
     "namespace": [
         "discogs",
-        "parser",
-        "wantlist"
+        "parser"
     ],
+    "parser_classname": "wantlist_parser",
     "filename": "wantlist",
     "link": "https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-wantlist",
     "description": "The Wantlist resource allows you to view and manage a user's wantlist.",

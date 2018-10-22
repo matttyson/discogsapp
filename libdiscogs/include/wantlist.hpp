@@ -9,7 +9,6 @@
 
 namespace discogs {
 namespace parser {
-namespace wantlist {
 
 class wantlist {
 public:
@@ -29,4 +28,3 @@ public:
 
 } // namespace discogs
 } // namespace parser
-} // namespace wantlist

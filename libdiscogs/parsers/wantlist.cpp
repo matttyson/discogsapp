@@ -3,7 +3,6 @@
 #include "porting.h"
 namespace discogs {
 namespace parser {
-namespace wantlist {
 
 enum class StateKey {
 	wantlist,
@@ -56,31 +55,31 @@ enum class StateKey {
 	wantlist_wants_basic_information_notes_value,
 };
 
-bool state_parser::Int(int value)
+bool wantlist_parser::Int(int value)
 {
     return Number((int)value);
 }
 
-bool state_parser::Uint(unsigned int value)
+bool wantlist_parser::Uint(unsigned int value)
 {
     return Number((int)value);
 }
 
-bool state_parser::Int64(int64_t i)
+bool wantlist_parser::Int64(int64_t i)
 {
     return false;
 }
 
-bool state_parser::Uint64(uint64_t i)
+bool wantlist_parser::Uint64(uint64_t i)
 {
     return false;
 }
 
-bool state_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
+bool wantlist_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
 {
 	return false;
 }
-bool state_parser::Number(int value)
+bool wantlist_parser::Number(int value)
 {
 	switch(m_state){
 	case StateKey::wantlist_pagination_per_page:
@@ -136,7 +135,7 @@ bool state_parser::Number(int value)
 	}
 	return true;
 }
-bool state_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
+bool wantlist_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::wantlist_pagination_urls_next:
@@ -251,7 +250,7 @@ bool state_parser::String(const Ch* value, rapidjson::SizeType length, bool copy
 	}
 	return true;
 }
-bool state_parser::Bool(bool value)
+bool wantlist_parser::Bool(bool value)
 {
 	switch(m_state){
 	default:
@@ -259,7 +258,7 @@ bool state_parser::Bool(bool value)
 	}
 	return true;
 }
-bool state_parser::Double(double value)
+bool wantlist_parser::Double(double value)
 {
 	switch(m_state){
 	default:
@@ -267,7 +266,7 @@ bool state_parser::Double(double value)
 	}
 	return true;
 }
-bool state_parser::Null()
+bool wantlist_parser::Null()
 {
 	switch(m_state){
 		case StateKey::wantlist_pagination:
@@ -414,7 +413,7 @@ bool state_parser::Null()
 	}
 	return true;
 }
-bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
+bool wantlist_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::wantlist_pagination_urls:
@@ -644,11 +643,11 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 	}
 	return true;
 }
-bool state_parser::StartArray()
+bool wantlist_parser::StartArray()
 {
 	return true;
 }
-bool state_parser::EndArray(rapidjson::SizeType memberCount)
+bool wantlist_parser::EndArray(rapidjson::SizeType memberCount)
 {
 	switch(m_state){
 	case StateKey::wantlist_wants:
@@ -673,7 +672,7 @@ bool state_parser::EndArray(rapidjson::SizeType memberCount)
 	return true;
 }
 
-bool state_parser::StartObject()
+bool wantlist_parser::StartObject()
 {
 	switch(m_state){
 	case StateKey::wantlist_wants:
@@ -695,7 +694,7 @@ bool state_parser::StartObject()
 	return true;
 }
 
-bool state_parser::EndObject(rapidjson::SizeType memberCount)
+bool wantlist_parser::EndObject(rapidjson::SizeType memberCount)
 {
 	switch(m_state){
 	case StateKey::wantlist_pagination:
@@ -711,11 +710,10 @@ bool state_parser::EndObject(rapidjson::SizeType memberCount)
 	return true;
 }
 
-state_parser::state_parser()
+wantlist_parser::wantlist_parser()
 {
 	m_state = StateKey::wantlist;
 }
 
 } // namespace discogs
 } // namespace parser
-} // namespace wantlist

@@ -3,7 +3,6 @@
 #include "porting.h"
 namespace discogs {
 namespace parser {
-namespace collection {
 
 enum class StateKey {
 	folder_list,
@@ -14,31 +13,31 @@ enum class StateKey {
 	folder_list_folders_name,
 };
 
-bool state_parser::Int(int value)
+bool collection_parser::Int(int value)
 {
     return Number((int)value);
 }
 
-bool state_parser::Uint(unsigned int value)
+bool collection_parser::Uint(unsigned int value)
 {
     return Number((int)value);
 }
 
-bool state_parser::Int64(int64_t i)
+bool collection_parser::Int64(int64_t i)
 {
     return false;
 }
 
-bool state_parser::Uint64(uint64_t i)
+bool collection_parser::Uint64(uint64_t i)
 {
     return false;
 }
 
-bool state_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
+bool collection_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
 {
 	return false;
 }
-bool state_parser::Number(int value)
+bool collection_parser::Number(int value)
 {
 	switch(m_state){
 	case StateKey::folder_list_folders_id:
@@ -54,7 +53,7 @@ bool state_parser::Number(int value)
 	}
 	return true;
 }
-bool state_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
+bool collection_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::folder_list_folders_resource_url:
@@ -70,7 +69,7 @@ bool state_parser::String(const Ch* value, rapidjson::SizeType length, bool copy
 	}
 	return true;
 }
-bool state_parser::Bool(bool value)
+bool collection_parser::Bool(bool value)
 {
 	switch(m_state){
 	default:
@@ -78,7 +77,7 @@ bool state_parser::Bool(bool value)
 	}
 	return true;
 }
-bool state_parser::Double(double value)
+bool collection_parser::Double(double value)
 {
 	switch(m_state){
 	default:
@@ -86,7 +85,7 @@ bool state_parser::Double(double value)
 	}
 	return true;
 }
-bool state_parser::Null()
+bool collection_parser::Null()
 {
 	switch(m_state){
 		case StateKey::folder_list_folders:
@@ -107,7 +106,7 @@ bool state_parser::Null()
 	}
 	return true;
 }
-bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
+bool collection_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::folder_list_folders:
@@ -141,11 +140,11 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 	}
 	return true;
 }
-bool state_parser::StartArray()
+bool collection_parser::StartArray()
 {
 	return true;
 }
-bool state_parser::EndArray(rapidjson::SizeType memberCount)
+bool collection_parser::EndArray(rapidjson::SizeType memberCount)
 {
 	switch(m_state){
 	case StateKey::folder_list_folders:
@@ -155,7 +154,7 @@ bool state_parser::EndArray(rapidjson::SizeType memberCount)
 	return true;
 }
 
-bool state_parser::StartObject()
+bool collection_parser::StartObject()
 {
 	switch(m_state){
 	case StateKey::folder_list_folders:
@@ -165,18 +164,17 @@ bool state_parser::StartObject()
 	return true;
 }
 
-bool state_parser::EndObject(rapidjson::SizeType memberCount)
+bool collection_parser::EndObject(rapidjson::SizeType memberCount)
 {
 	switch(m_state){
 	}
 	return true;
 }
 
-state_parser::state_parser()
+collection_parser::collection_parser()
 {
 	m_state = StateKey::folder_list;
 }
 
 } // namespace discogs
 } // namespace parser
-} // namespace collection

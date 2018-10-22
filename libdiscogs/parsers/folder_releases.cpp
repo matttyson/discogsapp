@@ -3,7 +3,6 @@
 #include "porting.h"
 namespace discogs {
 namespace parser {
-namespace folder_release {
 
 enum class StateKey {
 	folder_releases,
@@ -60,31 +59,31 @@ enum class StateKey {
 	folder_releases_releases_basic_information_notes_value,
 };
 
-bool state_parser::Int(int value)
+bool folder_releases_parser::Int(int value)
 {
     return Number((int)value);
 }
 
-bool state_parser::Uint(unsigned int value)
+bool folder_releases_parser::Uint(unsigned int value)
 {
     return Number((int)value);
 }
 
-bool state_parser::Int64(int64_t i)
+bool folder_releases_parser::Int64(int64_t i)
 {
     return false;
 }
 
-bool state_parser::Uint64(uint64_t i)
+bool folder_releases_parser::Uint64(uint64_t i)
 {
     return false;
 }
 
-bool state_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
+bool folder_releases_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
 {
 	return false;
 }
-bool state_parser::Number(int value)
+bool folder_releases_parser::Number(int value)
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination_per_page:
@@ -152,7 +151,7 @@ bool state_parser::Number(int value)
 	}
 	return true;
 }
-bool state_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
+bool folder_releases_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination_urls_next:
@@ -267,7 +266,7 @@ bool state_parser::String(const Ch* value, rapidjson::SizeType length, bool copy
 	}
 	return true;
 }
-bool state_parser::Bool(bool value)
+bool folder_releases_parser::Bool(bool value)
 {
 	switch(m_state){
 	default:
@@ -275,7 +274,7 @@ bool state_parser::Bool(bool value)
 	}
 	return true;
 }
-bool state_parser::Double(double value)
+bool folder_releases_parser::Double(double value)
 {
 	switch(m_state){
 	default:
@@ -283,7 +282,7 @@ bool state_parser::Double(double value)
 	}
 	return true;
 }
-bool state_parser::Null()
+bool folder_releases_parser::Null()
 {
 	switch(m_state){
 		case StateKey::folder_releases_pagination:
@@ -442,7 +441,7 @@ bool state_parser::Null()
 	}
 	return true;
 }
-bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
+bool folder_releases_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination_urls:
@@ -692,11 +691,11 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 	}
 	return true;
 }
-bool state_parser::StartArray()
+bool folder_releases_parser::StartArray()
 {
 	return true;
 }
-bool state_parser::EndArray(rapidjson::SizeType memberCount)
+bool folder_releases_parser::EndArray(rapidjson::SizeType memberCount)
 {
 	switch(m_state){
 	case StateKey::folder_releases_releases:
@@ -724,7 +723,7 @@ bool state_parser::EndArray(rapidjson::SizeType memberCount)
 	return true;
 }
 
-bool state_parser::StartObject()
+bool folder_releases_parser::StartObject()
 {
 	switch(m_state){
 	case StateKey::folder_releases_releases:
@@ -749,7 +748,7 @@ bool state_parser::StartObject()
 	return true;
 }
 
-bool state_parser::EndObject(rapidjson::SizeType memberCount)
+bool folder_releases_parser::EndObject(rapidjson::SizeType memberCount)
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination:
@@ -765,11 +764,10 @@ bool state_parser::EndObject(rapidjson::SizeType memberCount)
 	return true;
 }
 
-state_parser::state_parser()
+folder_releases_parser::folder_releases_parser()
 {
 	m_state = StateKey::folder_releases;
 }
 
 } // namespace discogs
 } // namespace parser
-} // namespace folder_release

@@ -4,6 +4,7 @@
         "parser"
     ],
     "filename": "release",
+    "parser_classname": "release_parser",
     "link": "https://www.discogs.com/developers/#page:database,header:database-release",
     "description": "RELEASE",
     "import": [

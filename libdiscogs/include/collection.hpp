@@ -7,7 +7,6 @@
 
 namespace discogs {
 namespace parser {
-namespace collection {
 
 class folder {
 public:
@@ -45,4 +44,3 @@ public:
 
 } // namespace discogs
 } // namespace parser
-} // namespace collection

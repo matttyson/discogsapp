@@ -1,9 +1,9 @@
 {
     "namespace": [
         "discogs",
-        "parser",
-        "collection"
+        "parser"
     ],
+    "parser_classname": "collection_parser",
     "filename": "collection",
     "link": "https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection",
     "description": "COLLECTION",

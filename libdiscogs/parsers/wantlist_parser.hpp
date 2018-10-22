@@ -10,13 +10,12 @@
 
 namespace discogs {
 namespace parser {
-namespace wantlist {
 
 enum class StateKey;
 
-class state_parser : public rapidjson::BaseReaderHandler<rjs_UTF_t, state_parser> {
+class wantlist_parser : public rapidjson::BaseReaderHandler<rjs_UTF_t, wantlist_parser> {
 public:
-	state_parser();
+	wantlist_parser();
 	bool Null();
 	bool Bool(bool b);
 	bool Int(int value);
@@ -39,4 +38,3 @@ public:
 
 } // namespace discogs
 } // namespace parser
-} // namespace wantlist

@@ -1,9 +1,9 @@
 {
     "namespace": [
         "discogs",
-        "parser",
-        "folder_release"
+        "parser"
     ],
+    "parser_classname": "folder_releases_parser",
     "filename": "folder_releases",
     "link": "https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-folder",
     "description": "COLLECTION ITEMS BY FOLDER",
@@ -20,7 +20,7 @@
     ],
     "classes": [
         {
-            "class_name": "release",
+            "class_name": "folder_release_item",
             "definition": [
                 {
                     "json_name": "id",
@@ -64,7 +64,7 @@
                 },
                 {
                     "json_name": "releases",
-                    "data_type": "release",
+                    "data_type": "folder_release_item",
                     "impl_name": "release_",
                     "array": true
                 }

@@ -10,13 +10,12 @@
 
 namespace discogs {
 namespace parser {
-namespace folder_release {
 
 enum class StateKey;
 
-class state_parser : public rapidjson::BaseReaderHandler<rjs_UTF_t, state_parser> {
+class folder_releases_parser : public rapidjson::BaseReaderHandler<rjs_UTF_t, folder_releases_parser> {
 public:
-	state_parser();
+	folder_releases_parser();
 	bool Null();
 	bool Bool(bool b);
 	bool Int(int value);
@@ -39,4 +38,3 @@ public:
 
 } // namespace discogs
 } // namespace parser
-} // namespace folder_release

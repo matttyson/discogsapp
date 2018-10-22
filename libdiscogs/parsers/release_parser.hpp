@@ -13,9 +13,9 @@ namespace parser {
 
 enum class StateKey;
 
-class state_parser : public rapidjson::BaseReaderHandler<rjs_UTF_t, state_parser> {
+class release_parser : public rapidjson::BaseReaderHandler<rjs_UTF_t, release_parser> {
 public:
-	state_parser();
+	release_parser();
 	bool Null();
 	bool Bool(bool b);
 	bool Int(int value);
