@@ -101,11 +101,31 @@ void client::list_folder()
 
 	for (const auto &e : releases) {
 		const auto &bi = e.basic_information_;
-		if(e.basic_information_.artists.size() > 0){
-			const auto &a = e.basic_information_.artists[0];
-			dcout << a.name << STR(" - ");
+		if(bi.artists.size() > 0){
+			dcout << bi.artists[0].name << STR(" - ");
 		}
-		dcout << bi.title << dendl;
+
+		dcout << bi.title;
+
+		if(bi.formats.size() > 0){
+			dcout << STR(" [");
+			bool first = true;
+			for (const auto &fmt : bi.formats) {
+				if(!first){
+					dcout << STR(", ");
+				}
+				first = false;
+				dcout << fmt.name;
+
+				for(const auto &desc : fmt.descriptions){
+					if(!first){
+						dcout << STR(", ");
+					}
+					dcout << desc;
+				}
+			}
+			dcout << STR("]\n");
+		}
 	}
 }
 
