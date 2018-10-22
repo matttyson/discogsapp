@@ -21,7 +21,7 @@ int client::process_args(int argc, discogs::char_t *argv[])
 		;
 
 	options.add_options(STR("Discogs"))
-		(STR("list-folder"), STR("List all the items in a folder, requires username, folder-id"))
+		(STR("folder-list"), STR("List all the items in a folder, requires username, folder-id"))
 		(STR("collections"), STR("List all the collections for a user, requires username"))
 		(STR("wantlist"), STR("List the users wantlist, requires username"))
 		(STR("wantlist-add"), STR("Add a release to the wantlist, requires username, release"))
@@ -46,8 +46,8 @@ int client::process_args(int argc, discogs::char_t *argv[])
 		return -1;
 	}
 	// Grab program commands
-	if (r.count(STR("list-folder"))) {
-		m_command = ParserCommand::list_folder;
+	if (r.count(STR("folder-list"))) {
+		m_command = ParserCommand::folder_list;
 	}
 
 	if(r.count(STR("collections"))){

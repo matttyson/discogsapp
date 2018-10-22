@@ -2,7 +2,7 @@
 
 enum class ParserCommand {
 	collection,
-	list_folder,
+	folder_list,
 	wantlist,
 	wantlist_del,
 	wantlist_add,

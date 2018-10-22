@@ -58,7 +58,7 @@ static bool has_more_pages(const discogs::parser::paginate::pagination &p)
 }
 
 
-void client::list_folder()
+void client::folder_list()
 {
 	std::vector<discogs::parser::folder_release::release> releases;
 
@@ -129,7 +129,7 @@ void client::list_folder()
 	}
 }
 
-void client::list_collections()
+void client::collections_list()
 {
 	/*
 	auto result = m_rest->collection(m_username);
@@ -157,7 +157,7 @@ void client::list_collections()
 	*/
 }
 
-void client::list_wantlist()
+void client::wantlist_list()
 {
 	int page_id = 1;
 	bool keep_going = false;
@@ -202,7 +202,7 @@ void client::list_wantlist()
 	}
 }
 
-void client::delete_wantlist()
+void client::wantlist_delete()
 {
 	auto result =
 	m_rest->delete_wantlist(m_release_id, m_username);
@@ -220,7 +220,7 @@ void client::delete_wantlist()
 	}
 }
 
-void client::add_wantlist()
+void client::wantlist_add()
 {
 	auto result =
 		m_rest->add_wantlist(m_release_id, m_username);
@@ -238,7 +238,7 @@ void client::add_wantlist()
 	}
 }
 
-void client::update_wantlist()
+void client::wantlist_update()
 {
 	auto result =
 		m_rest->update_wantlist(m_release_id, m_username, m_notes, m_rating);
@@ -263,28 +263,28 @@ int client::run(int argc, discogs::char_t *argv[])
 	}
 
 	switch(m_command){
-	case ParserCommand::list_folder:
-		list_folder();
+	case ParserCommand::folder_list:
+		folder_list();
 		break;
 
 	case ParserCommand::collection:
-		list_collections();
+		collections_list();
 		break;
 
 	case ParserCommand::wantlist:
-		list_wantlist();
+		wantlist_list();
 		break;
 
 	case ParserCommand::wantlist_del:
-		delete_wantlist();
+		wantlist_delete();
 		break;
 
 	case ParserCommand::wantlist_add:
-		add_wantlist();
+		wantlist_add();
 		break;
 
 	case ParserCommand::wantlist_upd:
-		update_wantlist();
+		wantlist_update();
 		break;
 
 	case ParserCommand::NO_COMMAND:

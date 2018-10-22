@@ -19,13 +19,15 @@ public:
 
 private:
 	int process_args(int argc, discogs::char_t *argv[]);
-	void list_folder();
-	void list_collections();
-	void list_wantlist();
+	void folder_list();
+	void collections_list();
+
 	void test_parse();
-	void delete_wantlist();
-	void add_wantlist();
-	void update_wantlist();
+
+	void wantlist_list();
+	void wantlist_delete();
+	void wantlist_add();
+	void wantlist_update();
 
 private:
 	ParserCommand m_command;
