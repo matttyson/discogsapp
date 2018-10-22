@@ -93,8 +93,6 @@ static pplx::task<utility::string_t>
 //do_basic_get(pplx::task<http::http_response> response_task)
 do_basic_get(http::http_response response)
 {
-//	std::cout << response.to_string();
-
 	if (response.status_code() == http::status_codes::OK) {
 		return (response.extract_string());
 	}

@@ -24,6 +24,12 @@ to_string_t(T x)
 	return std::to_wstring(x);
 }
 
+std::wstring
+to_string_t(const std::string &str);
+
+std::wstring
+to_string_t(const char * str);
+
 #else
 typedef std::string string_t;
 typedef char char_t;

@@ -3,6 +3,7 @@ include_directories(include)
 
 add_library(libdiscogs STATIC
 	${CMAKE_CURRENT_LIST_DIR}/libdiscogs.cpp
+	${CMAKE_CURRENT_LIST_DIR}/porting.cpp
 	${CMAKE_CURRENT_LIST_DIR}/libdiscogs.hpp
 )
 

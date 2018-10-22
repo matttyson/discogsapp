@@ -1,10 +1,20 @@
 #include "client.hpp"
 
+#include "porting.h"
 #include "libdiscogs/libdiscogs.hpp"
 #include "client_private.hpp"
 
 #include <iostream>
 #include <string>
+
+void print_exception(const web::http::http_exception &e)
+{
+	dcout << STR("HTTP Error (");
+	dcout << e.error_code();
+	dcout << STR(") ");
+	dcout << discogs::to_string_t(e.what());
+	dcout << dendl;
+}
 
 client::client(const discogs::string_t &user_agent)
 	:m_command(ParserCommand::NO_COMMAND),
@@ -62,11 +72,10 @@ void client::list_folder()
 			foo.wait();
 		}
 		catch (web::http::http_exception &e){
-			std::cerr << "HTTP Error: (" << e.error_code() << ") " << e.what();
+			print_exception(e);
 			return;
 		}
 		catch (std::exception &e) {
-			std::cerr << e.what() << "\n";
 			return;
 		}
 
@@ -105,11 +114,10 @@ void client::list_collections()
 		result.wait();
 	}
 	catch (web::http::http_exception &e) {
-		std::cerr << "HTTP Error: (" << e.error_code() << ") " << e.what();
+		print_exception(e);
 		return;
 	}
 	catch(std::exception &e){
-		std::cerr << e.what() << "\n";
 		return;
 	}
 
@@ -139,11 +147,10 @@ void client::list_wantlist()
 			result.wait();
 		}
 		catch (web::http::http_exception &e) {
-			std::cerr << "HTTP Error: (" << e.error_code() << ") " << e.what();
+			print_exception(e);
 			return;
 		}
 		catch (std::exception &e){
-			std::cerr << e.what() << "\n";
 			return;
 		}
 
@@ -181,11 +188,10 @@ void client::delete_wantlist()
 		dcout << STR("Deleted release ") << m_release_id << dendl;
 	}
 	catch (web::http::http_exception &e) {
-		std::cerr << "HTTP Error: (" << e.error_code() << ") " << e.what();
+		print_exception(e);
 		return;
 	}
 	catch(std::exception &e){
-		std::cout << e.what() << "\n";
 		return;
 	}
 }
@@ -200,11 +206,10 @@ void client::add_wantlist()
 		dcout << STR("Added release ") << m_release_id << dendl;
 	}
 	catch (web::http::http_exception &e) {
-		std::cerr << "HTTP Error: (" << e.error_code() << ") " << e.what();
+		print_exception(e);
 		return;
 	}
 	catch(std::exception &e){
-		std::cout << e.what() << "\n";
 		return;
 	}
 }
@@ -219,11 +224,10 @@ void client::update_wantlist()
 		dcout << STR("Updated release ") << m_release_id << dendl;
 	}
 	catch (web::http::http_exception &e) {
-		std::cerr << "HTTP Error: (" << e.error_code() << ") " << e.what();
+		print_exception(e);
 		return;
 	}
 	catch(std::exception &e){
-		std::cout << e.what() << "\n";
 		return;
 	}
 }
