@@ -10,13 +10,11 @@
     "import": [
         "base_classes.json"
     ],
-    "parents": [
-        {
-            "json_name": null,
-            "data_type": "release",
-            "impl_name": "release_"
-        }
-    ],
+    "document": {
+        "json_name": null,
+        "data_type": "release",
+        "impl_name": "release_"
+    },
     "classes": [
         {
             "class_name": "release",

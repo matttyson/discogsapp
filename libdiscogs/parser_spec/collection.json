@@ -7,13 +7,11 @@
     "filename": "collection",
     "link": "https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection",
     "description": "COLLECTION",
-    "parents": [
-        {
-            "json_name": null,
-            "data_type": "folder_list",
-            "impl_name": "folder_list_"
-        }
-    ],
+    "document": {
+        "json_name": null,
+        "data_type": "folder_list",
+        "impl_name": "folder_list_"
+    },
     "classes": [
         {
             "class_name": "folder",

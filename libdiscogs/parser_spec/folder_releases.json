@@ -11,13 +11,11 @@
         "paginate.json",
         "base_classes.json"
     ],
-    "parents": [
-        {
-            "json_name": null,
-            "data_type": "folder_releases",
-            "impl_name": "folder_release"
-        }
-    ],
+    "document": {
+        "json_name": null,
+        "data_type": "folder_releases",
+        "impl_name": "folder_release"
+    },
     "classes": [
         {
             "class_name": "folder_release_item",
