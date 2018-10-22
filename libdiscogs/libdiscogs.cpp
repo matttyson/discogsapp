@@ -128,7 +128,7 @@ do_basic_parse(utility::string_t str)
 	// TODO: Throw an exception here if nothing happens.
 
 	if(pr.IsError()){
-		dofstream file("parse_error.json");
+		discogs::dofstream file("parse_error.json");
 		file << str;
 		dcerr << STR("Parse Error! - json document written to parse_error.json") << dendl;
 	}

@@ -23,7 +23,7 @@ client::client(const discogs::string_t &user_agent)
 {
 	// TODO - Make the config load from a json file and
 	// not in the object constructor.
-	difstream file;
+	discogs::difstream file;
 	file.open("apikey", std::ios::in);
 	if(file.is_open()){
 		discogs::string_t key;

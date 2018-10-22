@@ -13,8 +13,8 @@ typedef wchar_t char_t;
 #define dcout std::wcout
 #define dcerr std::wcerr
 #define dendl L"\r\n"
-#define dofstream std::wofstream
-#define difstream std::wifstream
+typedef std::wofstream dofstream;
+typedef std::wifstream difstream;
 #define STR(x) L ## x
 
 template <typename T>
@@ -35,8 +35,8 @@ typedef std::string string_t;
 typedef char char_t;
 #define dcout std::cout
 #define dcerr std::cerr
-#define dofstream std::ofstream
-#define difstream std::ifstream
+typedef std::ofstream dofstream;
+typedef std::ifstream difstream;
 #define dendl '\n'
 #define STR(x) x
 
