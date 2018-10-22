@@ -1,22 +1,9 @@
 /* clang-format off */
 #include "folder_releases_parser.hpp"
+#include "porting.h"
 namespace discogs {
 namespace parser {
 namespace folder_release {
-
-
-#define STR(x) L ## x
-
-template <typename T>
-static inline int my_strcmp(const T *str1, const T *str2)
-{
-	if constexpr (sizeof(T) == sizeof(char)){
-		return ::strcmp(str1, str2);
-	}
-	else if constexpr (sizeof(T) == sizeof(wchar_t)) {
-		return ::wcscmp(str1, str2);
-	}
-}
 
 enum class StateKey {
 	folder_releases,
@@ -459,19 +446,19 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination_urls:
-		if(length == 4 && my_strcmp(str, STR("next")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("next")) == 0){
 			m_state = StateKey::folder_releases_pagination_urls_next;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("last")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("last")) == 0){
 			m_state = StateKey::folder_releases_pagination_urls_last;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("first")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("first")) == 0){
 			m_state = StateKey::folder_releases_pagination_urls_first;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("prev")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("prev")) == 0){
 			m_state = StateKey::folder_releases_pagination_urls_prev;
 		}
 		else {
@@ -479,23 +466,23 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::folder_releases_pagination:
-		if(length == 8 && my_strcmp(str, STR("per_page")) == 0){
+		if(length == 8 && discogs::strcmp(str, STR("per_page")) == 0){
 			m_state = StateKey::folder_releases_pagination_per_page;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("items")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("items")) == 0){
 			m_state = StateKey::folder_releases_pagination_items;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("page")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("page")) == 0){
 			m_state = StateKey::folder_releases_pagination_page;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("pages")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("pages")) == 0){
 			m_state = StateKey::folder_releases_pagination_pages;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("urls")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("urls")) == 0){
 			m_state = StateKey::folder_releases_pagination_urls;
 		}
 		else {
@@ -503,11 +490,11 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::folder_releases_releases_notes:
-		if(length == 8 && my_strcmp(str, STR("field_id")) == 0){
+		if(length == 8 && discogs::strcmp(str, STR("field_id")) == 0){
 			m_state = StateKey::folder_releases_releases_notes_field_id;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("value")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("value")) == 0){
 			m_state = StateKey::folder_releases_releases_notes_value;
 		}
 		else {
@@ -515,27 +502,27 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels:
-		if(length == 2 && my_strcmp(str, STR("id")) == 0){
+		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels_id;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("name")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels_name;
 		}
 		else
-		if(length == 11 && my_strcmp(str, STR("entity_type")) == 0){
+		if(length == 11 && discogs::strcmp(str, STR("entity_type")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels_entity_type;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("catno")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("catno")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels_catno;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels_resource_url;
 		}
 		else
-		if(length == 16 && my_strcmp(str, STR("entity_type_name")) == 0){
+		if(length == 16 && discogs::strcmp(str, STR("entity_type_name")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels_entity_type_name;
 		}
 		else {
@@ -543,19 +530,19 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats:
-		if(length == 4 && my_strcmp(str, STR("name")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_formats_name;
 		}
 		else
-		if(length == 3 && my_strcmp(str, STR("qty")) == 0){
+		if(length == 3 && discogs::strcmp(str, STR("qty")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_formats_qty;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("text")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("text")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_formats_text;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("descriptions")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("descriptions")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_formats_descriptions;
 		}
 		else {
@@ -563,31 +550,31 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists:
-		if(length == 2 && my_strcmp(str, STR("id")) == 0){
+		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_id;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("join")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("join")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_join;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("name")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_name;
 		}
 		else
-		if(length == 3 && my_strcmp(str, STR("anv")) == 0){
+		if(length == 3 && discogs::strcmp(str, STR("anv")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_anv;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("tracks")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("tracks")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_tracks;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("role")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("role")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_role;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_resource_url;
 		}
 		else {
@@ -595,11 +582,11 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::folder_releases_releases_basic_information_notes:
-		if(length == 8 && my_strcmp(str, STR("field_id")) == 0){
+		if(length == 8 && discogs::strcmp(str, STR("field_id")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_notes_field_id;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("value")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("value")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_notes_value;
 		}
 		else {
@@ -607,51 +594,51 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::folder_releases_releases_basic_information:
-		if(length == 2 && my_strcmp(str, STR("id")) == 0){
+		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_id;
 		}
 		else
-		if(length == 9 && my_strcmp(str, STR("master_id")) == 0){
+		if(length == 9 && discogs::strcmp(str, STR("master_id")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_master_id;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("year")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("year")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_year;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("thumb")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("thumb")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_thumb;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("title")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("title")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_title;
 		}
 		else
-		if(length == 11 && my_strcmp(str, STR("cover_image")) == 0){
+		if(length == 11 && discogs::strcmp(str, STR("cover_image")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_cover_image;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_resource_url;
 		}
 		else
-		if(length == 10 && my_strcmp(str, STR("master_url")) == 0){
+		if(length == 10 && discogs::strcmp(str, STR("master_url")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_master_url;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("labels")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("labels")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels;
 		}
 		else
-		if(length == 7 && my_strcmp(str, STR("formats")) == 0){
+		if(length == 7 && discogs::strcmp(str, STR("formats")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_formats;
 		}
 		else
-		if(length == 7 && my_strcmp(str, STR("artists")) == 0){
+		if(length == 7 && discogs::strcmp(str, STR("artists")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("notes")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("notes")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_notes;
 		}
 		else {
@@ -659,31 +646,31 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::folder_releases_releases:
-		if(length == 2 && my_strcmp(str, STR("id")) == 0){
+		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::folder_releases_releases_id;
 		}
 		else
-		if(length == 11 && my_strcmp(str, STR("instance_id")) == 0){
+		if(length == 11 && discogs::strcmp(str, STR("instance_id")) == 0){
 			m_state = StateKey::folder_releases_releases_instance_id;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("rating")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("rating")) == 0){
 			m_state = StateKey::folder_releases_releases_rating;
 		}
 		else
-		if(length == 9 && my_strcmp(str, STR("folder_id")) == 0){
+		if(length == 9 && discogs::strcmp(str, STR("folder_id")) == 0){
 			m_state = StateKey::folder_releases_releases_folder_id;
 		}
 		else
-		if(length == 10 && my_strcmp(str, STR("date_added")) == 0){
+		if(length == 10 && discogs::strcmp(str, STR("date_added")) == 0){
 			m_state = StateKey::folder_releases_releases_date_added;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("notes")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("notes")) == 0){
 			m_state = StateKey::folder_releases_releases_notes;
 		}
 		else
-		if(length == 17 && my_strcmp(str, STR("basic_information")) == 0){
+		if(length == 17 && discogs::strcmp(str, STR("basic_information")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information;
 		}
 		else {
@@ -691,11 +678,11 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::folder_releases:
-		if(length == 10 && my_strcmp(str, STR("pagination")) == 0){
+		if(length == 10 && discogs::strcmp(str, STR("pagination")) == 0){
 			m_state = StateKey::folder_releases_pagination;
 		}
 		else
-		if(length == 8 && my_strcmp(str, STR("releases")) == 0){
+		if(length == 8 && discogs::strcmp(str, STR("releases")) == 0){
 			m_state = StateKey::folder_releases_releases;
 		}
 		else {

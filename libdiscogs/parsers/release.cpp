@@ -1,22 +1,9 @@
 /* clang-format off */
 #include "release_parser.hpp"
+#include "porting.h"
 namespace discogs {
 namespace parser {
 namespace release {
-
-
-#define STR(x) L ## x
-
-template <typename T>
-static inline int my_strcmp(const T *str1, const T *str2)
-{
-	if constexpr (sizeof(T) == sizeof(char)){
-		return ::strcmp(str1, str2);
-	}
-	else if constexpr (sizeof(T) == sizeof(wchar_t)) {
-		return ::wcscmp(str1, str2);
-	}
-}
 
 enum class StateKey {
 	release,
@@ -792,11 +779,11 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::release_community_submitter:
-		if(length == 8 && my_strcmp(str, STR("username")) == 0){
+		if(length == 8 && discogs::strcmp(str, STR("username")) == 0){
 			m_state = StateKey::release_community_submitter_username;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::release_community_submitter_resource_url;
 		}
 		else {
@@ -804,11 +791,11 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release_community_rating:
-		if(length == 5 && my_strcmp(str, STR("count")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("count")) == 0){
 			m_state = StateKey::release_community_rating_count;
 		}
 		else
-		if(length == 7 && my_strcmp(str, STR("average")) == 0){
+		if(length == 7 && discogs::strcmp(str, STR("average")) == 0){
 			m_state = StateKey::release_community_rating_average;
 		}
 		else {
@@ -816,11 +803,11 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release_community_contributors:
-		if(length == 8 && my_strcmp(str, STR("username")) == 0){
+		if(length == 8 && discogs::strcmp(str, STR("username")) == 0){
 			m_state = StateKey::release_community_contributors_username;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::release_community_contributors_resource_url;
 		}
 		else {
@@ -828,31 +815,31 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release_community:
-		if(length == 4 && my_strcmp(str, STR("want")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("want")) == 0){
 			m_state = StateKey::release_community_want;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("have")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("have")) == 0){
 			m_state = StateKey::release_community_have;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("status")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("status")) == 0){
 			m_state = StateKey::release_community_status;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("data_quality")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("data_quality")) == 0){
 			m_state = StateKey::release_community_data_quality;
 		}
 		else
-		if(length == 9 && my_strcmp(str, STR("submitter")) == 0){
+		if(length == 9 && discogs::strcmp(str, STR("submitter")) == 0){
 			m_state = StateKey::release_community_submitter;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("rating")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("rating")) == 0){
 			m_state = StateKey::release_community_rating;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("contributors")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("contributors")) == 0){
 			m_state = StateKey::release_community_contributors;
 		}
 		else {
@@ -860,23 +847,23 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release_videos:
-		if(length == 8 && my_strcmp(str, STR("duration")) == 0){
+		if(length == 8 && discogs::strcmp(str, STR("duration")) == 0){
 			m_state = StateKey::release_videos_duration;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("embed")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("embed")) == 0){
 			m_state = StateKey::release_videos_embed;
 		}
 		else
-		if(length == 11 && my_strcmp(str, STR("description")) == 0){
+		if(length == 11 && discogs::strcmp(str, STR("description")) == 0){
 			m_state = StateKey::release_videos_description;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("title")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("title")) == 0){
 			m_state = StateKey::release_videos_title;
 		}
 		else
-		if(length == 3 && my_strcmp(str, STR("uri")) == 0){
+		if(length == 3 && discogs::strcmp(str, STR("uri")) == 0){
 			m_state = StateKey::release_videos_uri;
 		}
 		else {
@@ -884,27 +871,27 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release_labels:
-		if(length == 2 && my_strcmp(str, STR("id")) == 0){
+		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::release_labels_id;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("name")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
 			m_state = StateKey::release_labels_name;
 		}
 		else
-		if(length == 11 && my_strcmp(str, STR("entity_type")) == 0){
+		if(length == 11 && discogs::strcmp(str, STR("entity_type")) == 0){
 			m_state = StateKey::release_labels_entity_type;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("catno")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("catno")) == 0){
 			m_state = StateKey::release_labels_catno;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::release_labels_resource_url;
 		}
 		else
-		if(length == 16 && my_strcmp(str, STR("entity_type_name")) == 0){
+		if(length == 16 && discogs::strcmp(str, STR("entity_type_name")) == 0){
 			m_state = StateKey::release_labels_entity_type_name;
 		}
 		else {
@@ -912,31 +899,31 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release_artists:
-		if(length == 2 && my_strcmp(str, STR("id")) == 0){
+		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::release_artists_id;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("join")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("join")) == 0){
 			m_state = StateKey::release_artists_join;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("name")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
 			m_state = StateKey::release_artists_name;
 		}
 		else
-		if(length == 3 && my_strcmp(str, STR("anv")) == 0){
+		if(length == 3 && discogs::strcmp(str, STR("anv")) == 0){
 			m_state = StateKey::release_artists_anv;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("tracks")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("tracks")) == 0){
 			m_state = StateKey::release_artists_tracks;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("role")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("role")) == 0){
 			m_state = StateKey::release_artists_role;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::release_artists_resource_url;
 		}
 		else {
@@ -944,27 +931,27 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release_images:
-		if(length == 6 && my_strcmp(str, STR("height")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("height")) == 0){
 			m_state = StateKey::release_images_height;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("width")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("width")) == 0){
 			m_state = StateKey::release_images_width;
 		}
 		else
-		if(length == 3 && my_strcmp(str, STR("uri")) == 0){
+		if(length == 3 && discogs::strcmp(str, STR("uri")) == 0){
 			m_state = StateKey::release_images_uri;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::release_images_resource_url;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("type")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("type")) == 0){
 			m_state = StateKey::release_images_type;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("uri150")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("uri150")) == 0){
 			m_state = StateKey::release_images_uri150;
 		}
 		else {
@@ -972,19 +959,19 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release_tracklist:
-		if(length == 8 && my_strcmp(str, STR("duration")) == 0){
+		if(length == 8 && discogs::strcmp(str, STR("duration")) == 0){
 			m_state = StateKey::release_tracklist_duration;
 		}
 		else
-		if(length == 8 && my_strcmp(str, STR("position")) == 0){
+		if(length == 8 && discogs::strcmp(str, STR("position")) == 0){
 			m_state = StateKey::release_tracklist_position;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("type_")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("type_")) == 0){
 			m_state = StateKey::release_tracklist_type_;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("title")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("title")) == 0){
 			m_state = StateKey::release_tracklist_title;
 		}
 		else {
@@ -992,31 +979,31 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release_extraartists:
-		if(length == 2 && my_strcmp(str, STR("id")) == 0){
+		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::release_extraartists_id;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("join")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("join")) == 0){
 			m_state = StateKey::release_extraartists_join;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("name")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
 			m_state = StateKey::release_extraartists_name;
 		}
 		else
-		if(length == 3 && my_strcmp(str, STR("anv")) == 0){
+		if(length == 3 && discogs::strcmp(str, STR("anv")) == 0){
 			m_state = StateKey::release_extraartists_anv;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("tracks")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("tracks")) == 0){
 			m_state = StateKey::release_extraartists_tracks;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("role")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("role")) == 0){
 			m_state = StateKey::release_extraartists_role;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::release_extraartists_resource_url;
 		}
 		else {
@@ -1024,27 +1011,27 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release_companies:
-		if(length == 2 && my_strcmp(str, STR("id")) == 0){
+		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::release_companies_id;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("name")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
 			m_state = StateKey::release_companies_name;
 		}
 		else
-		if(length == 11 && my_strcmp(str, STR("entity_type")) == 0){
+		if(length == 11 && discogs::strcmp(str, STR("entity_type")) == 0){
 			m_state = StateKey::release_companies_entity_type;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("catno")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("catno")) == 0){
 			m_state = StateKey::release_companies_catno;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::release_companies_resource_url;
 		}
 		else
-		if(length == 16 && my_strcmp(str, STR("entity_type_name")) == 0){
+		if(length == 16 && discogs::strcmp(str, STR("entity_type_name")) == 0){
 			m_state = StateKey::release_companies_entity_type_name;
 		}
 		else {
@@ -1052,19 +1039,19 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release_formats:
-		if(length == 4 && my_strcmp(str, STR("name")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
 			m_state = StateKey::release_formats_name;
 		}
 		else
-		if(length == 3 && my_strcmp(str, STR("qty")) == 0){
+		if(length == 3 && discogs::strcmp(str, STR("qty")) == 0){
 			m_state = StateKey::release_formats_qty;
 		}
 		else
-		if(length == 4 && my_strcmp(str, STR("text")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("text")) == 0){
 			m_state = StateKey::release_formats_text;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("descriptions")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("descriptions")) == 0){
 			m_state = StateKey::release_formats_descriptions;
 		}
 		else {
@@ -1072,15 +1059,15 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release_identifiers:
-		if(length == 4 && my_strcmp(str, STR("type")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("type")) == 0){
 			m_state = StateKey::release_identifiers_type;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("value")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("value")) == 0){
 			m_state = StateKey::release_identifiers_value;
 		}
 		else
-		if(length == 11 && my_strcmp(str, STR("description")) == 0){
+		if(length == 11 && discogs::strcmp(str, STR("description")) == 0){
 			m_state = StateKey::release_identifiers_description;
 		}
 		else {
@@ -1088,139 +1075,139 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		}
 		break;
 	case StateKey::release:
-		if(length == 4 && my_strcmp(str, STR("year")) == 0){
+		if(length == 4 && discogs::strcmp(str, STR("year")) == 0){
 			m_state = StateKey::release_year;
 		}
 		else
-		if(length == 2 && my_strcmp(str, STR("id")) == 0){
+		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::release_id;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("num_for_sale")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("num_for_sale")) == 0){
 			m_state = StateKey::release_num_for_sale;
 		}
 		else
-		if(length == 9 && my_strcmp(str, STR("master_id")) == 0){
+		if(length == 9 && discogs::strcmp(str, STR("master_id")) == 0){
 			m_state = StateKey::release_master_id;
 		}
 		else
-		if(length == 15 && my_strcmp(str, STR("format_quantity")) == 0){
+		if(length == 15 && discogs::strcmp(str, STR("format_quantity")) == 0){
 			m_state = StateKey::release_format_quantity;
 		}
 		else
-		if(length == 16 && my_strcmp(str, STR("estimated_weight")) == 0){
+		if(length == 16 && discogs::strcmp(str, STR("estimated_weight")) == 0){
 			m_state = StateKey::release_estimated_weight;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("lowest_price")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("lowest_price")) == 0){
 			m_state = StateKey::release_lowest_price;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("artists_sort")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("artists_sort")) == 0){
 			m_state = StateKey::release_artists_sort;
 		}
 		else
-		if(length == 7 && my_strcmp(str, STR("country")) == 0){
+		if(length == 7 && discogs::strcmp(str, STR("country")) == 0){
 			m_state = StateKey::release_country;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("notes")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("notes")) == 0){
 			m_state = StateKey::release_notes;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("thumb")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("thumb")) == 0){
 			m_state = StateKey::release_thumb;
 		}
 		else
-		if(length == 5 && my_strcmp(str, STR("title")) == 0){
+		if(length == 5 && discogs::strcmp(str, STR("title")) == 0){
 			m_state = StateKey::release_title;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("date_changed")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("date_changed")) == 0){
 			m_state = StateKey::release_date_changed;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("status")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("status")) == 0){
 			m_state = StateKey::release_status;
 		}
 		else
-		if(length == 18 && my_strcmp(str, STR("released_formatted")) == 0){
+		if(length == 18 && discogs::strcmp(str, STR("released_formatted")) == 0){
 			m_state = StateKey::release_released_formatted;
 		}
 		else
-		if(length == 10 && my_strcmp(str, STR("master_url")) == 0){
+		if(length == 10 && discogs::strcmp(str, STR("master_url")) == 0){
 			m_state = StateKey::release_master_url;
 		}
 		else
-		if(length == 8 && my_strcmp(str, STR("released")) == 0){
+		if(length == 8 && discogs::strcmp(str, STR("released")) == 0){
 			m_state = StateKey::release_released;
 		}
 		else
-		if(length == 10 && my_strcmp(str, STR("date_added")) == 0){
+		if(length == 10 && discogs::strcmp(str, STR("date_added")) == 0){
 			m_state = StateKey::release_date_added;
 		}
 		else
-		if(length == 3 && my_strcmp(str, STR("uri")) == 0){
+		if(length == 3 && discogs::strcmp(str, STR("uri")) == 0){
 			m_state = StateKey::release_uri;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::release_resource_url;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("data_quality")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("data_quality")) == 0){
 			m_state = StateKey::release_data_quality;
 		}
 		else
-		if(length == 9 && my_strcmp(str, STR("community")) == 0){
+		if(length == 9 && discogs::strcmp(str, STR("community")) == 0){
 			m_state = StateKey::release_community;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("series")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("series")) == 0){
 			m_state = StateKey::release_series;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("styles")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("styles")) == 0){
 			m_state = StateKey::release_styles;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("genres")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("genres")) == 0){
 			m_state = StateKey::release_genres;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("videos")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("videos")) == 0){
 			m_state = StateKey::release_videos;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("labels")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("labels")) == 0){
 			m_state = StateKey::release_labels;
 		}
 		else
-		if(length == 7 && my_strcmp(str, STR("artists")) == 0){
+		if(length == 7 && discogs::strcmp(str, STR("artists")) == 0){
 			m_state = StateKey::release_artists;
 		}
 		else
-		if(length == 6 && my_strcmp(str, STR("images")) == 0){
+		if(length == 6 && discogs::strcmp(str, STR("images")) == 0){
 			m_state = StateKey::release_images;
 		}
 		else
-		if(length == 9 && my_strcmp(str, STR("tracklist")) == 0){
+		if(length == 9 && discogs::strcmp(str, STR("tracklist")) == 0){
 			m_state = StateKey::release_tracklist;
 		}
 		else
-		if(length == 12 && my_strcmp(str, STR("extraartists")) == 0){
+		if(length == 12 && discogs::strcmp(str, STR("extraartists")) == 0){
 			m_state = StateKey::release_extraartists;
 		}
 		else
-		if(length == 9 && my_strcmp(str, STR("companies")) == 0){
+		if(length == 9 && discogs::strcmp(str, STR("companies")) == 0){
 			m_state = StateKey::release_companies;
 		}
 		else
-		if(length == 7 && my_strcmp(str, STR("formats")) == 0){
+		if(length == 7 && discogs::strcmp(str, STR("formats")) == 0){
 			m_state = StateKey::release_formats;
 		}
 		else
-		if(length == 11 && my_strcmp(str, STR("identifiers")) == 0){
+		if(length == 11 && discogs::strcmp(str, STR("identifiers")) == 0){
 			m_state = StateKey::release_identifiers;
 		}
 		else {

@@ -1,15 +1,19 @@
 {
     "class_headers": [
-      "class_common.hpp"
+        "class_common.hpp"
     ],
     "parser_headers": [
-      "parser_common.hpp"
+        "parser_common.hpp"
+    ],
+    "parser_impl_headers": [
+        "porting.h"
     ],
     "parsers": [
         "release.json",
         "folder_releases.json",
         "wantlist.json"
     ],
+    "strcmp": "discogs::strcmp",
     "hdr_extension": "hpp",
     "cpp_extension": "cpp",
     "namespace": [

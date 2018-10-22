@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <type_traits>
+#include <cstring>
 
 
 namespace discogs {
@@ -30,6 +31,11 @@ to_string_t(const std::string &str);
 std::wstring
 to_string_t(const char * str);
 
+static int strcmp(const char_t *str1, const char_t *str2)
+{
+	return ::wcscmp(str1, str2);
+}
+
 #else
 typedef std::string string_t;
 typedef char char_t;
@@ -51,6 +57,17 @@ static
 std::string to_string(string_t str)
 {
 	return str;
+}
+
+static
+std::string to_string_t(const char *str)
+{
+	return std::string(str);
+}
+
+static int strcmp(const char_t *str1, const char_t *str2)
+{
+	return ::strcmp(str1, str2);
 }
 
 #endif
