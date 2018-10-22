@@ -54,21 +54,21 @@
                 }
             ]
         },
-      {
-        "class_name": "folder_releases",
-        "definition": [
-          {
-            "json_name": "pagination",
-            "data_type": "pagination",
-            "impl_name": "pages"
-          },
-          {
-            "json_name": "releases",
-            "data_type": "release",
-            "impl_name": "release_",
-            "array": true
-          }
-        ]
-      }
+        {
+            "class_name": "folder_releases",
+            "definition": [
+                {
+                    "json_name": "pagination",
+                    "data_type": "pagination",
+                    "impl_name": "pages"
+                },
+                {
+                    "json_name": "releases",
+                    "data_type": "release",
+                    "impl_name": "release_",
+                    "array": true
+                }
+            ]
+        }
     ]
 }
