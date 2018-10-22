@@ -65,6 +65,10 @@ void client::list_folder()
 		try {
 			foo.wait();
 		}
+		catch (web::http::http_exception &e){
+			std::cerr << "HTTP Error: (" << e.error_code() << ") " << e.what();
+			return;
+		}
 		catch (std::exception &e) {
 			std::cerr << e.what() << "\n";
 			return;
@@ -104,6 +108,10 @@ void client::list_collections()
 	try {
 		result.wait();
 	}
+	catch (web::http::http_exception &e) {
+		std::cerr << "HTTP Error: (" << e.error_code() << ") " << e.what();
+		return;
+	}
 	catch(std::exception &e){
 		std::cerr << e.what() << "\n";
 		return;
@@ -133,6 +141,10 @@ void client::list_wantlist()
 
 		try {
 			result.wait();
+		}
+		catch (web::http::http_exception &e) {
+			std::cerr << "HTTP Error: (" << e.error_code() << ") " << e.what();
+			return;
 		}
 		catch (std::exception &e){
 			std::cerr << e.what() << "\n";
@@ -172,8 +184,13 @@ void client::delete_wantlist()
 		result.wait();
 		dcout << STR("Deleted release ") << m_release_id << dendl;
 	}
+	catch (web::http::http_exception &e) {
+		std::cerr << "HTTP Error: (" << e.error_code() << ") " << e.what();
+		return;
+	}
 	catch(std::exception &e){
 		std::cout << e.what() << "\n";
+		return;
 	}
 }
 
@@ -186,8 +203,13 @@ void client::add_wantlist()
 		result.wait();
 		dcout << STR("Added release ") << m_release_id << dendl;
 	}
+	catch (web::http::http_exception &e) {
+		std::cerr << "HTTP Error: (" << e.error_code() << ") " << e.what();
+		return;
+	}
 	catch(std::exception &e){
 		std::cout << e.what() << "\n";
+		return;
 	}
 }
 
@@ -200,8 +222,13 @@ void client::update_wantlist()
 		result.wait();
 		dcout << STR("Updated release ") << m_release_id << dendl;
 	}
+	catch (web::http::http_exception &e) {
+		std::cerr << "HTTP Error: (" << e.error_code() << ") " << e.what();
+		return;
+	}
 	catch(std::exception &e){
 		std::cout << e.what() << "\n";
+		return;
 	}
 }
 

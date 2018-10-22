@@ -8,6 +8,7 @@
 #include "private_include/wantlist_parser.hpp"
 
 #include <cpprest/http_client.h>
+#include <cpprest/http_msg.h>
 #include <cpprest/filestream.h>
 #include <cpprest/json.h>
 #include <cpprest/details/basic_types.h>
@@ -98,10 +99,7 @@ do_basic_get(http::http_response response)
 		return (response.extract_string());
 	}
 
-	utility::string_t error = response.reason_phrase();
-	dcout << error << std::endl;
-	throw std::runtime_error("boom");
-	return pplx::task_from_result(string_t(STR("")));
+	throw http::http_exception(response.status_code(), response.reason_phrase());
 }
 
 template <typename Parser>
@@ -123,6 +121,8 @@ do_basic_parse(utility::string_t str)
 		iss(const_cast<char_t*>(str.c_str()));
 
 	rapidjson::ParseResult pr = r.Parse<rapidjson::kParseInsituFlag>(iss, *p);
+
+	// TODO: Throw an exception here if nothing happens.
 
 	if(pr.IsError()){
 		std::cout << "Parse Error!\n";
@@ -267,8 +267,7 @@ discogs::rest::delete_wantlist(
 			return true;
 		}
 
-		throw std::runtime_error("Nope");
-		return false;
+		throw http::http_exception(resp.status_code(), resp.reason_phrase());
 	});
 }
 
@@ -296,8 +295,7 @@ discogs::rest::add_wantlist(
 			return true;
 		}
 
-		throw std::runtime_error("Nope");
-		return false;
+		throw http::http_exception(resp.status_code(), resp.reason_phrase());
 	});
 }
 
@@ -346,7 +344,6 @@ discogs::rest::update_wantlist(
 			return true;
 		}
 
-		throw std::runtime_error("Nope");
-		return false;
+		throw http::http_exception(resp.status_code(), resp.reason_phrase());
 	});
 }
