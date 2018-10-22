@@ -111,7 +111,8 @@
                 },
                 {
                     "json_name": "series",
-                    "data_type": "string",
+                    "data_type": "series",
+                    "impl_name": "series_",
                     "array": true
                 },
                 {

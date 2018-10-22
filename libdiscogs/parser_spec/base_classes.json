@@ -228,6 +228,11 @@
                     "data_type": "string"
                 },
                 {
+                    "json_name": "artists",
+                    "data_type": "artist",
+                    "array": true
+                },
+                {
                     "json_name": "extraartists",
                     "data_type": "artist",
                     "array": true
@@ -266,6 +271,35 @@
                     "json_name": "descriptions",
                     "data_type": "string",
                     "array": true
+                }
+            ]
+        },
+        {
+            "class_name": "series",
+            "definition": [
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "name",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "entity_type",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "catno",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "entity_type_name",
+                    "data_type": "string"
                 }
             ]
         },

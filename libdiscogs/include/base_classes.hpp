@@ -185,8 +185,8 @@ class track {
 public:
 	track(){}
 	track
-		(string_t &&duration__, string_t &&position__, string_t &&type___, string_t &&title__, std::vector<artist> &&extraartists__) noexcept
-		:duration(duration__), position(position__), type_(type___), title(title__), extraartists(extraartists__) {}
+		(string_t &&duration__, string_t &&position__, string_t &&type___, string_t &&title__, std::vector<artist> &&artists__, std::vector<artist> &&extraartists__) noexcept
+		:duration(duration__), position(position__), type_(type___), title(title__), artists(artists__), extraartists(extraartists__) {}
 	~track(){}
 	track(const track &rhs) = default;
 	track(track &&rhs) noexcept = default;
@@ -197,6 +197,7 @@ public:
 	string_t position;
 	string_t type_;
 	string_t title;
+	std::vector<artist> artists;
 	std::vector<artist> extraartists;
 };
 
@@ -234,6 +235,27 @@ public:
 	string_t qty;
 	string_t text;
 	std::vector<string_t> descriptions;
+};
+
+
+class series {
+public:
+	series():id(0){}
+	series
+		(int id__, string_t &&name__, string_t &&entity_type__, string_t &&catno__, string_t &&resource_url__, string_t &&entity_type_name__) noexcept
+		:id(id__), name(name__), entity_type(entity_type__), catno(catno__), resource_url(resource_url__), entity_type_name(entity_type_name__) {}
+	~series(){}
+	series(const series &rhs) = default;
+	series(series &&rhs) noexcept = default;
+	series& operator=(const series &rhs) = default;
+	series& operator=(series &&rhs) noexcept = default;
+
+	int id;
+	string_t name;
+	string_t entity_type;
+	string_t catno;
+	string_t resource_url;
+	string_t entity_type_name;
 };
 
 
