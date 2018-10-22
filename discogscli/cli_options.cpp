@@ -27,6 +27,7 @@ int client::process_args(int argc, discogs::char_t *argv[])
 		(STR("wantlist-add"), STR("Add a release to the wantlist, requires username, release"))
 		(STR("wantlist-del"), STR("Delete an item from the wantlist, requires username, release"))
 		(STR("wantlist-upd"), STR("Update wantlist itemt, requires username, release [note, rating]"))
+		(STR("release-print"), STR("Print out a release, requires release"))
 		;
 
 	options.add_options(STR("Ancillary"))
@@ -68,6 +69,10 @@ int client::process_args(int argc, discogs::char_t *argv[])
 
 	if(r.count(STR("wantlist-upd"))){
 		m_command = ParserCommand::wantlist_upd;
+	}
+
+	if(r.count(STR("release-print"))){
+		m_command = ParserCommand::release_print;
 	}
 
 	// Grab ancillary arguments

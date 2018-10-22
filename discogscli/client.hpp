@@ -24,6 +24,8 @@ private:
 
 	void test_parse();
 
+	void release_print();
+
 	void wantlist_list();
 	void wantlist_delete();
 	void wantlist_add();

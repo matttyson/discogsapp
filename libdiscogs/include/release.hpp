@@ -8,7 +8,6 @@
 
 namespace discogs {
 namespace parser {
-namespace release {
 
 class release {
 public:
@@ -60,4 +59,3 @@ public:
 
 } // namespace discogs
 } // namespace parser
-} // namespace release

@@ -7,6 +7,7 @@ enum class ParserCommand {
 	wantlist_del,
 	wantlist_add,
 	wantlist_upd,
+	release_print,
 	NO_COMMAND
 };
 

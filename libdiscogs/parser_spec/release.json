@@ -1,8 +1,7 @@
 {
     "namespace": [
         "discogs",
-        "parser",
-        "release"
+        "parser"
     ],
     "filename": "release",
     "link": "https://www.discogs.com/developers/#page:database,header:database-release",

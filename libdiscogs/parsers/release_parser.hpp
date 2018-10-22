@@ -10,7 +10,6 @@
 
 namespace discogs {
 namespace parser {
-namespace release {
 
 enum class StateKey;
 
@@ -39,4 +38,3 @@ public:
 
 } // namespace discogs
 } // namespace parser
-} // namespace release

@@ -254,6 +254,52 @@ void client::wantlist_update()
 	}
 }
 
+void client::release_print()
+{
+	auto result =
+		m_rest->release(m_release_id);
+
+	try {
+		result.wait();
+	}
+	catch(web::http::http_exception &e) {
+		print_exception(e);
+	}
+
+	auto release = result.get();
+	bool start = true;
+
+	dcout << STR("Printing Release ") << release.id << dendl << dendl;
+	for (const auto &a : release.artists) {
+		dcout << STR("Artist: ") << a.name << dendl;
+	}
+	dcout << STR("Title : ") << release.title << dendl;
+	dcout << STR("Year  : ") << release.year << dendl;
+	for(const auto &f : release.formats){
+		dcout << STR("Format: ") << f.name;
+		for(const auto &d : f.descriptions){
+			dcout << STR(", ") << d;
+		}
+	}
+	dcout << dendl;
+	dcout << STR("Genres: ");
+	for (const auto &g : release.genres) {
+		if (!start) {
+			dcout << STR(", ");
+		}
+		start = false;
+		dcout << g;
+	}
+	dcout << dendl;
+	dcout << STR("URL   : ") << release.master_url << dendl;
+	dcout << STR("Tracks: ") << dendl;
+	for(const auto &t: release.tracklist){
+		dcout << STR("  ") << t.position
+			<< STR(" - ") << t.title
+			<< STR(" [") << t.duration << STR(']') << dendl;
+	}
+}
+
 int client::run(int argc, discogs::char_t *argv[])
 {
 	if (process_args(argc, argv) != 0) {
@@ -283,6 +329,10 @@ int client::run(int argc, discogs::char_t *argv[])
 
 	case ParserCommand::wantlist_upd:
 		wantlist_update();
+		break;
+
+	case ParserCommand::release_print:
+		release_print();
 		break;
 
 	case ParserCommand::NO_COMMAND:

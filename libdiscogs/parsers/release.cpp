@@ -3,7 +3,6 @@
 #include "porting.h"
 namespace discogs {
 namespace parser {
-namespace release {
 
 enum class StateKey {
 	release,
@@ -78,6 +77,14 @@ enum class StateKey {
 	release_tracklist_position,
 	release_tracklist_type_,
 	release_tracklist_title,
+	release_tracklist_extraartists,
+	release_tracklist_extraartists_id,
+	release_tracklist_extraartists_join,
+	release_tracklist_extraartists_name,
+	release_tracklist_extraartists_anv,
+	release_tracklist_extraartists_tracks,
+	release_tracklist_extraartists_role,
+	release_tracklist_extraartists_resource_url,
 	release_extraartists,
 	release_extraartists_id,
 	release_extraartists_join,
@@ -186,6 +193,10 @@ bool state_parser::Number(int value)
 	case StateKey::release_images_width:
 		release_.images.back().width = value;
 		m_state = StateKey::release_images;
+		break;
+	case StateKey::release_tracklist_extraartists_id:
+		release_.tracklist.back().extraartists.back().id = value;
+		m_state = StateKey::release_tracklist_extraartists;
 		break;
 	case StateKey::release_extraartists_id:
 		release_.extra_artists.back().id = value;
@@ -379,6 +390,30 @@ bool state_parser::String(const Ch* value, rapidjson::SizeType length, bool copy
 	case StateKey::release_tracklist_title:
 		release_.tracklist.back().title = string_t(value, length);
 		m_state = StateKey::release_tracklist;
+		break;
+	case StateKey::release_tracklist_extraartists_join:
+		release_.tracklist.back().extraartists.back().join = string_t(value, length);
+		m_state = StateKey::release_tracklist_extraartists;
+		break;
+	case StateKey::release_tracklist_extraartists_name:
+		release_.tracklist.back().extraartists.back().name = string_t(value, length);
+		m_state = StateKey::release_tracklist_extraartists;
+		break;
+	case StateKey::release_tracklist_extraartists_anv:
+		release_.tracklist.back().extraartists.back().anv = string_t(value, length);
+		m_state = StateKey::release_tracklist_extraartists;
+		break;
+	case StateKey::release_tracklist_extraartists_tracks:
+		release_.tracklist.back().extraartists.back().tracks = string_t(value, length);
+		m_state = StateKey::release_tracklist_extraartists;
+		break;
+	case StateKey::release_tracklist_extraartists_role:
+		release_.tracklist.back().extraartists.back().role = string_t(value, length);
+		m_state = StateKey::release_tracklist_extraartists;
+		break;
+	case StateKey::release_tracklist_extraartists_resource_url:
+		release_.tracklist.back().extraartists.back().resource_url = string_t(value, length);
+		m_state = StateKey::release_tracklist_extraartists;
 		break;
 	case StateKey::release_extraartists_join:
 		release_.extra_artists.back().join = string_t(value, length);
@@ -700,6 +735,30 @@ bool state_parser::Null()
 		case StateKey::release_tracklist_title:
 			m_state = StateKey::release_tracklist;
 			break;
+		case StateKey::release_tracklist_extraartists:
+			m_state = StateKey::release_tracklist;
+			break;
+		case StateKey::release_tracklist_extraartists_id:
+			m_state = StateKey::release_tracklist_extraartists;
+			break;
+		case StateKey::release_tracklist_extraartists_join:
+			m_state = StateKey::release_tracklist_extraartists;
+			break;
+		case StateKey::release_tracklist_extraartists_name:
+			m_state = StateKey::release_tracklist_extraartists;
+			break;
+		case StateKey::release_tracklist_extraartists_anv:
+			m_state = StateKey::release_tracklist_extraartists;
+			break;
+		case StateKey::release_tracklist_extraartists_tracks:
+			m_state = StateKey::release_tracklist_extraartists;
+			break;
+		case StateKey::release_tracklist_extraartists_role:
+			m_state = StateKey::release_tracklist_extraartists;
+			break;
+		case StateKey::release_tracklist_extraartists_resource_url:
+			m_state = StateKey::release_tracklist_extraartists;
+			break;
 		case StateKey::release_extraartists:
 			m_state = StateKey::release;
 			break;
@@ -958,6 +1017,38 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 			return false;
 		}
 		break;
+	case StateKey::release_tracklist_extraartists:
+		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
+			m_state = StateKey::release_tracklist_extraartists_id;
+		}
+		else
+		if(length == 4 && discogs::strcmp(str, STR("join")) == 0){
+			m_state = StateKey::release_tracklist_extraartists_join;
+		}
+		else
+		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
+			m_state = StateKey::release_tracklist_extraartists_name;
+		}
+		else
+		if(length == 3 && discogs::strcmp(str, STR("anv")) == 0){
+			m_state = StateKey::release_tracklist_extraartists_anv;
+		}
+		else
+		if(length == 6 && discogs::strcmp(str, STR("tracks")) == 0){
+			m_state = StateKey::release_tracklist_extraartists_tracks;
+		}
+		else
+		if(length == 4 && discogs::strcmp(str, STR("role")) == 0){
+			m_state = StateKey::release_tracklist_extraartists_role;
+		}
+		else
+		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
+			m_state = StateKey::release_tracklist_extraartists_resource_url;
+		}
+		else {
+			return false;
+		}
+		break;
 	case StateKey::release_tracklist:
 		if(length == 8 && discogs::strcmp(str, STR("duration")) == 0){
 			m_state = StateKey::release_tracklist_duration;
@@ -973,6 +1064,10 @@ bool state_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		else
 		if(length == 5 && discogs::strcmp(str, STR("title")) == 0){
 			m_state = StateKey::release_tracklist_title;
+		}
+		else
+		if(length == 12 && discogs::strcmp(str, STR("extraartists")) == 0){
+			m_state = StateKey::release_tracklist_extraartists;
 		}
 		else {
 			return false;
@@ -1251,6 +1346,9 @@ bool state_parser::EndArray(rapidjson::SizeType memberCount)
 	case StateKey::release_tracklist:
 		m_state = StateKey::release;
 		break;
+	case StateKey::release_tracklist_extraartists:
+		m_state = StateKey::release_tracklist;
+		break;
 	case StateKey::release_extraartists:
 		m_state = StateKey::release;
 		break;
@@ -1291,6 +1389,9 @@ bool state_parser::StartObject()
 	case StateKey::release_tracklist:
 		release_.tracklist.emplace_back();
 		break;
+	case StateKey::release_tracklist_extraartists:
+		release_.tracklist.back().extraartists.emplace_back();
+		break;
 	case StateKey::release_extraartists:
 		release_.extra_artists.emplace_back();
 		break;
@@ -1330,4 +1431,3 @@ state_parser::state_parser()
 
 } // namespace discogs
 } // namespace parser
-} // namespace release

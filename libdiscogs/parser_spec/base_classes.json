@@ -226,6 +226,11 @@
                 {
                     "json_name": "title",
                     "data_type": "string"
+                },
+                {
+                    "json_name": "extraartists",
+                    "data_type": "artist",
+                    "array": true
                 }
             ]
         },

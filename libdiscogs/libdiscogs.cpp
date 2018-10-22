@@ -8,6 +8,8 @@
 #include "parsers/wantlist_parser.hpp"
 #include "include/collection.hpp"
 #include "parsers/collection_parser.hpp"
+#include "include/release.hpp"
+#include "parsers/release_parser.hpp"
 
 #include <cpprest/http_client.h>
 #include <cpprest/http_msg.h>
@@ -136,6 +138,29 @@ do_basic_parse(utility::string_t str)
 	}
 
 	return pplx::task_from_result(p);
+}
+
+pplx::task<discogs::parser::release>
+discogs::rest::release(int release_id)
+{
+	uri_builder builder;
+
+	builder.append_path(STR("releases"))
+		.append_path(to_string_t(release_id));
+
+	auto request = create_request(builder);
+	auto response = m_client.request(request);
+
+	return response.then(do_basic_get)
+		.then(do_basic_parse<discogs::parser::state_parser>)
+		.then([](pplx::task<std::shared_ptr<discogs::parser::state_parser>> task_p) ->
+			pplx::task<discogs::parser::release>
+	{
+		auto p = task_p.get();
+		return pplx::task_from_result(
+			discogs::parser::release(std::move(p->release_))
+		);
+	});
 }
 
 

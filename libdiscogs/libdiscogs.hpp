@@ -9,6 +9,7 @@
 #include "include/folder_releases.hpp"
 #include "include/collection.hpp"
 #include "include/wantlist.hpp"
+#include "include/release.hpp"
 
 
 namespace discogs {
@@ -24,6 +25,10 @@ public:
 
 	int per_page() const { return m_per_page; }
 	void set_per_page(int per_page) { m_per_page = per_page; }
+
+	// RELEASE
+	pplx::task<discogs::parser::release>
+	release(int release_id);
 
 	// COLLECTION
 	pplx::task<discogs::parser::collection::folder_list>

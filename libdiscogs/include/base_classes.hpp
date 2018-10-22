@@ -185,8 +185,8 @@ class track {
 public:
 	track(){}
 	track
-		(string_t &&duration__, string_t &&position__, string_t &&type___, string_t &&title__) noexcept
-		:duration(duration__), position(position__), type_(type___), title(title__) {}
+		(string_t &&duration__, string_t &&position__, string_t &&type___, string_t &&title__, std::vector<artist> &&extraartists__) noexcept
+		:duration(duration__), position(position__), type_(type___), title(title__), extraartists(extraartists__) {}
 	~track(){}
 	track(const track &rhs) = default;
 	track(track &&rhs) noexcept = default;
@@ -197,6 +197,7 @@ public:
 	string_t position;
 	string_t type_;
 	string_t title;
+	std::vector<artist> extraartists;
 };
 
 
