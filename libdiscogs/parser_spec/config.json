@@ -11,7 +11,8 @@
     "parsers": [
         "release.json",
         "folder_releases.json",
-        "wantlist.json"
+        "wantlist.json",
+        "collection.json"
     ],
     "strcmp": "discogs::strcmp",
     "hdr_extension": "hpp",

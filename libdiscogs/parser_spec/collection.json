@@ -10,9 +10,8 @@
     "parents": [
         {
             "json_name": null,
-            "impl_name": "folders",
-            "data_type": "folder",
-            "array": true
+            "data_type": "folder_list",
+            "impl_name": "folder_list_"
         }
     ],
     "classes": [
@@ -34,6 +33,16 @@
                 {
                     "json_name": "name",
                     "data_type": "string"
+                }
+            ]
+        },
+        {
+            "class_name": "folder_list",
+            "definition": [
+                {
+                    "json_name": "folders",
+                    "data_type": "folder",
+                    "array": true
                 }
             ]
         }

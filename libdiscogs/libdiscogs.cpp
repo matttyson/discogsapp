@@ -6,6 +6,8 @@
 #include "parsers/folder_releases_parser.hpp"
 #include "include/wantlist.hpp"
 #include "parsers/wantlist_parser.hpp"
+#include "include/collection.hpp"
+#include "parsers/collection_parser.hpp"
 
 #include <cpprest/http_client.h>
 #include <cpprest/http_msg.h>
@@ -136,8 +138,8 @@ do_basic_parse(utility::string_t str)
 	return pplx::task_from_result(p);
 }
 
-/*
-pplx::task<discogs::parser::collection::container>
+
+pplx::task<discogs::parser::collection::folder_list>
 discogs::rest::collection(const string_t & username)
 {
 	uri_builder builder;
@@ -152,19 +154,19 @@ discogs::rest::collection(const string_t & username)
 	auto response = m_client.request(request);
 
 	return response.then(do_basic_get)
-		.then(do_basic_parse<collection::parser>)
-		.then([](pplx::task<std::shared_ptr<collection::parser>> task_p) ->
-			pplx::task<discogs::parser::collection::container>
+		.then(do_basic_parse<collection::state_parser>)
+		.then([](pplx::task<std::shared_ptr<collection::state_parser>> task_p) ->
+			pplx::task<discogs::parser::collection::folder_list>
 	{
 		auto p = task_p.get();
 		return pplx::task_from_result(
-			collection::container(
-				std::move(p->folders_)
+			collection::folder_list(
+				std::move(p->folder_list_.folders)
 			)
 		);
 	});
 }
-*/
+
 
 
 pplx::task<discogs::parser::wantlist::wantlist>

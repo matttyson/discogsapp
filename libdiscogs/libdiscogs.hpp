@@ -24,11 +24,11 @@ public:
 
 	int per_page() const { return m_per_page; }
 	void set_per_page(int per_page) { m_per_page = per_page; }
-/*
+
 	// COLLECTION
-	pplx::task<discogs::parser::collection::container>
+	pplx::task<discogs::parser::collection::folder_list>
 	collection(const string_t &username);
-*/
+
 	// COLLECTION ITEMS BY FOLDER
 	pplx::task<discogs::parser::folder_release::folder_releases>
 	folder_releases(

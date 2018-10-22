@@ -131,7 +131,6 @@ void client::folder_list()
 
 void client::collections_list()
 {
-	/*
 	auto result = m_rest->collection(m_username);
 
 	try {
@@ -149,12 +148,11 @@ void client::collections_list()
 
 //	std::sort(c.labels_.begin(), c.labels_.end(),[](collection::)
 
-	for(const auto &col : c.folders_){
+	for(const auto &col : c.folders){
 		dcout << col.name << dendl;
 		dcout << STR("\tcount: ") << col.count << dendl;
-		dcout << STR("\tid: ") << col.id << dendl dendl;
+		dcout << STR("\tid: ") << col.id << dendl;
 	}
-	*/
 }
 
 void client::wantlist_list()
