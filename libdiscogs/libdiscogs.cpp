@@ -117,15 +117,22 @@ do_basic_parse(utility::string_t str)
 	std::shared_ptr<Parser> p = std::make_shared<Parser>();
 	rapidjson::GenericReader<
 		rjs_UTF_t, rjs_UTF_t> r;
-	rapidjson::GenericInsituStringStream<rjs_UTF_t>
-		iss(const_cast<char_t*>(str.c_str()));
+	rapidjson::GenericStringStream<rjs_UTF_t>
+		iss(str.c_str());
 
-	rapidjson::ParseResult pr = r.Parse<rapidjson::kParseInsituFlag>(iss, *p);
+//	Code for insitu parsing - not using at the moment.
+//	rapidjson::GenericInsituStringStream<rjs_UTF_t>
+//		iss(const_cast<char_t*>(str.c_str()));
+//	rapidjson::ParseResult pr = r.Parse<rapidjson::kParseInsituFlag>(iss, *p);
+
+	rapidjson::ParseResult pr = r.Parse(iss, *p);
 
 	// TODO: Throw an exception here if nothing happens.
 
 	if(pr.IsError()){
-		std::cout << "Parse Error!\n";
+		dofstream file("parse_error.json");
+		file << str;
+		dcerr << STR("Parse Error! - json document written to parse_error.json") << dendl;
 	}
 
 	return pplx::task_from_result(p);
