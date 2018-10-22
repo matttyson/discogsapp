@@ -13,11 +13,7 @@ client::client(const discogs::string_t &user_agent)
 {
 	// TODO - Make the config load from a json file and
 	// not in the object constructor.
-#ifdef DISCOGS_WCHAR
-	std::wifstream file;
-#else
-	std::ifstream file;
-#endif
+	difstream file;
 	file.open("apikey", std::ios::in);
 	if(file.is_open()){
 		discogs::string_t key;
