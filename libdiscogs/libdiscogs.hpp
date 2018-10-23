@@ -11,6 +11,19 @@
 #include "include/wantlist.hpp"
 #include "include/release.hpp"
 
+/*
+	API.  Currently this returns a pplx::task_from_result.
+
+	While this is a nice API for doing async operations, it
+	can't deal with move only types.
+
+	This makes returning large objects is expensive as it
+	will copy. It also makes returning a std::unique_ptr
+	impossible.
+
+	I might have to change this be either a raw ptr or a
+	std::shared_ptr to the data set.
+*/
 
 namespace discogs {
 
