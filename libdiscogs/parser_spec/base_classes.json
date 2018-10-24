@@ -420,6 +420,10 @@
                     "data_type": "string"
                 },
                 {
+                    "json_name": "notes",
+                    "data_type": "string"
+                },
+                {
                     "json_name": "basic_information",
                     "data_type": "basic_information",
                     "impl_name": "basic_information_"

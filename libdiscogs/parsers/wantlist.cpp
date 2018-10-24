@@ -21,6 +21,7 @@ enum class StateKey {
 	wantlist_wants_id,
 	wantlist_wants_resource_url,
 	wantlist_wants_date_added,
+	wantlist_wants_notes,
 	wantlist_wants_basic_information,
 	wantlist_wants_basic_information_id,
 	wantlist_wants_basic_information_master_id,
@@ -160,6 +161,10 @@ bool wantlist_parser::String(const Ch* value, rapidjson::SizeType length, bool c
 		break;
 	case StateKey::wantlist_wants_date_added:
 		wantlist_.want_.back().date_added = string_t(value, length);
+		m_state = StateKey::wantlist_wants;
+		break;
+	case StateKey::wantlist_wants_notes:
+		wantlist_.want_.back().notes = string_t(value, length);
 		m_state = StateKey::wantlist_wants;
 		break;
 	case StateKey::wantlist_wants_basic_information_thumb:
@@ -312,6 +317,9 @@ bool wantlist_parser::Null()
 			m_state = StateKey::wantlist_wants;
 			break;
 		case StateKey::wantlist_wants_date_added:
+			m_state = StateKey::wantlist_wants;
+			break;
+		case StateKey::wantlist_wants_notes:
 			m_state = StateKey::wantlist_wants;
 			break;
 		case StateKey::wantlist_wants_basic_information:
@@ -619,6 +627,10 @@ bool wantlist_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 		else
 		if(length == 10 && discogs::strcmp(str, STR("date_added")) == 0){
 			m_state = StateKey::wantlist_wants_date_added;
+		}
+		else
+		if(length == 5 && discogs::strcmp(str, STR("notes")) == 0){
+			m_state = StateKey::wantlist_wants_notes;
 		}
 		else
 		if(length == 17 && discogs::strcmp(str, STR("basic_information")) == 0){

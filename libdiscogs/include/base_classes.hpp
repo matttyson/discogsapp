@@ -312,8 +312,8 @@ class want {
 public:
 	want():rating(0),id(0){}
 	want
-		(int rating__, int id__, string_t &&resource_url__, string_t &&date_added__, basic_information &&basic_information___) noexcept
-		:rating(rating__), id(id__), resource_url(resource_url__), date_added(date_added__), basic_information_(basic_information___) {}
+		(int rating__, int id__, string_t &&resource_url__, string_t &&date_added__, string_t &&notes__, basic_information &&basic_information___) noexcept
+		:rating(rating__), id(id__), resource_url(resource_url__), date_added(date_added__), notes(notes__), basic_information_(basic_information___) {}
 	~want(){}
 	want(const want &rhs) = default;
 	want(want &&rhs) noexcept = default;
@@ -324,6 +324,7 @@ public:
 	int id;
 	string_t resource_url;
 	string_t date_added;
+	string_t notes;
 	basic_information basic_information_;
 };
 
