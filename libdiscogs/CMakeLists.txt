@@ -26,9 +26,3 @@ if(WIN32)
 endif()
 
 add_subdirectory(parsers)
-
-# Fix this.
-set_property(SOURCE "${CMAKE_CURRENT_LIST_DIR}/parsers/parser.cpp" APPEND PROPERTY
-	INCLUDE_DIRECTORIES
-		"${CMAKE_CURRENT_LIST_DIR}/include"
-		"${CMAKE_CURRENT_LIST_DIR}/private_include")
