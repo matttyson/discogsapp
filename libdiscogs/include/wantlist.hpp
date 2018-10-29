@@ -13,9 +13,6 @@ namespace parser {
 class wantlist {
 public:
 	wantlist(){}
-	wantlist
-		(paginate::pagination &&pages__, std::vector<common::want> &&want___) noexcept
-		:pages(pages__), want_(want___) {}
 	~wantlist(){}
 	wantlist(const wantlist &rhs) = default;
 	wantlist(wantlist &&rhs) noexcept = default;
