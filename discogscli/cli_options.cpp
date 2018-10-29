@@ -41,6 +41,7 @@ int client::process_args(int argc, discogs::char_t *argv[])
 	cxxopts::ParseResult r = options.parse(argc, argv);
 
 	const auto sz = r.arguments().size();
+	int command_count = 0;
 
 	if (r.count(STR("help")) > 0 || sz == 0) {
 		dcout << options.help({ STR("Driver"),STR("Discogs"),STR("Ancillary") });
@@ -49,30 +50,43 @@ int client::process_args(int argc, discogs::char_t *argv[])
 	// Grab program commands
 	if (r.count(STR("folder-list"))) {
 		m_command = ParserCommand::folder_list;
+		command_count++;
 	}
 
 	if(r.count(STR("collections"))){
 		m_command = ParserCommand::collection;
+		command_count++;
 	}
 
 	if(r.count(STR("wantlist"))){
 		m_command = ParserCommand::wantlist;
+		command_count++;
 	}
 
 	if(r.count(STR("wantlist-del"))){
 		m_command = ParserCommand::wantlist_del;
+		command_count++;
 	}
 
 	if(r.count(STR("wantlist-add"))){
 		m_command = ParserCommand::wantlist_add;
+		command_count++;
 	}
 
 	if(r.count(STR("wantlist-upd"))){
 		m_command = ParserCommand::wantlist_upd;
+		command_count++;
 	}
 
 	if(r.count(STR("release-print"))){
 		m_command = ParserCommand::release_print;
+		command_count++;
+	}
+
+	if(command_count != 1){
+		dcout << STR("Error: a single Discogs option must be selected") << dendl << dendl;
+		dcout << options.help({ STR("Driver"),STR("Discogs"),STR("Ancillary") });
+		return -1;
 	}
 
 	// Grab ancillary arguments
