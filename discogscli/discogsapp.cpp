@@ -1,7 +1,3 @@
-// discogsapp.cpp : Defines the entry point for the application.
-//
-
-#include "discogsapp.h"
 #include "client.hpp"
 
 discogs::string_t global_user_agent(STR("madabbot test client/0.1"));
