@@ -259,7 +259,7 @@ discogs::rest::folder_releases(
 
 
 pplx::task<bool>
-discogs::rest::delete_wantlist(
+discogs::rest::wantlist_delete(
 	int release_id,
 	const string_t &username
 )
@@ -288,7 +288,7 @@ discogs::rest::delete_wantlist(
 }
 
 pplx::task<bool>
-discogs::rest::add_wantlist(
+discogs::rest::wantlist_add(
 	int release_id,
 	const string_t &username
 )
@@ -317,7 +317,7 @@ discogs::rest::add_wantlist(
 
 
 pplx::task<bool>
-discogs::rest::update_wantlist(
+discogs::rest::wantlist_update(
 	int release_id,
 	const string_t &username,
 	const string_t &notes,

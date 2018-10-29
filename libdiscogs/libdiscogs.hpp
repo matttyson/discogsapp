@@ -64,14 +64,14 @@ public:
 
 	// Add to wantlist
 	pplx::task<bool>
-	add_wantlist(
+	wantlist_add(
 		int release_id,
 		const string_t &username
 	);
 
 	// Update notes or rating on the wantlist
 	pplx::task<bool>
-	update_wantlist(
+	wantlist_update(
 		int release_id,
 		const string_t &username,
 		const string_t &notes,
@@ -80,7 +80,7 @@ public:
 
 	// Delete a release from the wantlist.
 	pplx::task<bool>
-	delete_wantlist(
+	wantlist_delete(
 		int release_id,
 		const string_t &username
 	);

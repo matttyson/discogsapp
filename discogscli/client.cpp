@@ -203,7 +203,7 @@ void client::wantlist_list()
 void client::wantlist_delete()
 {
 	auto result =
-	m_rest->delete_wantlist(m_release_id, m_username);
+	m_rest->wantlist_delete(m_release_id, m_username);
 
 	try {
 		result.wait();
@@ -221,7 +221,7 @@ void client::wantlist_delete()
 void client::wantlist_add()
 {
 	auto result =
-		m_rest->add_wantlist(m_release_id, m_username);
+		m_rest->wantlist_add(m_release_id, m_username);
 
 	try {
 		result.wait();
@@ -239,7 +239,7 @@ void client::wantlist_add()
 void client::wantlist_update()
 {
 	auto result =
-		m_rest->update_wantlist(m_release_id, m_username, m_notes, m_rating);
+		m_rest->wantlist_update(m_release_id, m_username, m_notes, m_rating);
 
 	try {
 		result.wait();
