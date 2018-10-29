@@ -57,7 +57,6 @@ static bool has_more_pages(const discogs::parser::paginate::pagination &p)
 	return p.page < p.pages;
 }
 
-
 void client::folder_list()
 {
 	std::vector<discogs::parser::folder_release_item> releases;
@@ -79,13 +78,13 @@ void client::folder_list()
 			return;
 		}
 
-		auto c = foo.get();
+		auto c = discogs::unique(foo.get());
 
 		releases.insert(releases.end(),
-			std::make_move_iterator(c.release_.begin()),
-			std::make_move_iterator(c.release_.end()));
+			std::make_move_iterator(c->release_.begin()),
+			std::make_move_iterator(c->release_.end()));
 
-		keep_going = has_more_pages(c.pages);
+		keep_going = has_more_pages(c->pages);
 
 		dcerr << STR("Downloaded page ") << page_id << dendl;
 		page_id++;
@@ -144,11 +143,9 @@ void client::collections_list()
 		return;
 	}
 
-	auto c = result.get();
+	auto c = discogs::unique(result.get());
 
-//	std::sort(c.labels_.begin(), c.labels_.end(),[](collection::)
-
-	for(const auto &col : c.folders){
+	for(const auto &col : c->folders){
 		dcout << col.name << dendl;
 		dcout << STR("\tcount: ") << col.count << dendl;
 		dcout << STR("\tid: ") << col.id << dendl;
@@ -176,13 +173,13 @@ void client::wantlist_list()
 			return;
 		}
 
-		auto c = result.get();
+		auto c = discogs::unique(result.get());
 
-		//keep_going = has_more_pages(c.pages);
+		keep_going = has_more_pages(c->pages);
 
 		want_list.insert(want_list.end(),
-			std::make_move_iterator(c.want_.begin()),
-			std::make_move_iterator(c.want_.end())
+			std::make_move_iterator(c->want_.begin()),
+			std::make_move_iterator(c->want_.end())
 		);
 		page_id++;
 	} while (keep_going);
@@ -266,16 +263,16 @@ void client::release_print()
 		print_exception(e);
 	}
 
-	auto release = result.get();
+	auto release = discogs::unique(result.get());
 	bool start = true;
 
-	dcout << STR("Printing Release ") << release.id << dendl << dendl;
-	for (const auto &a : release.artists) {
+	dcout << STR("Printing Release ") << release->id << dendl << dendl;
+	for (const auto &a : release->artists) {
 		dcout << STR("Artist: ") << a.name << dendl;
 	}
-	dcout << STR("Title : ") << release.title << dendl;
-	dcout << STR("Year  : ") << release.year << dendl;
-	for(const auto &f : release.formats){
+	dcout << STR("Title : ") << release->title << dendl;
+	dcout << STR("Year  : ") << release->year << dendl;
+	for(const auto &f : release->formats){
 		dcout << STR("Format: ") << f.name;
 		for(const auto &d : f.descriptions){
 			dcout << STR(", ") << d;
@@ -283,7 +280,7 @@ void client::release_print()
 	}
 	dcout << dendl;
 	dcout << STR("Genres: ");
-	for (const auto &g : release.genres) {
+	for (const auto &g : release->genres) {
 		if (!start) {
 			dcout << STR(", ");
 		}
@@ -291,9 +288,9 @@ void client::release_print()
 		dcout << g;
 	}
 	dcout << dendl;
-	dcout << STR("URL   : ") << release.master_url << dendl;
+	dcout << STR("URL   : ") << release->master_url << dendl;
 	dcout << STR("Tracks: ") << dendl;
-	for(const auto &t: release.tracklist){
+	for(const auto &t: release->tracklist){
 		dcout << STR("  ") << t.position
 			<< STR(" - ") << t.title;
 		if(t.duration.length() > 0){

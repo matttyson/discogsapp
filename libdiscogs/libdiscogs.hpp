@@ -12,20 +12,34 @@
 #include "include/release.hpp"
 
 /*
-	API.  Currently this returns a pplx::task_from_result.
+	The discogs REST api will return a pplx::task_from_result
+	object which contains a raw pointer to the data being managed.
 
-	While this is a nice API for doing async operations, it
-	can't deal with move only types.
+	This is because the pplx library can't deal with move only types
+	and therefore cannot return a std::unique_ptr.
 
-	This makes returning large objects is expensive as it
-	will copy. It also makes returning a std::unique_ptr
-	impossible.
+	I do not want to force the user of this API to have to take a
+	std::shared_ptr or be forced to copy large objects.
 
-	I might have to change this be either a raw ptr or a
-	std::shared_ptr to the data set.
+	Therefore it's reccomended you wrap the raw ptr from this API
+	into either a std::unique_ptr or std::shared_ptr as you prefer.
 */
 
 namespace discogs {
+
+/*
+	This is a helper function to reduce the amount of typing
+	needed to make a unique_ptr from a raw pointer.
+	I would have thought that the unique_ptr template class could
+	infer the type of T from the argument, but that seems to not
+	be the case.
+*/
+
+template<typename T>
+static std::unique_ptr<T> unique(T *t)
+{
+	return std::unique_ptr<T>(t);
+}
 
 class rest {
 public:
@@ -40,15 +54,15 @@ public:
 	void set_per_page(int per_page) { m_per_page = per_page; }
 
 	// RELEASE
-	pplx::task<discogs::parser::release>
+	pplx::task<discogs::parser::release *>
 	release(int release_id);
 
 	// COLLECTION
-	pplx::task<discogs::parser::folder_list>
+	pplx::task<discogs::parser::folder_list *>
 	collection(const string_t &username);
 
 	// COLLECTION ITEMS BY FOLDER
-	pplx::task<discogs::parser::folder_releases>
+	pplx::task<discogs::parser::folder_releases *>
 	folder_releases(
 		const string_t &username,
 		const string_t &folder_id,
@@ -56,7 +70,7 @@ public:
 	);
 
 	// Get Wantlist
-	pplx::task<discogs::parser::wantlist>
+	pplx::task<discogs::parser::wantlist *>
 	wantlist(
 		const string_t &username,
 		int page_id = 1

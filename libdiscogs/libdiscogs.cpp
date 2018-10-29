@@ -140,7 +140,7 @@ do_basic_parse(utility::string_t str)
 	return pplx::task_from_result(p);
 }
 
-pplx::task<discogs::parser::release>
+pplx::task<discogs::parser::release *>
 discogs::rest::release(int release_id)
 {
 	uri_builder builder;
@@ -154,15 +154,17 @@ discogs::rest::release(int release_id)
 	return response.then(do_basic_get)
 		.then(do_basic_parse<discogs::parser::release_parser>)
 		.then([](pplx::task<std::shared_ptr<discogs::parser::release_parser>> task_p) ->
-			pplx::task<discogs::parser::release>
+			pplx::task<discogs::parser::release *>
 	{
 		auto p = task_p.get();
-		return pplx::task_from_result(std::move(p->release_));
+		return pplx::task_from_result(
+			new discogs::parser::release(std::move(p->release_))
+		);
 	});
 }
 
 
-pplx::task<discogs::parser::folder_list>
+pplx::task<discogs::parser::folder_list *>
 discogs::rest::collection(const string_t & username)
 {
 	uri_builder builder;
@@ -179,16 +181,18 @@ discogs::rest::collection(const string_t & username)
 	return response.then(do_basic_get)
 		.then(do_basic_parse<parser::collection_parser>)
 		.then([](pplx::task<std::shared_ptr<parser::collection_parser>> task_p) ->
-			pplx::task<discogs::parser::folder_list>
+			pplx::task<discogs::parser::folder_list *>
 	{
 		auto p = task_p.get();
-		return pplx::task_from_result(std::move(p->folder_list_));
+		return pplx::task_from_result(
+			new discogs::parser::folder_list(std::move(p->folder_list_))
+		);
 	});
 }
 
 
 
-pplx::task<discogs::parser::wantlist>
+pplx::task<discogs::parser::wantlist *>
 discogs::rest::wantlist(
 	const string_t &username,
 	int page_id
@@ -215,15 +219,17 @@ discogs::rest::wantlist(
 	return response.then(do_basic_get)
 		.then(do_basic_parse<discogs::parser::wantlist_parser>)
 		.then([](std::shared_ptr<discogs::parser::wantlist_parser> p) ->
-			pplx::task<discogs::parser::wantlist>
+			pplx::task<discogs::parser::wantlist *>
 	{
-		return pplx::task_from_result(std::move(p->wantlist_));
+		return pplx::task_from_result(
+			new discogs::parser::wantlist(std::move(p->wantlist_))
+		);
 	});
 }
 
 
 
-pplx::task<discogs::parser::folder_releases>
+pplx::task<discogs::parser::folder_releases *>
 discogs::rest::folder_releases(
 	const string_t & username,
 	const string_t &folder_id,
@@ -251,9 +257,11 @@ discogs::rest::folder_releases(
 	return z.then(do_basic_get)
 			.then(do_basic_parse<parser::folder_releases_parser>)
 			.then([](std::shared_ptr<parser::folder_releases_parser> p) ->
-				pplx::task<parser::folder_releases>
+				pplx::task<parser::folder_releases *>
 	{
-		return pplx::task_from_result(std::move(p->folder_release));
+		return pplx::task_from_result(
+			new discogs::parser::folder_releases(std::move(p->folder_release))
+		);
 	});
 }
 
