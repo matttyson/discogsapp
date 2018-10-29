@@ -1,11 +1,14 @@
-include_directories(..)
-include_directories(include)
-
 add_library(libdiscogs STATIC
 	${CMAKE_CURRENT_LIST_DIR}/libdiscogs.cpp
 	${CMAKE_CURRENT_LIST_DIR}/porting.cpp
 	${CMAKE_CURRENT_LIST_DIR}/libdiscogs.hpp
 )
+
+target_include_directories(libdiscogs PUBLIC .)
+target_include_directories(libdiscogs PUBLIC include)
+
+target_include_directories(libdiscogs PRIVATE parsers)
+target_include_directories(libdiscogs PRIVATE ..)
 
 find_package(RapidJSON REQUIRED)
 
@@ -26,3 +29,4 @@ if(WIN32)
 endif()
 
 add_subdirectory(parsers)
+add_subdirectory(include)

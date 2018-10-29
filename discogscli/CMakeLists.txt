@@ -7,6 +7,8 @@ cmake_minimum_required (VERSION 3.8)
 
 add_executable (discogsapp "discogsapp.cpp" "client.cpp" "cli_options.cpp")
 
+target_sources(discogsapp PRIVATE client.hpp client_private.hpp)
+
 target_link_libraries(discogsapp libdiscogs)
 
 target_include_directories(discogsapp PRIVATE ..)
