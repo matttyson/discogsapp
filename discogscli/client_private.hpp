@@ -8,7 +8,7 @@ enum class ParserCommand {
 	wantlist_add,
 	wantlist_upd,
 	release_print,
-	authenticate,
+	login,
 	logout,
 	identify,
 	NO_COMMAND

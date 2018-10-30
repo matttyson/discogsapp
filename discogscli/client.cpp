@@ -319,7 +319,7 @@ void client::identify()
 	dcout << STR("URL     : ") << id->resource_url << dendl;
 }
 
-void client::authenticate()
+void client::login()
 {
 	const discogs::oauth1_data data = get_oauth_data();
 
@@ -378,8 +378,8 @@ int client::run(int argc, discogs::char_t *argv[])
 	apply_config();
 
 	switch(m_command){
-	case ParserCommand::authenticate:
-		authenticate();
+	case ParserCommand::login:
+		login();
 		break;
 
 	case ParserCommand::logout:

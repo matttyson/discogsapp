@@ -92,7 +92,7 @@ int client::process_args(int argc, discogs::char_t *argv[])
 	}
 
 	if(r.count(STR("login"))){
-		m_command = ParserCommand::authenticate;
+		m_command = ParserCommand::login;
 		command_count++;
 	}
 
