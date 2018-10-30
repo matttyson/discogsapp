@@ -3,6 +3,7 @@
 add_library(liboauth1 STATIC
 	${CMAKE_CURRENT_LIST_DIR}/oauth1.cpp
 	${CMAKE_CURRENT_LIST_DIR}/oauth1.hpp
+	${CMAKE_CURRENT_LIST_DIR}/oauth1_data.hpp
 	${CMAKE_CURRENT_LIST_DIR}/oauth1_listener.cpp
 	${CMAKE_CURRENT_LIST_DIR}/oauth1_listener.hpp
 )
