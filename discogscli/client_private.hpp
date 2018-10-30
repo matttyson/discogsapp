@@ -11,6 +11,7 @@ enum class ParserCommand {
 	login,
 	logout,
 	identify,
+	download,
 	NO_COMMAND
 };
 

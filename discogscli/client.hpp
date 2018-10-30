@@ -37,6 +37,8 @@ private:
 	void login();
 	void logout();
 
+	void download();
+
 	void apply_config();
 
 private:
@@ -52,5 +54,6 @@ private:
 	discogs::string_t m_username;
 	discogs::string_t m_folder_id;
 	discogs::string_t m_notes;
+	discogs::string_t m_cmd_arg;
 };
 

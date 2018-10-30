@@ -121,6 +121,13 @@ public:
 	pplx::task<discogs::parser::identity *>
 	identity();
 
+	// Just download a URL without processing, store the body as
+	// a string_t.  url_path is the URL path after the domain.
+	// EG if you want http://api.domain.com/foo/bar/baz
+	// then set url_path to foo/bar/baz
+	pplx::task<discogs::string_t>
+	download_url(const discogs::string_t &url_path);
+
 private:
 	web::http::http_request create_request(
 		const web::uri_builder &url,

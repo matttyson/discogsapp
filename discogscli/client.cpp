@@ -347,6 +347,40 @@ void client::logout()
 	m_cfg.write();
 }
 
+void client::download()
+{
+	// TODO:  The output here will be whatever json
+	// the endpoint gives us, which will usally be
+	// one long string with no line breaks.
+	// I should use RapidJSON to format this
+	// so that it's written out in a pretty way.
+
+	auto result = m_rest->download_url(m_cmd_arg);
+
+	try {
+		result.wait();
+	}
+	catch(const web::http::http_exception &e) {
+		print_exception(e);
+		return;
+	}
+
+	discogs::string_t filename = STR("download.json");
+
+	discogs::dofstream file;
+	file.open(filename);
+
+	if(!file.is_open()){
+		dcout << STR("Error opening file") << dendl;
+		return;
+	}
+
+	file << result.get();
+
+	dcout << STR("Written output to ") << filename << dendl;
+
+}
+
 void client::apply_config()
 {
 	const discogs::oauth1_data data = get_oauth_data();
@@ -416,6 +450,10 @@ int client::run(int argc, discogs::char_t *argv[])
 
 	case ParserCommand::identify:
 		identify();
+		break;
+
+	case ParserCommand::download:
+		download();
 		break;
 
 	case ParserCommand::NO_COMMAND:

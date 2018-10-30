@@ -450,3 +450,16 @@ discogs::rest::identity()
 		);
 	});
 }
+
+
+pplx::task<discogs::string_t>
+discogs::rest::download_url(const discogs::string_t &url_path)
+{
+	uri_builder builder;
+	builder.append_path(url_path);
+
+	auto request = create_request(builder);
+	auto response = m_private->m_client.request(request);
+
+	return response.then(do_basic_get);
+}

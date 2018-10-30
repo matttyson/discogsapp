@@ -24,6 +24,7 @@ int client::process_args(int argc, discogs::char_t *argv[])
 
 	options.add_options(STR("Discogs"))
 		(STR("whoami"), STR("Print out information about who you are authenticated as"))
+		(STR("download"), STR("Download a URL from discogs"), cxxopts::value<cxxopts::String>())
 		(STR("folder-list"), STR("List all the items in a folder, requires username, folder-id"))
 		(STR("collections"), STR("List all the collections for a user, requires username"))
 		(STR("wantlist"), STR("List the users wantlist, requires username"))
@@ -98,6 +99,12 @@ int client::process_args(int argc, discogs::char_t *argv[])
 
 	if(r.count(STR("logout"))){
 		m_command = ParserCommand::logout;
+		command_count++;
+	}
+
+	if(r.count(STR("download"))){
+		m_command = ParserCommand::download;
+		m_cmd_arg = r[STR("download")].as<cxxopts::String>();
 		command_count++;
 	}
 
