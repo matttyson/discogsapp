@@ -11,10 +11,12 @@
 #include "include/release.hpp"
 #include "parsers/release_parser.hpp"
 
+#include <cpprest/http_listener.h>
 #include <cpprest/http_client.h>
 #include <cpprest/http_msg.h>
 #include <cpprest/filestream.h>
 #include <cpprest/json.h>
+#include <cpprest/oauth1.h>
 #include <cpprest/details/basic_types.h>
 
 #include <rapidjson/writer.h>
@@ -58,8 +60,28 @@ const static std::string json_content_type = std::string("application/json; char
 using namespace web;
 using namespace discogs::parser;
 
+
+namespace discogs {
+
+class rest_private {
+public:
+	rest_private(int per_page, const string_t &user_agent, const string_t &base_url)
+		:m_per_page(per_page), m_user_agent(user_agent), m_base_url(base_url), m_client(base_url)
+	{}
+
+	int m_per_page;
+	string_t m_user_agent;
+	string_t m_base_url;
+
+	// HTTP Client object
+	web::http::client::http_client m_client;
+};
+
+}
+
+
 discogs::rest::rest(const string_t & user_agent, const string_t & base_url)
-	:m_per_page(100),m_user_agent(user_agent),m_client(base_url)
+	:m_private(new discogs::rest_private(100, user_agent, base_url))
 {
 }
 
@@ -67,12 +89,46 @@ discogs::rest::~rest()
 {
 }
 
-void discogs::rest::set_session_key(const string_t &session_key)
+int discogs::rest::per_page()const
 {
-	m_session_key.reserve(session_key.length() + 15);
-	m_session_key.clear();
-	m_session_key.assign(STR("Discogs token="), 14);
-	m_session_key.append(session_key);
+	return m_private->m_per_page;
+}
+
+void discogs::rest::set_per_page(int per_page)
+{
+	m_private->m_per_page = per_page;
+}
+
+void discogs::rest::oauth_configure(
+	const discogs::oauth1_data &data,
+	const string_t &user_access_token,
+	const string_t &user_secret_token
+)
+{
+	web::http::oauth1::experimental::oauth1_config oauth1_config(
+		data.consumer_key,
+		data.consumer_secret,
+		data.temp_endpoint,
+		data.auth_endpoint,
+		data.token_endpoint,
+		data.callback_uri,
+		web::http::oauth1::experimental::oauth1_methods::plaintext
+	);
+
+	// Set the user's access token, if we have it.
+	if(user_access_token.size() && user_secret_token.size()){
+		oauth1_config.set_token(web::http::oauth1::experimental::oauth1_token(
+			user_access_token, user_secret_token
+		));
+	}
+
+	web::http::client::http_client_config http_config;
+
+	http_config.set_oauth1(oauth1_config);
+
+	m_private->m_client = web::http::client::http_client(
+		m_private->m_base_url, http_config
+	);
 }
 
 http::http_request discogs::rest::create_request(
@@ -83,12 +139,9 @@ http::http_request discogs::rest::create_request(
 	http::http_request request(method);
 	request.set_request_uri(url.to_string());
 
-	request.headers().add(STR("User-Agent"), m_user_agent);
+	request.headers().add(STR("User-Agent"), m_private->m_user_agent);
 	request.headers().add(STR("Accept"),
 		STR("application/vnd.discogs.v2.discogs+json"));
-	if (m_session_key.length() > 0) {
-		request.headers().add(STR("Authorization"), m_session_key);
-	}
 
 	return request;
 }
@@ -149,7 +202,7 @@ discogs::rest::release(int release_id)
 		.append_path(to_string_t(release_id));
 
 	auto request = create_request(builder);
-	auto response = m_client.request(request);
+	auto response = m_private->m_client.request(request);
 
 	return response.then(do_basic_get)
 		.then(do_basic_parse<discogs::parser::release_parser>)
@@ -176,7 +229,7 @@ discogs::rest::collection(const string_t & username)
 
 	auto request = create_request(builder);
 
-	auto response = m_client.request(request);
+	auto response = m_private->m_client.request(request);
 
 	return response.then(do_basic_get)
 		.then(do_basic_parse<parser::collection_parser>)
@@ -204,8 +257,8 @@ discogs::rest::wantlist(
 		.append_path(username, true)
 		.append_path(STR("wants"));
 
-	if (m_per_page > 0) {
-		builder.append_query(STR("per_page"), m_per_page);
+	if (m_private->m_per_page > 0) {
+		builder.append_query(STR("per_page"), m_private->m_per_page);
 	}
 
 	builder.append_query(STR("page"), page_id);
@@ -214,7 +267,7 @@ discogs::rest::wantlist(
 
 	auto request = create_request(builder);
 
-	auto response = m_client.request(request);
+	auto response = m_private->m_client.request(request);
 
 	return response.then(do_basic_get)
 		.then(do_basic_parse<discogs::parser::wantlist_parser>)
@@ -244,8 +297,8 @@ discogs::rest::folder_releases(
 		.append_path(folder_id, true)
 		.append_path(STR("releases"));
 
-	if(m_per_page > 0){
-		builder.append_query(STR("per_page"), m_per_page);
+	if(m_private->m_per_page > 0){
+		builder.append_query(STR("per_page"), m_private->m_per_page);
 	}
 	if(page_id > 0){
 		builder.append_query(STR("page"), page_id);
@@ -253,7 +306,7 @@ discogs::rest::folder_releases(
 
 	auto request = create_request(builder);
 
-	auto z = m_client.request(request);
+	auto z = m_private->m_client.request(request);
 	return z.then(do_basic_get)
 			.then(do_basic_parse<parser::folder_releases_parser>)
 			.then([](std::shared_ptr<parser::folder_releases_parser> p) ->
@@ -281,7 +334,7 @@ discogs::rest::wantlist_delete(
 
 	auto request = create_request(builder, http::methods::DEL);
 
-	auto result = m_client.request(request);
+	auto result = m_private->m_client.request(request);
 
 	return
 	result.then([](http::http_response resp) -> bool {
@@ -310,7 +363,7 @@ discogs::rest::wantlist_add(
 
 	auto request = create_request(builder, http::methods::PUT);
 
-	auto result = m_client.request(request);
+	auto result = m_private->m_client.request(request);
 
 	return result.then([](http::http_response resp) -> bool {
 		const auto code = resp.status_code();
@@ -359,7 +412,7 @@ discogs::rest::wantlist_update(
 	auto request = create_request(builder, http::methods::POST);
 	request.set_body(sb.MoveStdString(), json_content_type);
 
-	auto result = m_client.request(request);
+	auto result = m_private->m_client.request(request);
 
 	return result.then([](http::http_response resp) -> bool {
 		const auto code = resp.status_code();

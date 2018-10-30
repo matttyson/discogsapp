@@ -17,4 +17,5 @@ project ("discogsapp" CXX)
 # Include sub-projects.
 add_subdirectory ("discogscli")
 add_subdirectory ("libdiscogs")
+add_subdirectory ("liboauth1")
 

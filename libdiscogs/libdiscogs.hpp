@@ -4,12 +4,16 @@
 #include <cpprest/http_client.h>
 #include <pplx/pplxtasks.h>
 
-// TODO: work out how to remove the dependecy on http_client.h  pimpl idiom?
+// I want to remove http_client.h so the cpprestsdk isn't visible outside this
+// header file.  I need to create a new set of exceptions so the cpprestk
+// exception defintions aren't needed.
 
 #include "include/folder_releases.hpp"
 #include "include/collection.hpp"
 #include "include/wantlist.hpp"
 #include "include/release.hpp"
+
+#include "liboauth1/oauth1_data.hpp"
 
 /*
 	The discogs REST api will return a pplx::task_from_result
@@ -41,6 +45,8 @@ static std::unique_ptr<T> unique(T *t)
 	return std::unique_ptr<T>(t);
 }
 
+class rest_private;
+
 class rest {
 public:
 	rest(
@@ -50,8 +56,10 @@ public:
 	~rest();
 	void set_session_key(const string_t &session_key);
 
-	int per_page() const { return m_per_page; }
-	void set_per_page(int per_page) { m_per_page = per_page; }
+	int per_page() const;
+	void set_per_page(int per_page);
+
+	void authenticate();
 
 	// RELEASE
 	pplx::task<discogs::parser::release *>
@@ -99,6 +107,15 @@ public:
 		const string_t &username
 	);
 
+	// Configuration data for the OAuth system
+	// Supply the filled data struct, along with
+	// the logged in users tokens.
+	void oauth_configure(
+		const discogs::oauth1_data &data,
+		const string_t &access_token,
+		const string_t &secret_token
+	);
+
 private:
 	web::http::http_request create_request(
 		const web::uri_builder &url,
@@ -106,10 +123,7 @@ private:
 	);
 
 private:
-	int m_per_page;
-	string_t m_user_agent;
-	string_t m_session_key;
-	web::http::client::http_client m_client;
+	std::unique_ptr<discogs::rest_private> m_private;
 };
 
 }

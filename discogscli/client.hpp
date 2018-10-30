@@ -1,6 +1,7 @@
 #pragma once
 
 #include "porting.h"
+#include "config.hpp"
 #include <memory>
 
 namespace discogs {
@@ -31,6 +32,10 @@ private:
 	void wantlist_add();
 	void wantlist_update();
 
+	void authenticate();
+
+	void apply_config();
+
 private:
 	ParserCommand m_command;
 	std::unique_ptr<discogs::rest> m_rest;
@@ -38,6 +43,8 @@ private:
 	// Arguments
 	int m_release_id;
 	int m_rating;
+
+	discogs::config m_cfg;
 
 	discogs::string_t m_username;
 	discogs::string_t m_folder_id;

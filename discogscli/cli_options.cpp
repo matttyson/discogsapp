@@ -18,6 +18,7 @@ int client::process_args(int argc, discogs::char_t *argv[])
 		(STR("help"), STR("Print Help"), cxxopts::value<bool>())
 		(STR("v,verbose"), STR("Verbose output"), cxxopts::value<bool>()->default_value(STR("false")))
 		(STR("c,config"), STR("Config file to use"), cxxopts::value<cxxopts::String>())
+		(STR("auth"), STR("Authenticate with discogs via oauth (web browser required)"))
 		;
 
 	options.add_options(STR("Discogs"))
@@ -81,6 +82,10 @@ int client::process_args(int argc, discogs::char_t *argv[])
 	if(r.count(STR("release-print"))){
 		m_command = ParserCommand::release_print;
 		command_count++;
+	}
+
+	if(r.count(STR("auth"))){
+		m_command = ParserCommand::authenticate;
 	}
 
 	if(command_count != 1){

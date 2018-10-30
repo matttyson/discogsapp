@@ -1,11 +1,18 @@
 #include "client.hpp"
 
 #include "porting.h"
-#include "libdiscogs/libdiscogs.hpp"
+
 #include "client_private.hpp"
+#include "config.hpp"
+#include "oauth1_data.hpp"
+
+#include "libdiscogs/libdiscogs.hpp"
+#include "liboauth1/oauth1.hpp"
 
 #include <iostream>
 #include <string>
+
+void open_browser(const discogs::string_t &str);
 
 void print_exception(const web::http::http_exception &e)
 {
@@ -19,17 +26,9 @@ void print_exception(const web::http::http_exception &e)
 client::client(const discogs::string_t &user_agent)
 	:m_command(ParserCommand::NO_COMMAND),
 	m_rest(std::make_unique<discogs::rest>(user_agent)),
-	m_release_id(-1), m_rating(-1)
+	m_release_id(-1), m_rating(-1),
+	m_cfg(STR("discogscli.json"))
 {
-	// TODO - Make the config load from a json file and
-	// not in the object constructor.
-	discogs::difstream file;
-	file.open("apikey", std::ios::in);
-	if(file.is_open()){
-		discogs::string_t key;
-		getline(file, key);
-		m_rest->set_session_key(key);
-	}
 	m_rest->set_per_page(100);
 }
 
@@ -300,13 +299,62 @@ void client::release_print()
 	}
 }
 
+void client::authenticate()
+{
+	const discogs::oauth1_data data = get_oauth_data();
+
+	discogs::oauth1 auth(data, open_browser);
+
+	auto task = auth.authenticate();
+
+	if(task.get()){
+		dcout << STR("Authenticated successfully") << dendl;
+
+		m_cfg.set(STR("user_access_token"), auth.access_token());
+		m_cfg.set(STR("user_secret"), auth.secret());
+		m_cfg.write();
+	}
+	else {
+		// Authentication failed.
+		dcout << STR("Authentication failed") << dendl;
+	}
+}
+
+void client::apply_config()
+{
+	const discogs::oauth1_data data = get_oauth_data();
+
+	if(!m_cfg.read()){
+		return;
+	}
+
+	discogs::string_t user_access_token;
+	discogs::string_t user_secret;
+
+	if(!m_cfg.get(STR("user_access_token"), user_access_token)){
+		return;
+	}
+
+	if (!m_cfg.get(STR("user_secret"), user_secret)) {
+		return;
+	}
+
+	m_rest->oauth_configure(data, user_access_token, user_secret);
+}
+
 int client::run(int argc, discogs::char_t *argv[])
 {
 	if (process_args(argc, argv) != 0) {
 		return -1;
 	}
 
+	apply_config();
+
 	switch(m_command){
+	case ParserCommand::authenticate:
+		authenticate();
+		break;
+
 	case ParserCommand::folder_list:
 		folder_list();
 		break;
