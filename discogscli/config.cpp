@@ -252,4 +252,9 @@ void config::set(const discogs::string_t &key, int value)
 	m_data->data[key] = value;
 }
 
+void config::remove(const discogs::string_t &key)
+{
+	m_data->data.erase(key);
+}
+
 }

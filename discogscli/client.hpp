@@ -35,6 +35,7 @@ private:
 	void identify();
 
 	void authenticate();
+	void logout();
 
 	void apply_config();
 

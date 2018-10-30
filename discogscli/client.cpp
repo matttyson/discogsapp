@@ -340,6 +340,13 @@ void client::authenticate()
 	}
 }
 
+void client::logout()
+{
+	m_cfg.remove(STR("user_access_token"));
+	m_cfg.remove(STR("user_secret"));
+	m_cfg.write();
+}
+
 void client::apply_config()
 {
 	const discogs::oauth1_data data = get_oauth_data();
@@ -373,6 +380,10 @@ int client::run(int argc, discogs::char_t *argv[])
 	switch(m_command){
 	case ParserCommand::authenticate:
 		authenticate();
+		break;
+
+	case ParserCommand::logout:
+		logout();
 		break;
 
 	case ParserCommand::folder_list:
