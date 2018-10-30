@@ -22,6 +22,7 @@ int client::process_args(int argc, discogs::char_t *argv[])
 		;
 
 	options.add_options(STR("Discogs"))
+		(STR("whoami"), STR("Print out information about who you are authenticated as"))
 		(STR("folder-list"), STR("List all the items in a folder, requires username, folder-id"))
 		(STR("collections"), STR("List all the collections for a user, requires username"))
 		(STR("wantlist"), STR("List the users wantlist, requires username"))
@@ -81,6 +82,11 @@ int client::process_args(int argc, discogs::char_t *argv[])
 
 	if(r.count(STR("release-print"))){
 		m_command = ParserCommand::release_print;
+		command_count++;
+	}
+
+	if(r.count(STR("whoami"))){
+		m_command = ParserCommand::identify;
 		command_count++;
 	}
 

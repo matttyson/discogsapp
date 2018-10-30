@@ -7,4 +7,5 @@ target_sources(libdiscogs PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}/parser_common.hpp
 	${CMAKE_CURRENT_LIST_DIR}/release.hpp
 	${CMAKE_CURRENT_LIST_DIR}/wantlist.hpp
+	${CMAKE_CURRENT_LIST_DIR}/identity.hpp
 )

@@ -1,0 +1,42 @@
+{
+    "namespace": [
+        "discogs",
+        "parser"
+    ],
+    "parser_classname": "identity_parser",
+    "filename": "identity",
+    "link": "https://www.discogs.com/developers/#page:authentication,header:authentication-oauth-flow",
+    "description": "Identify the logged in user",
+    "document": {
+        "json_name": null,
+        "data_type": "identity",
+        "impl_name": "identity_"
+    },
+    "classes": [
+        {
+            "class_name": "identity",
+            "definition": [
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "username",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "consumer_name",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "message",
+                    "data_type": "string"
+                }
+            ]
+        }
+    ]
+}

@@ -32,6 +32,8 @@ private:
 	void wantlist_add();
 	void wantlist_update();
 
+	void identify();
+
 	void authenticate();
 
 	void apply_config();

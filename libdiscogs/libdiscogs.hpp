@@ -12,6 +12,7 @@
 #include "include/collection.hpp"
 #include "include/wantlist.hpp"
 #include "include/release.hpp"
+#include "include/identity.hpp"
 
 #include "liboauth1/oauth1_data.hpp"
 
@@ -115,6 +116,10 @@ public:
 		const string_t &access_token,
 		const string_t &secret_token
 	);
+
+	// Returns the identity of the user when logged in with oauth.
+	pplx::task<discogs::parser::identity *>
+	identity();
 
 private:
 	web::http::http_request create_request(

@@ -10,6 +10,9 @@
 #include "parsers/collection_parser.hpp"
 #include "include/release.hpp"
 #include "parsers/release_parser.hpp"
+#include "include/identity.hpp"
+#include "parsers/identity_parser.hpp"
+
 
 #include <cpprest/http_listener.h>
 #include <cpprest/http_client.h>
@@ -422,5 +425,28 @@ discogs::rest::wantlist_update(
 		}
 
 		throw http::http_exception(resp.status_code(), resp.reason_phrase());
+	});
+}
+
+pplx::task<discogs::parser::identity *>
+discogs::rest::identity()
+{
+	uri_builder builder;
+
+	builder.append_path(STR("oauth"))
+		.append_path(STR("identity"));
+
+	auto request = create_request(builder);
+	auto response = m_private->m_client.request(request);
+
+	return response.then(do_basic_get)
+		.then(do_basic_parse<discogs::parser::identity_parser>)
+		.then([](pplx::task<std::shared_ptr<discogs::parser::identity_parser>> task_p) ->
+			pplx::task<discogs::parser::identity *>
+	{
+		auto p = task_p.get();
+		return pplx::task_from_result(
+			new discogs::parser::identity(std::move(p->identity_))
+		);
 	});
 }

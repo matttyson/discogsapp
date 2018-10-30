@@ -299,6 +299,26 @@ void client::release_print()
 	}
 }
 
+void client::identify()
+{
+	auto result = m_rest->identity();
+
+	try {
+		result.wait();
+	}
+	catch (const web::http::http_exception &e) {
+		dcout << STR("You are not logged in") << dendl;
+		return;
+	}
+
+	auto id = discogs::unique(result.get());
+
+	dcout << STR("Logged in as:") << dendl << dendl;
+	dcout << STR("Username: ") << id->username << dendl;
+	dcout << STR("ID      : ") << id->id << dendl;
+	dcout << STR("URL     : ") << id->resource_url << dendl;
+}
+
 void client::authenticate()
 {
 	const discogs::oauth1_data data = get_oauth_data();
@@ -381,6 +401,10 @@ int client::run(int argc, discogs::char_t *argv[])
 
 	case ParserCommand::release_print:
 		release_print();
+		break;
+
+	case ParserCommand::identify:
+		identify();
 		break;
 
 	case ParserCommand::NO_COMMAND:
