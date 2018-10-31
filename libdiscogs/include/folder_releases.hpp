@@ -23,7 +23,7 @@ public:
 	int instance_id;
 	int rating;
 	int folder_id;
-	string_t date_added;
+	platform::string_t date_added;
 	std::vector<common::note> notes;
 	common::basic_information basic_information_;
 };

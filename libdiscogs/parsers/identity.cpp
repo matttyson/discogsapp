@@ -1,6 +1,6 @@
 /* clang-format off */
 #include "identity_parser.hpp"
-#include "porting.h"
+#include "libplatform/platform.hpp"
 namespace discogs {
 namespace parser {
 
@@ -53,19 +53,19 @@ bool identity_parser::String(const Ch* value, rapidjson::SizeType length, bool c
 {
 	switch(m_state){
 	case StateKey::identity_username:
-		identity_.username = string_t(value, length);
+		identity_.username = ::platform::string_t(value, length);
 		m_state = StateKey::identity;
 		break;
 	case StateKey::identity_resource_url:
-		identity_.resource_url = string_t(value, length);
+		identity_.resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::identity;
 		break;
 	case StateKey::identity_consumer_name:
-		identity_.consumer_name = string_t(value, length);
+		identity_.consumer_name = ::platform::string_t(value, length);
 		m_state = StateKey::identity;
 		break;
 	case StateKey::identity_message:
-		identity_.message = string_t(value, length);
+		identity_.message = ::platform::string_t(value, length);
 		m_state = StateKey::identity;
 		break;
 	default:
@@ -114,23 +114,23 @@ bool identity_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
 	case StateKey::identity:
-		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
+		if(length == 2 && platform::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::identity_id;
 		}
 		else
-		if(length == 8 && discogs::strcmp(str, STR("username")) == 0){
+		if(length == 8 && platform::strcmp(str, STR("username")) == 0){
 			m_state = StateKey::identity_username;
 		}
 		else
-		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && platform::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::identity_resource_url;
 		}
 		else
-		if(length == 13 && discogs::strcmp(str, STR("consumer_name")) == 0){
+		if(length == 13 && platform::strcmp(str, STR("consumer_name")) == 0){
 			m_state = StateKey::identity_consumer_name;
 		}
 		else
-		if(length == 7 && discogs::strcmp(str, STR("message")) == 0){
+		if(length == 7 && platform::strcmp(str, STR("message")) == 0){
 			m_state = StateKey::identity_message;
 		}
 		else {

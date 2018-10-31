@@ -1,16 +1,16 @@
 #include "client.hpp"
 
-#ifdef DISCOGS_WCHAR
+#ifdef PLATFORM_WCHAR
 #define CXXOPTS_WIDE_STRING
 #endif
 
 #include <cxxopts.hpp>
 
-#include "porting.h"
+#include "libplatform/platform.hpp"
 #include "client_private.hpp"
 
 
-int client::process_args(int argc, discogs::char_t *argv[])
+int client::process_args(int argc, platform::char_t *argv[])
 {
 	cxxopts::Options options(STR("discogs"), STR("Discogs CLI driver"));
 

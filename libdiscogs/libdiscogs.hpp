@@ -1,5 +1,5 @@
 
-#include "porting.h"
+#include "libplatform/platform.hpp"
 
 #include <cpprest/http_client.h>
 #include <pplx/pplxtasks.h>
@@ -51,11 +51,11 @@ class rest_private;
 class rest {
 public:
 	rest(
-		const string_t &user_agent,
-		const string_t &base_url = STR("https://api.discogs.com")
+		const platform::string_t &user_agent,
+		const platform::string_t &base_url = STR("https://api.discogs.com")
 	);
 	~rest();
-	void set_session_key(const string_t &session_key);
+	void set_session_key(const platform::string_t &session_key);
 
 	int per_page() const;
 	void set_per_page(int per_page);
@@ -68,20 +68,20 @@ public:
 
 	// COLLECTION
 	pplx::task<discogs::parser::folder_list *>
-	collection(const string_t &username);
+	collection(const platform::string_t &username);
 
 	// COLLECTION ITEMS BY FOLDER
 	pplx::task<discogs::parser::folder_releases *>
 	folder_releases(
-		const string_t &username,
-		const string_t &folder_id,
+		const platform::string_t &username,
+		const platform::string_t &folder_id,
 		int page_id = 1
 	);
 
 	// Get Wantlist
 	pplx::task<discogs::parser::wantlist *>
 	wantlist(
-		const string_t &username,
+		const platform::string_t &username,
 		int page_id = 1
 	);
 
@@ -89,15 +89,15 @@ public:
 	pplx::task<bool>
 	wantlist_add(
 		int release_id,
-		const string_t &username
+		const platform::string_t &username
 	);
 
 	// Update notes or rating on the wantlist
 	pplx::task<bool>
 	wantlist_update(
 		int release_id,
-		const string_t &username,
-		const string_t &notes,
+		const platform::string_t &username,
+		const platform::string_t &notes,
 		int rating = -1
 	);
 
@@ -105,7 +105,7 @@ public:
 	pplx::task<bool>
 	wantlist_delete(
 		int release_id,
-		const string_t &username
+		const platform::string_t &username
 	);
 
 	// Configuration data for the OAuth system
@@ -113,8 +113,8 @@ public:
 	// the logged in users tokens.
 	void oauth_configure(
 		const discogs::oauth1_data &data,
-		const string_t &access_token,
-		const string_t &secret_token
+		const platform::string_t &access_token,
+		const platform::string_t &secret_token
 	);
 
 	// Returns the identity of the user when logged in with oauth.
@@ -125,8 +125,8 @@ public:
 	// a string_t.  url_path is the URL path after the domain.
 	// EG if you want http://api.domain.com/foo/bar/baz
 	// then set url_path to foo/bar/baz
-	pplx::task<discogs::string_t>
-	download_url(const discogs::string_t &url_path);
+	pplx::task<platform::string_t>
+	download_url(const platform::string_t &url_path);
 
 private:
 	web::http::http_request create_request(

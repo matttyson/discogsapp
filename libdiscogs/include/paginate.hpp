@@ -16,10 +16,10 @@ public:
 	urls& operator=(const urls &rhs) = default;
 	urls& operator=(urls &&rhs) noexcept = default;
 
-	string_t next;
-	string_t last;
-	string_t first;
-	string_t prev;
+	platform::string_t next;
+	platform::string_t last;
+	platform::string_t first;
+	platform::string_t prev;
 };
 
 

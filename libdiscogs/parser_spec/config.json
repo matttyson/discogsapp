@@ -6,7 +6,7 @@
         "parser_common.hpp"
     ],
     "parser_impl_headers": [
-        "porting.h"
+        "libplatform/platform.hpp"
     ],
     "parsers": [
         "release.json",
@@ -15,7 +15,7 @@
         "collection.json",
         "identify.json"
     ],
-    "strcmp": "discogs::strcmp",
+    "strcmp": "platform::strcmp",
     "hdr_extension": "hpp",
     "cpp_extension": "cpp",
     "namespace": [
@@ -28,7 +28,7 @@
             "constructor": "0"
         },
         "string": {
-            "cpp_type": "string_t"
+            "cpp_type": "platform::string_t"
         },
         "boolean": {
             "cpp_type": "bool",

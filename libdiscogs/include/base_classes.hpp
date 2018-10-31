@@ -16,8 +16,8 @@ public:
 	contributor& operator=(const contributor &rhs) = default;
 	contributor& operator=(contributor &&rhs) noexcept = default;
 
-	string_t username;
-	string_t resource_url;
+	platform::string_t username;
+	platform::string_t resource_url;
 };
 
 
@@ -30,9 +30,9 @@ public:
 	identifier& operator=(const identifier &rhs) = default;
 	identifier& operator=(identifier &&rhs) noexcept = default;
 
-	string_t type;
-	string_t value;
-	string_t description;
+	platform::string_t type;
+	platform::string_t value;
+	platform::string_t description;
 };
 
 
@@ -46,11 +46,11 @@ public:
 	label& operator=(label &&rhs) noexcept = default;
 
 	int id;
-	string_t name;
-	string_t entity_type;
-	string_t catno;
-	string_t resource_url;
-	string_t entity_type_name;
+	platform::string_t name;
+	platform::string_t entity_type;
+	platform::string_t catno;
+	platform::string_t resource_url;
+	platform::string_t entity_type_name;
 };
 
 
@@ -65,9 +65,9 @@ public:
 
 	int duration;
 	bool embed;
-	string_t description;
-	string_t title;
-	string_t uri;
+	platform::string_t description;
+	platform::string_t title;
+	platform::string_t uri;
 };
 
 
@@ -81,11 +81,11 @@ public:
 	company& operator=(company &&rhs) noexcept = default;
 
 	int id;
-	string_t name;
-	string_t entity_type;
-	string_t catno;
-	string_t resource_url;
-	string_t entity_type_name;
+	platform::string_t name;
+	platform::string_t entity_type;
+	platform::string_t catno;
+	platform::string_t resource_url;
+	platform::string_t entity_type_name;
 };
 
 
@@ -112,8 +112,8 @@ public:
 	submitter& operator=(const submitter &rhs) = default;
 	submitter& operator=(submitter &&rhs) noexcept = default;
 
-	string_t username;
-	string_t resource_url;
+	platform::string_t username;
+	platform::string_t resource_url;
 };
 
 
@@ -127,12 +127,12 @@ public:
 	artist& operator=(artist &&rhs) noexcept = default;
 
 	int id;
-	string_t join;
-	string_t name;
-	string_t anv;
-	string_t tracks;
-	string_t role;
-	string_t resource_url;
+	platform::string_t join;
+	platform::string_t name;
+	platform::string_t anv;
+	platform::string_t tracks;
+	platform::string_t role;
+	platform::string_t resource_url;
 };
 
 
@@ -147,10 +147,10 @@ public:
 
 	int height;
 	int width;
-	string_t uri;
-	string_t resource_url;
-	string_t type;
-	string_t uri150;
+	platform::string_t uri;
+	platform::string_t resource_url;
+	platform::string_t type;
+	platform::string_t uri150;
 };
 
 
@@ -163,10 +163,10 @@ public:
 	track& operator=(const track &rhs) = default;
 	track& operator=(track &&rhs) noexcept = default;
 
-	string_t duration;
-	string_t position;
-	string_t type_;
-	string_t title;
+	platform::string_t duration;
+	platform::string_t position;
+	platform::string_t type_;
+	platform::string_t title;
 	std::vector<artist> artists;
 	std::vector<artist> extraartists;
 };
@@ -182,7 +182,7 @@ public:
 	note& operator=(note &&rhs) noexcept = default;
 
 	int field_id;
-	string_t value;
+	platform::string_t value;
 };
 
 
@@ -195,10 +195,10 @@ public:
 	format& operator=(const format &rhs) = default;
 	format& operator=(format &&rhs) noexcept = default;
 
-	string_t name;
-	string_t qty;
-	string_t text;
-	std::vector<string_t> descriptions;
+	platform::string_t name;
+	platform::string_t qty;
+	platform::string_t text;
+	std::vector<platform::string_t> descriptions;
 };
 
 
@@ -212,11 +212,11 @@ public:
 	series& operator=(series &&rhs) noexcept = default;
 
 	int id;
-	string_t name;
-	string_t entity_type;
-	string_t catno;
-	string_t resource_url;
-	string_t entity_type_name;
+	platform::string_t name;
+	platform::string_t entity_type;
+	platform::string_t catno;
+	platform::string_t resource_url;
+	platform::string_t entity_type_name;
 };
 
 
@@ -231,8 +231,8 @@ public:
 
 	int want;
 	int have;
-	string_t status;
-	string_t data_quality;
+	platform::string_t status;
+	platform::string_t data_quality;
 	submitter sumbitter_;
 	rating rating_;
 	std::vector<contributor> contributors;
@@ -251,11 +251,11 @@ public:
 	int id;
 	int master_id;
 	int year;
-	string_t thumb;
-	string_t title;
-	string_t cover_image;
-	string_t resource_url;
-	string_t master_url;
+	platform::string_t thumb;
+	platform::string_t title;
+	platform::string_t cover_image;
+	platform::string_t resource_url;
+	platform::string_t master_url;
 	std::vector<label> labels;
 	std::vector<format> formats;
 	std::vector<artist> artists;
@@ -274,9 +274,9 @@ public:
 
 	int rating;
 	int id;
-	string_t resource_url;
-	string_t date_added;
-	string_t notes;
+	platform::string_t resource_url;
+	platform::string_t date_added;
+	platform::string_t notes;
 	basic_information basic_information_;
 };
 

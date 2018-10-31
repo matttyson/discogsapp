@@ -17,7 +17,7 @@ add_executable (discogsapp
 	${CMAKE_CURRENT_LIST_DIR}/oauth1_data.hpp
 )
 
-target_link_libraries(discogsapp libdiscogs liboauth1)
+target_link_libraries(discogsapp libdiscogs liboauth1 libplatform)
 
 target_include_directories(discogsapp PRIVATE ..)
 

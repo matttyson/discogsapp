@@ -1,6 +1,6 @@
 #include "client.hpp"
 
-#include "porting.h"
+#include "libplatform/platform.hpp"
 
 #include "client_private.hpp"
 #include "config.hpp"
@@ -12,18 +12,18 @@
 #include <iostream>
 #include <string>
 
-void open_browser(const discogs::string_t &str);
+void open_browser(const platform::string_t &str);
 
 void print_exception(const web::http::http_exception &e)
 {
 	dcout << STR("HTTP Error (");
 	dcout << e.error_code();
 	dcout << STR(") ");
-	dcout << discogs::to_string_t(e.what());
+	dcout << platform::to_string_t(e.what());
 	dcout << dendl;
 }
 
-client::client(const discogs::string_t &user_agent)
+client::client(const platform::string_t &user_agent)
 	:m_command(ParserCommand::NO_COMMAND),
 	m_rest(std::make_unique<discogs::rest>(user_agent)),
 	m_release_id(-1), m_rating(-1),
@@ -365,9 +365,9 @@ void client::download()
 		return;
 	}
 
-	discogs::string_t filename = STR("download.json");
+	platform::string_t filename = STR("download.json");
 
-	discogs::dofstream file;
+	platform::dofstream file;
 	file.open(filename);
 
 	if(!file.is_open()){
@@ -389,8 +389,8 @@ void client::apply_config()
 		return;
 	}
 
-	discogs::string_t user_access_token;
-	discogs::string_t user_secret;
+	platform::string_t user_access_token;
+	platform::string_t user_secret;
 
 	if(!m_cfg.get(STR("user_access_token"), user_access_token)){
 		return;
@@ -403,7 +403,7 @@ void client::apply_config()
 	m_rest->oauth_configure(data, user_access_token, user_secret);
 }
 
-int client::run(int argc, discogs::char_t *argv[])
+int client::run(int argc, platform::char_t *argv[])
 {
 	if (process_args(argc, argv) != 0) {
 		return -1;

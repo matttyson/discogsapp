@@ -18,10 +18,10 @@ public:
 	identity& operator=(identity &&rhs) noexcept = default;
 
 	int id;
-	string_t username;
-	string_t resource_url;
-	string_t consumer_name;
-	string_t message;
+	platform::string_t username;
+	platform::string_t resource_url;
+	platform::string_t consumer_name;
+	platform::string_t message;
 };
 
 } // namespace discogs

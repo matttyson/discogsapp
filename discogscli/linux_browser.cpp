@@ -1,5 +1,5 @@
 
-#include "porting.h"
+#include "libplatform/platform.hpp"
 #include <cstdlib>
 
 /*
@@ -16,8 +16,8 @@ on the local system so we know which one to call
 
 */
 
-void open_browser(const discogs::string_t &str)
+void open_browser(const platform::string_t &str)
 {
-	discogs::string_t browser_cmd(STR("xdg-open \"") + str + STR("\""));
+	platform::string_t browser_cmd(STR("xdg-open \"") + str + STR("\""));
 	(void)system(browser_cmd.c_str());
 }

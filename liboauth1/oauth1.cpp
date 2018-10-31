@@ -49,12 +49,12 @@ pplx::task<bool> discogs::oauth1::authenticate()
 	return m_data->listener.listen_for_code();
 }
 
-discogs::string_t discogs::oauth1::access_token()
+platform::string_t discogs::oauth1::access_token()
 {
 	return m_data->oauth1_config.token().access_token();
 }
 
-discogs::string_t discogs::oauth1::secret()
+platform::string_t discogs::oauth1::secret()
 {
 	return m_data->oauth1_config.token().secret();
 }

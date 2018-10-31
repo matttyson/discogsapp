@@ -1,17 +1,17 @@
 #pragma once
 
-#include "porting.h"
+#include "libplatform/platform.hpp"
 
 namespace discogs {
 
 struct oauth1_data {
 	oauth1_data(
-		const string_t &consumer_key_,
-		const string_t &consumer_secret_,
-		const string_t &temp_endpoint_,
-		const string_t &auth_endpoint_,
-		const string_t &token_endpoint_,
-		const string_t &callback_uri_
+		const platform::string_t &consumer_key_,
+		const platform::string_t &consumer_secret_,
+		const platform::string_t &temp_endpoint_,
+		const platform::string_t &auth_endpoint_,
+		const platform::string_t &token_endpoint_,
+		const platform::string_t &callback_uri_
 	) :
 		consumer_key(consumer_key_),
 		consumer_secret(consumer_secret_),
@@ -21,12 +21,12 @@ struct oauth1_data {
 		callback_uri(callback_uri_)
 	{}
 
-	const string_t consumer_key;
-	const string_t consumer_secret;
-	const string_t temp_endpoint;
-	const string_t auth_endpoint;
-	const string_t token_endpoint;
-	const string_t callback_uri;
+	const platform::string_t consumer_key;
+	const platform::string_t consumer_secret;
+	const platform::string_t temp_endpoint;
+	const platform::string_t auth_endpoint;
+	const platform::string_t token_endpoint;
+	const platform::string_t callback_uri;
 };
 
 }

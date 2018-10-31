@@ -1,6 +1,6 @@
 /* clang-format off */
 #include "folder_releases_parser.hpp"
-#include "porting.h"
+#include "libplatform/platform.hpp"
 namespace discogs {
 namespace parser {
 
@@ -155,110 +155,110 @@ bool folder_releases_parser::String(const Ch* value, rapidjson::SizeType length,
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination_urls_next:
-		folder_release.pages.links.next = string_t(value, length);
+		folder_release.pages.links.next = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_pagination_urls;
 		break;
 	case StateKey::folder_releases_pagination_urls_last:
-		folder_release.pages.links.last = string_t(value, length);
+		folder_release.pages.links.last = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_pagination_urls;
 		break;
 	case StateKey::folder_releases_pagination_urls_first:
-		folder_release.pages.links.first = string_t(value, length);
+		folder_release.pages.links.first = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_pagination_urls;
 		break;
 	case StateKey::folder_releases_pagination_urls_prev:
-		folder_release.pages.links.prev = string_t(value, length);
+		folder_release.pages.links.prev = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_pagination_urls;
 		break;
 	case StateKey::folder_releases_releases_date_added:
-		folder_release.release_.back().date_added = string_t(value, length);
+		folder_release.release_.back().date_added = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases;
 		break;
 	case StateKey::folder_releases_releases_notes_value:
-		folder_release.release_.back().notes.back().value = string_t(value, length);
+		folder_release.release_.back().notes.back().value = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_notes;
 		break;
 	case StateKey::folder_releases_releases_basic_information_thumb:
-		folder_release.release_.back().basic_information_.thumb = string_t(value, length);
+		folder_release.release_.back().basic_information_.thumb = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_title:
-		folder_release.release_.back().basic_information_.title = string_t(value, length);
+		folder_release.release_.back().basic_information_.title = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_cover_image:
-		folder_release.release_.back().basic_information_.cover_image = string_t(value, length);
+		folder_release.release_.back().basic_information_.cover_image = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_resource_url:
-		folder_release.release_.back().basic_information_.resource_url = string_t(value, length);
+		folder_release.release_.back().basic_information_.resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_master_url:
-		folder_release.release_.back().basic_information_.master_url = string_t(value, length);
+		folder_release.release_.back().basic_information_.master_url = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_name:
-		folder_release.release_.back().basic_information_.labels.back().name = string_t(value, length);
+		folder_release.release_.back().basic_information_.labels.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_entity_type:
-		folder_release.release_.back().basic_information_.labels.back().entity_type = string_t(value, length);
+		folder_release.release_.back().basic_information_.labels.back().entity_type = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_catno:
-		folder_release.release_.back().basic_information_.labels.back().catno = string_t(value, length);
+		folder_release.release_.back().basic_information_.labels.back().catno = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_resource_url:
-		folder_release.release_.back().basic_information_.labels.back().resource_url = string_t(value, length);
+		folder_release.release_.back().basic_information_.labels.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_entity_type_name:
-		folder_release.release_.back().basic_information_.labels.back().entity_type_name = string_t(value, length);
+		folder_release.release_.back().basic_information_.labels.back().entity_type_name = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats_name:
-		folder_release.release_.back().basic_information_.formats.back().name = string_t(value, length);
+		folder_release.release_.back().basic_information_.formats.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_formats;
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats_qty:
-		folder_release.release_.back().basic_information_.formats.back().qty = string_t(value, length);
+		folder_release.release_.back().basic_information_.formats.back().qty = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_formats;
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats_text:
-		folder_release.release_.back().basic_information_.formats.back().text = string_t(value, length);
+		folder_release.release_.back().basic_information_.formats.back().text = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_formats;
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats_descriptions:
 		folder_release.release_.back().basic_information_.formats.back().descriptions.emplace_back(value, length);
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_join:
-		folder_release.release_.back().basic_information_.artists.back().join = string_t(value, length);
+		folder_release.release_.back().basic_information_.artists.back().join = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_name:
-		folder_release.release_.back().basic_information_.artists.back().name = string_t(value, length);
+		folder_release.release_.back().basic_information_.artists.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_anv:
-		folder_release.release_.back().basic_information_.artists.back().anv = string_t(value, length);
+		folder_release.release_.back().basic_information_.artists.back().anv = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_tracks:
-		folder_release.release_.back().basic_information_.artists.back().tracks = string_t(value, length);
+		folder_release.release_.back().basic_information_.artists.back().tracks = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_role:
-		folder_release.release_.back().basic_information_.artists.back().role = string_t(value, length);
+		folder_release.release_.back().basic_information_.artists.back().role = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_resource_url:
-		folder_release.release_.back().basic_information_.artists.back().resource_url = string_t(value, length);
+		folder_release.release_.back().basic_information_.artists.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_notes_value:
-		folder_release.release_.back().basic_information_.notes.back().value = string_t(value, length);
+		folder_release.release_.back().basic_information_.notes.back().value = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_notes;
 		break;
 	default:
@@ -445,19 +445,19 @@ bool folder_releases_parser::Key(const Ch* str, rapidjson::SizeType length, bool
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination_urls:
-		if(length == 4 && discogs::strcmp(str, STR("next")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("next")) == 0){
 			m_state = StateKey::folder_releases_pagination_urls_next;
 		}
 		else
-		if(length == 4 && discogs::strcmp(str, STR("last")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("last")) == 0){
 			m_state = StateKey::folder_releases_pagination_urls_last;
 		}
 		else
-		if(length == 5 && discogs::strcmp(str, STR("first")) == 0){
+		if(length == 5 && platform::strcmp(str, STR("first")) == 0){
 			m_state = StateKey::folder_releases_pagination_urls_first;
 		}
 		else
-		if(length == 4 && discogs::strcmp(str, STR("prev")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("prev")) == 0){
 			m_state = StateKey::folder_releases_pagination_urls_prev;
 		}
 		else {
@@ -465,23 +465,23 @@ bool folder_releases_parser::Key(const Ch* str, rapidjson::SizeType length, bool
 		}
 		break;
 	case StateKey::folder_releases_pagination:
-		if(length == 8 && discogs::strcmp(str, STR("per_page")) == 0){
+		if(length == 8 && platform::strcmp(str, STR("per_page")) == 0){
 			m_state = StateKey::folder_releases_pagination_per_page;
 		}
 		else
-		if(length == 5 && discogs::strcmp(str, STR("items")) == 0){
+		if(length == 5 && platform::strcmp(str, STR("items")) == 0){
 			m_state = StateKey::folder_releases_pagination_items;
 		}
 		else
-		if(length == 4 && discogs::strcmp(str, STR("page")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("page")) == 0){
 			m_state = StateKey::folder_releases_pagination_page;
 		}
 		else
-		if(length == 5 && discogs::strcmp(str, STR("pages")) == 0){
+		if(length == 5 && platform::strcmp(str, STR("pages")) == 0){
 			m_state = StateKey::folder_releases_pagination_pages;
 		}
 		else
-		if(length == 4 && discogs::strcmp(str, STR("urls")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("urls")) == 0){
 			m_state = StateKey::folder_releases_pagination_urls;
 		}
 		else {
@@ -489,11 +489,11 @@ bool folder_releases_parser::Key(const Ch* str, rapidjson::SizeType length, bool
 		}
 		break;
 	case StateKey::folder_releases_releases_notes:
-		if(length == 8 && discogs::strcmp(str, STR("field_id")) == 0){
+		if(length == 8 && platform::strcmp(str, STR("field_id")) == 0){
 			m_state = StateKey::folder_releases_releases_notes_field_id;
 		}
 		else
-		if(length == 5 && discogs::strcmp(str, STR("value")) == 0){
+		if(length == 5 && platform::strcmp(str, STR("value")) == 0){
 			m_state = StateKey::folder_releases_releases_notes_value;
 		}
 		else {
@@ -501,27 +501,27 @@ bool folder_releases_parser::Key(const Ch* str, rapidjson::SizeType length, bool
 		}
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels:
-		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
+		if(length == 2 && platform::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels_id;
 		}
 		else
-		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("name")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels_name;
 		}
 		else
-		if(length == 11 && discogs::strcmp(str, STR("entity_type")) == 0){
+		if(length == 11 && platform::strcmp(str, STR("entity_type")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels_entity_type;
 		}
 		else
-		if(length == 5 && discogs::strcmp(str, STR("catno")) == 0){
+		if(length == 5 && platform::strcmp(str, STR("catno")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels_catno;
 		}
 		else
-		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && platform::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels_resource_url;
 		}
 		else
-		if(length == 16 && discogs::strcmp(str, STR("entity_type_name")) == 0){
+		if(length == 16 && platform::strcmp(str, STR("entity_type_name")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels_entity_type_name;
 		}
 		else {
@@ -529,19 +529,19 @@ bool folder_releases_parser::Key(const Ch* str, rapidjson::SizeType length, bool
 		}
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats:
-		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("name")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_formats_name;
 		}
 		else
-		if(length == 3 && discogs::strcmp(str, STR("qty")) == 0){
+		if(length == 3 && platform::strcmp(str, STR("qty")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_formats_qty;
 		}
 		else
-		if(length == 4 && discogs::strcmp(str, STR("text")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("text")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_formats_text;
 		}
 		else
-		if(length == 12 && discogs::strcmp(str, STR("descriptions")) == 0){
+		if(length == 12 && platform::strcmp(str, STR("descriptions")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_formats_descriptions;
 		}
 		else {
@@ -549,31 +549,31 @@ bool folder_releases_parser::Key(const Ch* str, rapidjson::SizeType length, bool
 		}
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists:
-		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
+		if(length == 2 && platform::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_id;
 		}
 		else
-		if(length == 4 && discogs::strcmp(str, STR("join")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("join")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_join;
 		}
 		else
-		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("name")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_name;
 		}
 		else
-		if(length == 3 && discogs::strcmp(str, STR("anv")) == 0){
+		if(length == 3 && platform::strcmp(str, STR("anv")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_anv;
 		}
 		else
-		if(length == 6 && discogs::strcmp(str, STR("tracks")) == 0){
+		if(length == 6 && platform::strcmp(str, STR("tracks")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_tracks;
 		}
 		else
-		if(length == 4 && discogs::strcmp(str, STR("role")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("role")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_role;
 		}
 		else
-		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && platform::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists_resource_url;
 		}
 		else {
@@ -581,11 +581,11 @@ bool folder_releases_parser::Key(const Ch* str, rapidjson::SizeType length, bool
 		}
 		break;
 	case StateKey::folder_releases_releases_basic_information_notes:
-		if(length == 8 && discogs::strcmp(str, STR("field_id")) == 0){
+		if(length == 8 && platform::strcmp(str, STR("field_id")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_notes_field_id;
 		}
 		else
-		if(length == 5 && discogs::strcmp(str, STR("value")) == 0){
+		if(length == 5 && platform::strcmp(str, STR("value")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_notes_value;
 		}
 		else {
@@ -593,51 +593,51 @@ bool folder_releases_parser::Key(const Ch* str, rapidjson::SizeType length, bool
 		}
 		break;
 	case StateKey::folder_releases_releases_basic_information:
-		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
+		if(length == 2 && platform::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_id;
 		}
 		else
-		if(length == 9 && discogs::strcmp(str, STR("master_id")) == 0){
+		if(length == 9 && platform::strcmp(str, STR("master_id")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_master_id;
 		}
 		else
-		if(length == 4 && discogs::strcmp(str, STR("year")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("year")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_year;
 		}
 		else
-		if(length == 5 && discogs::strcmp(str, STR("thumb")) == 0){
+		if(length == 5 && platform::strcmp(str, STR("thumb")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_thumb;
 		}
 		else
-		if(length == 5 && discogs::strcmp(str, STR("title")) == 0){
+		if(length == 5 && platform::strcmp(str, STR("title")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_title;
 		}
 		else
-		if(length == 11 && discogs::strcmp(str, STR("cover_image")) == 0){
+		if(length == 11 && platform::strcmp(str, STR("cover_image")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_cover_image;
 		}
 		else
-		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && platform::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_resource_url;
 		}
 		else
-		if(length == 10 && discogs::strcmp(str, STR("master_url")) == 0){
+		if(length == 10 && platform::strcmp(str, STR("master_url")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_master_url;
 		}
 		else
-		if(length == 6 && discogs::strcmp(str, STR("labels")) == 0){
+		if(length == 6 && platform::strcmp(str, STR("labels")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_labels;
 		}
 		else
-		if(length == 7 && discogs::strcmp(str, STR("formats")) == 0){
+		if(length == 7 && platform::strcmp(str, STR("formats")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_formats;
 		}
 		else
-		if(length == 7 && discogs::strcmp(str, STR("artists")) == 0){
+		if(length == 7 && platform::strcmp(str, STR("artists")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_artists;
 		}
 		else
-		if(length == 5 && discogs::strcmp(str, STR("notes")) == 0){
+		if(length == 5 && platform::strcmp(str, STR("notes")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information_notes;
 		}
 		else {
@@ -645,31 +645,31 @@ bool folder_releases_parser::Key(const Ch* str, rapidjson::SizeType length, bool
 		}
 		break;
 	case StateKey::folder_releases_releases:
-		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
+		if(length == 2 && platform::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::folder_releases_releases_id;
 		}
 		else
-		if(length == 11 && discogs::strcmp(str, STR("instance_id")) == 0){
+		if(length == 11 && platform::strcmp(str, STR("instance_id")) == 0){
 			m_state = StateKey::folder_releases_releases_instance_id;
 		}
 		else
-		if(length == 6 && discogs::strcmp(str, STR("rating")) == 0){
+		if(length == 6 && platform::strcmp(str, STR("rating")) == 0){
 			m_state = StateKey::folder_releases_releases_rating;
 		}
 		else
-		if(length == 9 && discogs::strcmp(str, STR("folder_id")) == 0){
+		if(length == 9 && platform::strcmp(str, STR("folder_id")) == 0){
 			m_state = StateKey::folder_releases_releases_folder_id;
 		}
 		else
-		if(length == 10 && discogs::strcmp(str, STR("date_added")) == 0){
+		if(length == 10 && platform::strcmp(str, STR("date_added")) == 0){
 			m_state = StateKey::folder_releases_releases_date_added;
 		}
 		else
-		if(length == 5 && discogs::strcmp(str, STR("notes")) == 0){
+		if(length == 5 && platform::strcmp(str, STR("notes")) == 0){
 			m_state = StateKey::folder_releases_releases_notes;
 		}
 		else
-		if(length == 17 && discogs::strcmp(str, STR("basic_information")) == 0){
+		if(length == 17 && platform::strcmp(str, STR("basic_information")) == 0){
 			m_state = StateKey::folder_releases_releases_basic_information;
 		}
 		else {
@@ -677,11 +677,11 @@ bool folder_releases_parser::Key(const Ch* str, rapidjson::SizeType length, bool
 		}
 		break;
 	case StateKey::folder_releases:
-		if(length == 10 && discogs::strcmp(str, STR("pagination")) == 0){
+		if(length == 10 && platform::strcmp(str, STR("pagination")) == 0){
 			m_state = StateKey::folder_releases_pagination;
 		}
 		else
-		if(length == 8 && discogs::strcmp(str, STR("releases")) == 0){
+		if(length == 8 && platform::strcmp(str, STR("releases")) == 0){
 			m_state = StateKey::folder_releases_releases;
 		}
 		else {

@@ -1,6 +1,6 @@
 /* clang-format off */
 #include "collection_parser.hpp"
-#include "porting.h"
+#include "libplatform/platform.hpp"
 namespace discogs {
 namespace parser {
 
@@ -57,11 +57,11 @@ bool collection_parser::String(const Ch* value, rapidjson::SizeType length, bool
 {
 	switch(m_state){
 	case StateKey::folder_list_folders_resource_url:
-		folder_list_.folders.back().resource_url = string_t(value, length);
+		folder_list_.folders.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::folder_list_folders;
 		break;
 	case StateKey::folder_list_folders_name:
-		folder_list_.folders.back().name = string_t(value, length);
+		folder_list_.folders.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::folder_list_folders;
 		break;
 	default:
@@ -110,19 +110,19 @@ bool collection_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy
 {
 	switch(m_state){
 	case StateKey::folder_list_folders:
-		if(length == 2 && discogs::strcmp(str, STR("id")) == 0){
+		if(length == 2 && platform::strcmp(str, STR("id")) == 0){
 			m_state = StateKey::folder_list_folders_id;
 		}
 		else
-		if(length == 5 && discogs::strcmp(str, STR("count")) == 0){
+		if(length == 5 && platform::strcmp(str, STR("count")) == 0){
 			m_state = StateKey::folder_list_folders_count;
 		}
 		else
-		if(length == 12 && discogs::strcmp(str, STR("resource_url")) == 0){
+		if(length == 12 && platform::strcmp(str, STR("resource_url")) == 0){
 			m_state = StateKey::folder_list_folders_resource_url;
 		}
 		else
-		if(length == 4 && discogs::strcmp(str, STR("name")) == 0){
+		if(length == 4 && platform::strcmp(str, STR("name")) == 0){
 			m_state = StateKey::folder_list_folders_name;
 		}
 		else {
@@ -130,7 +130,7 @@ bool collection_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy
 		}
 		break;
 	case StateKey::folder_list:
-		if(length == 7 && discogs::strcmp(str, STR("folders")) == 0){
+		if(length == 7 && platform::strcmp(str, STR("folders")) == 0){
 			m_state = StateKey::folder_list_folders;
 		}
 		else {

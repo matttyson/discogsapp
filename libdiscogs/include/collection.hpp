@@ -19,8 +19,8 @@ public:
 
 	int id;
 	int count;
-	string_t resource_url;
-	string_t name;
+	platform::string_t resource_url;
+	platform::string_t name;
 };
 
 

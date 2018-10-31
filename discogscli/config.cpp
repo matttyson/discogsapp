@@ -9,12 +9,11 @@
 #include <rapidjson/prettywriter.h>
 #include <rapidjson/reader.h>
 
-#ifdef DISCOGS_WCHAR
+#ifdef PLATFORM_WCHAR
 typedef rapidjson::UTF16<> rjs_UTF_t;
 #else
 typedef rapidjson::UTF8<> rjs_UTF_t;
 #endif
-
 
 // This code is really shitty. I need to fix it later.
 
@@ -31,29 +30,29 @@ struct element {
 	element(int i)
 		:strval(STR("")), intval(i), type(element_type::int_type)
 	{}
-	element(const string_t &str)
+	element(const platform::string_t &str)
 		:strval(str), intval(0), type(element_type::string_type)
 	{}
-	element(const char_t *str, int length)
+	element(const platform::char_t *str, int length)
 		:strval(str, length), intval(0), type(element_type::string_type)
 	{}
 	element()
 		:type(element_type::none_type)
 	{}
 
-	discogs::string_t strval;
+	platform::string_t strval;
 	int intval;
 	element_type type;
 };
 
 class config_private {
 public:
-	config_private(const discogs::string_t filename_)
+	config_private(const platform::string_t &filename_)
 		:filename(filename_)
 	{}
 
-	string_t filename;
-	std::map<string_t, element> data;
+	platform::string_t filename;
+	std::map<platform::string_t, element> data;
 };
 
 
@@ -73,8 +72,8 @@ public:
 	bool StartArray();
 	bool EndArray(rapidjson::SizeType elementCount);
 public:
-	discogs::string_t current_key;
-	std::map<string_t, element> data;
+	platform::string_t current_key;
+	std::map<platform::string_t, element> data;
 };
 
 bool config_parser::Null()
@@ -115,7 +114,7 @@ bool config_parser::String(const Ch* str, rapidjson::SizeType length, bool copy)
 }
 bool config_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
 {
-	current_key = string_t(str, length);
+	current_key = ::platform::string_t(str, length);
 	return true;
 }
 bool config_parser::StartObject()
@@ -135,7 +134,7 @@ bool config_parser::EndArray(rapidjson::SizeType memberCount)
 	return false;
 }
 
-config::config(const discogs::string_t &filename)
+config::config(const platform::string_t &filename)
 	:m_data(new config_private(filename))
 {
 }
@@ -144,13 +143,14 @@ config::~config()
 {
 }
 
+
 bool config::read()
 {
 	char buffer[512];
 	FILE *fp;
 	config_parser p;
 
-#ifdef DISCOGS_WCHAR
+#ifdef PLATFORM_WCHAR
 	fp = _wfopen(m_data->filename.c_str(), L"r");
 #else
 	fp = fopen(m_data->filename.c_str(), "r");
@@ -181,7 +181,7 @@ bool config::write()
 	char buffer[512];
 	FILE *fp;
 
-#ifdef DISCOGS_WCHAR
+#ifdef PLATFORM_WCHAR
 	fp = _wfopen(m_data->filename.c_str(), L"w");
 #else
 	fp = fopen(m_data->filename.c_str(), "w");
@@ -218,7 +218,7 @@ bool config::write()
 	return true;
 }
 
-bool config::get(const discogs::string_t &key, discogs::string_t &value)
+bool config::get(const platform::string_t &key, platform::string_t &value)
 {
 	if(m_data->data.find(key) == m_data->data.end()){
 		return false;
@@ -230,7 +230,7 @@ bool config::get(const discogs::string_t &key, discogs::string_t &value)
 	return true;
 }
 
-bool config::get(const discogs::string_t &key, int &value)
+bool config::get(const platform::string_t &key, int &value)
 {
 	if (m_data->data.find(key) == m_data->data.end()) {
 		return false;
@@ -242,17 +242,17 @@ bool config::get(const discogs::string_t &key, int &value)
 	return true;
 }
 
-void config::set(const discogs::string_t &key, const discogs::string_t &value)
+void config::set(const platform::string_t &key, const platform::string_t &value)
 {
 	m_data->data[key] = value;
 }
 
-void config::set(const discogs::string_t &key, int value)
+void config::set(const platform::string_t &key, int value)
 {
 	m_data->data[key] = value;
 }
 
-void config::remove(const discogs::string_t &key)
+void config::remove(const platform::string_t &key)
 {
 	m_data->data.erase(key);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "porting.h"
+#include "libplatform/platform.hpp"
 #include "config.hpp"
 #include <memory>
 
@@ -13,13 +13,13 @@ enum class ParserCommand;
 class client
 {
 public:
-	client(const discogs::string_t &user_agent);
+	client(const platform::string_t &user_agent);
 	~client();
 
-	int run(int argc, discogs::char_t *argv[]);
+	int run(int argc, platform::char_t *argv[]);
 
 private:
-	int process_args(int argc, discogs::char_t *argv[]);
+	int process_args(int argc, platform::char_t *argv[]);
 	void folder_list();
 	void collections_list();
 
@@ -51,9 +51,9 @@ private:
 
 	discogs::config m_cfg;
 
-	discogs::string_t m_username;
-	discogs::string_t m_folder_id;
-	discogs::string_t m_notes;
-	discogs::string_t m_cmd_arg;
+	platform::string_t m_username;
+	platform::string_t m_folder_id;
+	platform::string_t m_notes;
+	platform::string_t m_cmd_arg;
 };
 

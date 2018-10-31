@@ -2,9 +2,9 @@
 #include <Windows.h>
 #include <shellapi.h>
 
-#include "porting.h"
+#include "libplatform/platform.hpp"
 
-void open_browser(const discogs::string_t &str)
+void open_browser(const platform::string_t &str)
 {
 	HINSTANCE inst = ShellExecute(NULL, STR("open"), str.c_str(), NULL, NULL, SW_SHOWNORMAL);
 }

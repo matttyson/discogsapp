@@ -1,4 +1,4 @@
-#include "porting.h"
+#include "libplatform/platform.hpp"
 
 #include "libdiscogs.hpp"
 
@@ -50,7 +50,7 @@ private:
 
 typedef StdStringBuffer<rapidjson::UTF8<> > Utf8StdStringBuffer;
 
-#ifdef DISCOGS_WCHAR
+#ifdef PLATFORM_WCHAR
 typedef rapidjson::Writer<Utf8StdStringBuffer, rapidjson::UTF16<>, rapidjson::UTF8<>> Utf8StdStringWriter;
 #else
 typedef rapidjson::Writer<Utf8StdStringBuffer, rapidjson::UTF8<>, rapidjson::UTF8<>> Utf8StdStringWriter;
@@ -68,13 +68,13 @@ namespace discogs {
 
 class rest_private {
 public:
-	rest_private(int per_page, const string_t &user_agent, const string_t &base_url)
+	rest_private(int per_page, const platform::string_t &user_agent, const platform::string_t &base_url)
 		:m_per_page(per_page), m_user_agent(user_agent), m_base_url(base_url), m_client(base_url)
 	{}
 
 	int m_per_page;
-	string_t m_user_agent;
-	string_t m_base_url;
+	platform::string_t m_user_agent;
+	platform::string_t m_base_url;
 
 	// HTTP Client object
 	web::http::client::http_client m_client;
@@ -83,7 +83,7 @@ public:
 }
 
 
-discogs::rest::rest(const string_t & user_agent, const string_t & base_url)
+discogs::rest::rest(const platform::string_t & user_agent, const platform::string_t & base_url)
 	:m_private(new discogs::rest_private(100, user_agent, base_url))
 {
 }
@@ -104,8 +104,8 @@ void discogs::rest::set_per_page(int per_page)
 
 void discogs::rest::oauth_configure(
 	const discogs::oauth1_data &data,
-	const string_t &user_access_token,
-	const string_t &user_secret_token
+	const platform::string_t &user_access_token,
+	const platform::string_t &user_secret_token
 )
 {
 	web::http::oauth1::experimental::oauth1_config oauth1_config(
@@ -188,7 +188,7 @@ do_basic_parse(utility::string_t str)
 	// TODO: Throw an exception here if nothing happens.
 
 	if(pr.IsError()){
-		discogs::dofstream file("parse_error.json");
+		platform::dofstream file("parse_error.json");
 		file << str;
 		dcerr << STR("Parse Error! - json document written to parse_error.json") << dendl;
 	}
@@ -202,7 +202,7 @@ discogs::rest::release(int release_id)
 	uri_builder builder;
 
 	builder.append_path(STR("releases"))
-		.append_path(to_string_t(release_id));
+		.append_path(platform::to_string_t(release_id));
 
 	auto request = create_request(builder);
 	auto response = m_private->m_client.request(request);
@@ -221,7 +221,7 @@ discogs::rest::release(int release_id)
 
 
 pplx::task<discogs::parser::folder_list *>
-discogs::rest::collection(const string_t & username)
+discogs::rest::collection(const platform::string_t & username)
 {
 	uri_builder builder;
 
@@ -250,7 +250,7 @@ discogs::rest::collection(const string_t & username)
 
 pplx::task<discogs::parser::wantlist *>
 discogs::rest::wantlist(
-	const string_t &username,
+	const platform::string_t &username,
 	int page_id
 )
 {
@@ -287,8 +287,8 @@ discogs::rest::wantlist(
 
 pplx::task<discogs::parser::folder_releases *>
 discogs::rest::folder_releases(
-	const string_t & username,
-	const string_t &folder_id,
+	const platform::string_t & username,
+	const platform::string_t &folder_id,
 	int page_id)
 {
 	uri_builder builder;
@@ -325,7 +325,7 @@ discogs::rest::folder_releases(
 pplx::task<bool>
 discogs::rest::wantlist_delete(
 	int release_id,
-	const string_t &username
+	const platform::string_t &username
 )
 {
 	uri_builder builder;
@@ -333,7 +333,7 @@ discogs::rest::wantlist_delete(
 	builder.append_path(STR("users"))
 		.append_path(username,true)
 		.append_path(STR("wants"))
-		.append_path(to_string_t(release_id));
+		.append_path(platform::to_string_t(release_id));
 
 	auto request = create_request(builder, http::methods::DEL);
 
@@ -354,7 +354,7 @@ discogs::rest::wantlist_delete(
 pplx::task<bool>
 discogs::rest::wantlist_add(
 	int release_id,
-	const string_t &username
+	const platform::string_t &username
 )
 {
 	uri_builder builder;
@@ -362,7 +362,7 @@ discogs::rest::wantlist_add(
 	builder.append_path(STR("users"))
 		.append_path(username, true)
 		.append_path(STR("wants"))
-		.append_path(to_string_t(release_id));
+		.append_path(platform::to_string_t(release_id));
 
 	auto request = create_request(builder, http::methods::PUT);
 
@@ -383,8 +383,8 @@ discogs::rest::wantlist_add(
 pplx::task<bool>
 discogs::rest::wantlist_update(
 	int release_id,
-	const string_t &username,
-	const string_t &notes,
+	const platform::string_t &username,
+	const platform::string_t &notes,
 	int rating
 )
 {
@@ -393,7 +393,7 @@ discogs::rest::wantlist_update(
 	builder.append_path(STR("users"))
 		.append_path(username, true)
 		.append_path(STR("wants"))
-		.append_path(to_string_t(release_id));
+		.append_path(platform::to_string_t(release_id));
 
 	Utf8StdStringBuffer sb;
 	Utf8StdStringWriter writer(sb);
@@ -452,8 +452,8 @@ discogs::rest::identity()
 }
 
 
-pplx::task<discogs::string_t>
-discogs::rest::download_url(const discogs::string_t &url_path)
+pplx::task<platform::string_t>
+discogs::rest::download_url(const platform::string_t &url_path)
 {
 	uri_builder builder;
 	builder.append_path(url_path);
