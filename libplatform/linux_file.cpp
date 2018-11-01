@@ -115,7 +115,7 @@ void platform::file::trim()
 
 void platform::file::flush()
 {
-	syncfs(m_data->fd);
+	fsync(m_data->fd);
 }
 
 size_t platform::file::tell()
