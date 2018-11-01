@@ -36,8 +36,8 @@ public:
 	file(file &&) noexcept = delete;
 	file& operator=(file &&) = delete;
 
-	file(const platform::char_t *filename, int mode);
-	file(const platform::string_t &filename, int mode);
+	file(const platform::char_t *filename, io_mode iomode, create_mode cmode);
+	file(const platform::string_t &filename, io_mode iomode, create_mode cmode);
 	~file();
 
 	bool open(const platform::char_t *filename, io_mode iomode, create_mode cmode);

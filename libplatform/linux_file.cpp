@@ -27,6 +27,17 @@ platform::file::file()
 {
 }
 
+platform::file::file(const platform::char_t *filename, io_mode iomode, create_mode cmode)
+	:file()
+{
+	open(filename, iomode, cmode);
+}
+
+platform::file::file(const platform::string_t &filename, io_mode iomode, create_mode cmode)
+	: file()
+{
+	open(filename, iomode, cmode);
+}
 
 platform::file::~file()
 {
