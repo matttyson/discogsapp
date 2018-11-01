@@ -6,8 +6,6 @@
 
 namespace {
 
-const platform::string_t fname = STR("myfilename");
-
 // File should exist and contents preserved
 TEST(OpenOpenTest, OpenExistingFile) {
 	ASSERT_TRUE(create_junk_file(fname));

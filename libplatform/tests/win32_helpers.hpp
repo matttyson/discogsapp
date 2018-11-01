@@ -7,6 +7,8 @@
 
 #include <exception>
 
+const platform::string_t fname = STR("myfilename");
+
 const char junk_data[] = "foobarbaz";
 const int junk_size = sizeof(junk_data);
 
