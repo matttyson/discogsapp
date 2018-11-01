@@ -201,4 +201,44 @@ TEST(ReadWrite, WriteUTF8) {
 	delete_file(fname);
 }
 
+TEST(ReadWrite, WriteBinary) {
+	delete_file(fname);
+
+	{
+		platform::file f;
+
+		const bool rc = f.open(fname,
+			platform::file::io_mode::readwrite,
+			platform::file::create_mode::create
+		);
+
+		ASSERT_TRUE(rc);
+
+		const size_t sz = f.write((const char*)(utf_codes), sizeof(utf_codes));
+
+		ASSERT_EQ(sz, sizeof(utf_codes));
+	}
+
+	ASSERT_EQ(file_length(fname), sizeof(utf_codes));
+
+	{
+		platform::file f;
+		const bool rc = f.open(fname,
+			platform::file::io_mode::readwrite,
+			platform::file::create_mode::exist);
+		ASSERT_TRUE(rc);
+
+		platform::char_t buffer[utf_code_count];
+
+		const size_t sz = f.read((char*)buffer, sizeof(buffer));
+
+		ASSERT_EQ(sz, sizeof(buffer));
+
+		const int cmp = memcmp(buffer, utf_codes, sizeof(buffer));
+		ASSERT_EQ(cmp, 0);
+	}
+
+	delete_file(fname);
+}
+
 }
