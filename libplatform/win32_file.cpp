@@ -3,6 +3,12 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
+
+// A lot of the windows code can only deal with DWORDs (unsigned 32 bit int)
+// when it comes to reading and writing data or converting utf8 / utf16 strings.
+// I don't expect this will ever be a problem as I don't see myself writing
+// code to read or write 4 gigs in one hit.
+
 namespace platform {
 
 class file_private {
@@ -182,7 +188,7 @@ size_t platform::file::write_utf8(const platform::char_t *data, size_t length)
 		BOOL rc = FALSE;
 		DWORD written = 0;
 		// UTF 8 strings
-		rc = WriteFile(m_data->fp, data, (DWORD) length, &written, NULL);
+		rc = WriteFile(m_data->fp, data, static_cast<DWORD>(length), &written, NULL);
 		return written;
 	}
 	else if constexpr(sizeof(wchar_t) == sizeof(platform::char_t)){
@@ -190,7 +196,7 @@ size_t platform::file::write_utf8(const platform::char_t *data, size_t length)
 		DWORD written = 0;
 
 		const int bufsize = WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS,
-			data, length,
+			data, static_cast<DWORD>(length),
 			NULL, 0,
 			NULL, NULL);
 
@@ -201,11 +207,11 @@ size_t platform::file::write_utf8(const platform::char_t *data, size_t length)
 		auto buffer = std::make_unique<char[]>(bufsize);
 
 		const int converted = WideCharToMultiByte(CP_UTF8, WC_ERR_INVALID_CHARS,
-			data, length,
-			buffer.get(), bufsize,
+			data, static_cast<DWORD>(length),
+			buffer.get(), static_cast<DWORD>(bufsize),
 			NULL, NULL);
 
-		WriteFile(m_data->fp, buffer.get(), (DWORD) converted, &written, NULL);
+		WriteFile(m_data->fp, buffer.get(), static_cast<DWORD>(converted), &written, NULL);
 
 		return written;
 	}
@@ -225,7 +231,7 @@ size_t platform::file::read_utf8(platform::string_t &data)
 		data.clear();
 		data.resize(file_length);
 
-		BOOL rc = ReadFile(m_data->fp, data.data(), file_length, &bytes_read, NULL);
+		BOOL rc = ReadFile(m_data->fp, data.data(), static_cast<DWORD>(file_length), &bytes_read, NULL);
 		if(!rc){
 			return 0;
 		}
@@ -242,7 +248,7 @@ size_t platform::file::read_utf8(platform::string_t &data)
 
 		auto buffer = std::make_unique<char[]>(to_read);
 
-		rc = ReadFile(m_data->fp, buffer.get(), to_read, &bytes_read, NULL);
+		rc = ReadFile(m_data->fp, buffer.get(), static_cast<DWORD>(to_read), &bytes_read, NULL);
 		if(!rc){
 			return 0;
 		}
@@ -272,7 +278,7 @@ size_t platform::file::write(const char *data, size_t length)
 {
 	DWORD written = 0;
 
-	BOOL rc = WriteFile(m_data->fp, data, length, &written, NULL);
+	BOOL rc = WriteFile(m_data->fp, data, static_cast<DWORD>(length), &written, NULL);
 
 	return written;
 }
@@ -280,7 +286,7 @@ size_t platform::file::write(const char *data, size_t length)
 size_t platform::file::read(char *data, size_t length)
 {
 	DWORD read = 0;
-	BOOL rc = ReadFile(m_data->fp, data, length, &read, NULL);
+	BOOL rc = ReadFile(m_data->fp, data, static_cast<DWORD>(length), &read, NULL);
 
 	return read;
 }
