@@ -177,7 +177,7 @@ TEST(ReadWrite, WriteUTF8) {
 
 		const bool rc = f.open(fname,
 			platform::file::io_mode::readwrite,
-			platform::file::create_mode::trunc);
+			platform::file::create_mode::create);
 		ASSERT_TRUE(rc);
 
 		f.write_utf8(utf_code_string);
