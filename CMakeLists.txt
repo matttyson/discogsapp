@@ -13,6 +13,10 @@ endif()
 
 project ("discogsapp" CXX)
 
+if(${ENABLE_TESTS})
+	include(CTest)
+	enable_testing()
+endif()
 
 # Include sub-projects.
 add_subdirectory ("discogscli")

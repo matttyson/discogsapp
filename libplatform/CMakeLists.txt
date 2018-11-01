@@ -16,3 +16,7 @@ if(UNIX)
 		${CMAKE_CURRENT_LIST_DIR}/linux_file.cpp
 	)
 endif()
+
+if(BUILD_TESTING)
+	add_subdirectory(tests)
+endif()
