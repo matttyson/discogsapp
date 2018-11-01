@@ -147,6 +147,11 @@ void platform::file::truncate()
 	SetEndOfFile(m_data->fp);
 }
 
+void platform::file::trim()
+{
+	SetEndOfFile(m_data->fp);
+}
+
 size_t platform::file::seek(int64_t offset, platform::file::seek_dir seek_direction)
 {
 	BOOL rc;

@@ -107,6 +107,12 @@ void platform::file::truncate()
 	ftruncate(m_data->fd, 0);
 }
 
+void platform::file::trim()
+{
+	const size_t location = tell();
+	ftruncate(m_data->fd, location);
+}
+
 void platform::file::flush()
 {
 	syncfs(m_data->fd);

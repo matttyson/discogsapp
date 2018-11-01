@@ -50,6 +50,9 @@ public:
 	// Set the file to empty with a length of zero bytes
 	void truncate();
 
+	// Set the current file pointer location to be the end of the file
+	void trim();
+
 	// Flush the buffers to disk
 	void flush();
 
