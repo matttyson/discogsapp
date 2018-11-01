@@ -1,5 +1,6 @@
 #include "file.hpp"
 #include "win32_helpers.hpp"
+#include "utf_codes.hpp"
 
 #include "gtest/gtest.h"
 
@@ -124,6 +125,78 @@ TEST(OpenTruncTest, OpenNotExistingFile) {
 	}
 
 	ASSERT_TRUE(file_exists(fname));
+
+	delete_file(fname);
+}
+
+// File open should succeed if the file does exist
+TEST(OpenExistTest, OpenExistingFile) {
+	delete_file(fname);
+	create_empty_file(fname);
+
+	{
+		platform::file f;
+		const bool rc = f.open(fname,
+			platform::file::io_mode::readwrite,
+			platform::file::create_mode::exist
+		);
+		ASSERT_TRUE(rc);
+	}
+
+	ASSERT_TRUE(file_exists(fname));
+
+	delete_file(fname);
+}
+
+// File open should fail if the file does not exist.
+TEST(OpenExistTest, OpenNotExistingFile) {
+	delete_file(fname);
+
+	{
+		platform::file f;
+		const bool rc = f.open(fname,
+			platform::file::io_mode::readwrite,
+			platform::file::create_mode::exist
+		);
+		ASSERT_FALSE(rc);
+	}
+
+	ASSERT_FALSE(file_exists(fname));
+	delete_file(fname);
+}
+
+// Write a platform string out as UTF8
+// Read in the UTF8 string as a platform string
+// Make sure they are the same
+
+TEST(ReadWrite, WriteUTF8) {
+	delete_file(fname);
+
+	{
+		platform::file f;
+
+		const bool rc = f.open(fname,
+			platform::file::io_mode::readwrite,
+			platform::file::create_mode::trunc);
+		ASSERT_TRUE(rc);
+
+		f.write_utf8(utf_code_string);
+	}
+
+	{
+		platform::file f;
+
+		const bool rc = f.open(fname,
+			platform::file::io_mode::readwrite,
+			platform::file::create_mode::exist);
+		ASSERT_TRUE(rc);
+
+		platform::string_t str;
+
+		f.read_utf8(str);
+
+		ASSERT_EQ(str, utf_code_string);
+	}
 
 	delete_file(fname);
 }

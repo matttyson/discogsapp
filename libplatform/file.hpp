@@ -24,6 +24,7 @@ public:
 
 	enum class create_mode {
 		open, // if exist, open. if not, create.
+		exist,  // if exists, open, if not, error.
 		create, // if exists, error. if not, create.
 		trunc, // if exists, truncate.  if not, create.
 	};

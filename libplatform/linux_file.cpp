@@ -64,6 +64,8 @@ bool platform::file::open(const platform::char_t *filename, io_mode iomode, crea
 	case create_mode::open:
 		flags |= O_CREAT;
 		break;
+	case create_mode::exist:
+		break;
 	case create_mode::create:
 		flags |= O_CREAT | O_EXCL;
 		break;

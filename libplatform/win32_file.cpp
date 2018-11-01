@@ -75,6 +75,9 @@ bool platform::file::open(const platform::char_t *filename, io_mode iomode, crea
 	case create_mode::open:
 		disposition = OPEN_ALWAYS;
 		break;
+	case create_mode::exist:
+		disposition = OPEN_EXISTING;
+		break;
 	case create_mode::create:
 		disposition = CREATE_NEW;
 		break;
