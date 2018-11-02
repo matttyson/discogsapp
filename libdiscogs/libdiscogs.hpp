@@ -67,12 +67,65 @@ public:
 
 	// COLLECTION
 	// GET /users/{username}/collection/folders
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-get
+	// Retrieve a list of folders in a user’s collection
 	pplx::task<discogs::parser::folder_list *>
 	collection_folders(const platform::string_t &username);
 
+	// COLLECTION
+	// POST /users/{username}/collection/folders
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-post
+	// Create a new folder in a user’s collection
+	pplx::task<bool>
+	collection_folder_add(
+		const platform::string_t &username,
+		const platform::string_t &folder_name
+	);
+
+	// COLLECTION FOLDER
+	// GET /users/{username}/collection/folders/{folder_id}
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder-get
+	// Retrieve metadata about a folder in a user’s collection
+	pplx::task<void*>
+	collection_folder(
+		const platform::string_t &username,
+		int folder_id
+	);
+
+	// COLLECTION FOLDER
+	// POST /users/{username}/collection/folders/{folder_id}
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder-post
+	// Edit a folder’s metadata. Folders 0 and 1 cannot be renamed
+	pplx::task<void*>
+	collection_folder_update(
+		const platform::string_t &username,
+		int folder_id
+	);
+
+	// COLLECTION FOLDER
+	// DELETE /users/{username}/collection/folders/{folder_id}
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder-delete
+	// Delete a folder from a user’s collection. A folder must be empty before it can be deleted.
+	pplx::task<void*>
+	collection_folder_delete(
+		const platform::string_t &username,
+		int folder_id
+	);
+
+	// COLLECTION ITEMS BY RELEASE
+	// GET /users/{username}/collection/releases/{release_id}
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-release-get
+	// View the user’s collection folders which contain a specified release
+	pplx::task<void*>
+	collection_releases(
+		const platform::string_t &username,
+		int release_id
+	);
 
 	// COLLECTION ITEMS BY FOLDER
 	// GET /users/{username}/collection/folders/{folder_id}/releases
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-folder-get
+	// Returns the list of item in a folder in a user’s collection
 	pplx::task<discogs::parser::folder_releases *>
 	collection_folder_releases(
 		const platform::string_t &username,
@@ -80,25 +133,101 @@ public:
 		int page_id = 1
 	);
 
+	// ADD TO COLLECTION FOLDER
+	// POST /users/{username}/collection/folders/{folder_id}/releases/{release_id}
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-add-to-collection-folder-post
+	// Add a release to a folder in a user’s collection
+	pplx::task<void*>
+	collection_add_to_folder(
+		const platform::string_t &username,
+		int folder_id,
+		int release_id
+	);
+
+	// CHANGE RATING OF RELEASE
+	// POST /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-change-rating-of-release-post
+	// Change the rating on a release and/or move the instance to another folder.
+	pplx::task<void*>
+	collection_change_rating_of_release(
+		const platform::string_t &username,
+		int folder_id,
+		int release_id,
+		int instance_id,
+		int rating = -1
+	);
+
+	// DELETE INSTANCE FROM FOLDER
+	// DELETE /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-delete-instance-from-folder-delete
+	// Remove an instance of a release from a user’s collection folder
+	pplx::task<void*>
+	collection_delete_instance_from_folder(
+		const platform::string_t &username,
+		int folder_id,
+		int release_id,
+		int instance_id
+	);
+
+	// LIST CUSTOM FIELDS
+	// GET /users/{username}/collection/fields
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-list-custom-fields-get
+	// Retrieve a list of user-defined collection notes fields
+	pplx::task<void*>
+	collection_list_custom_fields(
+		const platform::string_t &username
+	);
+
+	// EDIT FIELDS INSTANCE
+	// POST /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}/fields/{field_id}{?value}
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-edit-fields-instance-post
+	// Change the value of a notes field on a particular instance
+	pplx::task<void*>
+	collection_edit_fields_instance(
+		const platform::string_t &username,
+		const platform::string_t &value,
+		int folder_id,
+		int release_id,
+		int instance_id,
+		int field_id
+	);
+
+	// COLLECTION VALUE
+	// GET /users/{username}/collection/value
+	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-value-get
+	// Returns the minimum, median, and maximum value of a user’s collection
+	pplx::task<void*>
+	collection_value(
+		const platform::string_t &username
+	);
 
 	// ---- END COLLECTION ----
 
 	// ---- WANTLIST ----
 
-	// Get Wantlist
+	// WANTLIST
+	// GET /users/{username}/wants
+	// https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-wantlist-get
+	// Returns the list of releases in a user’s wantlist
 	pplx::task<discogs::parser::wantlist *>
 	wantlist(
 		const platform::string_t &username,
 		int page_id = 1
 	);
 
-	// Add to wantlist
+	// ADD TO WANTLIST
+	// GET /users/{username}/wants/{release_id}{?notes,rating}
+	// https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist-put
+	// Add a release to a user’s wantlist
 	pplx::task<bool>
 	wantlist_add(
 		int release_id,
 		const platform::string_t &username
 	);
 
+	// ADD TO WANTLIST
+	// POST /users/{username}/wants/{release_id}{?notes,rating}
+	// https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist-post
 	// Update notes or rating on the wantlist
 	pplx::task<bool>
 	wantlist_update(
@@ -108,6 +237,9 @@ public:
 		int rating = -1
 	);
 
+	// DELETE WANTLIST ITEM
+	// DELETE /users/{username}/wants/{release_id}{?notes,rating}
+	// https://www.discogs.com/developers/#page:user-wantlist,header:user-wantlist-add-to-wantlist-delete
 	// Delete a release from the wantlist.
 	pplx::task<bool>
 	wantlist_delete(
