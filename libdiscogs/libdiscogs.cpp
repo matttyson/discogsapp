@@ -41,9 +41,6 @@ public:
 
 	void Flush() {}
 
-	std::basic_string<Ch>&& MoveStdString() { return std::move(str); }
-
-private:
 	std::basic_string<Ch> str;
 };
 
@@ -413,7 +410,7 @@ discogs::rest::wantlist_update(
 	writer.EndObject();
 
 	auto request = create_request(builder, http::methods::POST);
-	request.set_body(sb.MoveStdString(), json_content_type);
+	request.set_body(std::move(sb.str), json_content_type);
 
 	auto result = m_private->m_client.request(request);
 
