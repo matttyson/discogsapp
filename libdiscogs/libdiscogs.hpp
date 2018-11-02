@@ -55,12 +55,9 @@ public:
 		const platform::string_t &base_url = STR("https://api.discogs.com")
 	);
 	~rest();
-	void set_session_key(const platform::string_t &session_key);
 
 	int per_page() const;
 	void set_per_page(int per_page);
-
-	void authenticate();
 
 	// RELEASE
 	pplx::task<discogs::parser::release *>
