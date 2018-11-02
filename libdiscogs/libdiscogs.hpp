@@ -63,17 +63,27 @@ public:
 	pplx::task<discogs::parser::release *>
 	release(int release_id);
 
+	// ---- COLLECTION ----
+
 	// COLLECTION
+	// GET /users/{username}/collection/folders
 	pplx::task<discogs::parser::folder_list *>
-	collection(const platform::string_t &username);
+	collection_folders(const platform::string_t &username);
+
 
 	// COLLECTION ITEMS BY FOLDER
+	// GET /users/{username}/collection/folders/{folder_id}/releases
 	pplx::task<discogs::parser::folder_releases *>
-	folder_releases(
+	collection_folder_releases(
 		const platform::string_t &username,
 		const platform::string_t &folder_id,
 		int page_id = 1
 	);
+
+
+	// ---- END COLLECTION ----
+
+	// ---- WANTLIST ----
 
 	// Get Wantlist
 	pplx::task<discogs::parser::wantlist *>
@@ -104,6 +114,8 @@ public:
 		int release_id,
 		const platform::string_t &username
 	);
+
+	// ---- END WANTLIST ----
 
 	// Configuration data for the OAuth system
 	// Supply the filled data struct, along with

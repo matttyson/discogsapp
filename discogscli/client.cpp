@@ -64,7 +64,7 @@ void client::folder_list()
 	int page_id = 1;
 
 	do {
-		auto foo = m_rest->folder_releases(m_username, m_folder_id, page_id);
+		auto foo = m_rest->collection_folder_releases(m_username, m_folder_id, page_id);
 
 		try {
 			foo.wait();
@@ -129,7 +129,7 @@ void client::folder_list()
 
 void client::collections_list()
 {
-	auto result = m_rest->collection(m_username);
+	auto result = m_rest->collection_folders(m_username);
 
 	try {
 		result.wait();

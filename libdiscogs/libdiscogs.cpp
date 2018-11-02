@@ -221,7 +221,7 @@ discogs::rest::release(int release_id)
 
 
 pplx::task<discogs::parser::folder_list *>
-discogs::rest::collection(const platform::string_t & username)
+discogs::rest::collection_folders(const platform::string_t & username)
 {
 	uri_builder builder;
 
@@ -286,7 +286,7 @@ discogs::rest::wantlist(
 
 
 pplx::task<discogs::parser::folder_releases *>
-discogs::rest::folder_releases(
+discogs::rest::collection_folder_releases(
 	const platform::string_t & username,
 	const platform::string_t &folder_id,
 	int page_id)
