@@ -32,12 +32,7 @@ TEST(RapidJSON, Writer) {
 	ASSERT_TRUE(rc);
 
 	platform::PlatformWriteStream pws(f, buffer, sizeof(buffer));
-
-	rapidjson::Writer<
-		platform::PlatformWriteStream,
-		rjs_UTF_t,
-		rapidjson::UTF8<>
-	> writer(pws);
+	platform::FileWriter writer(pws);
 
 	writer.StartObject();
 	writer.Key(STR("KEY"), 3);
@@ -59,7 +54,7 @@ TEST(RapidJSON, Reader) {
 	rapidjson_test_parser parser;
 
 	platform::PlatformReadStream prs(f, buffer, sizeof(buffer));
-	rapidjson::GenericReader<rapidjson::UTF8<>, rjs_UTF_t> r;
+	platform::Reader r;
 
 	rapidjson::ParseResult pr = r.Parse(prs, parser);
 

@@ -3,17 +3,8 @@
 #include <tuple>
 #include <map>
 
-#include <rapidjson/rapidjson.h>
-#include <rapidjson/filereadstream.h>
-#include <rapidjson/filewritestream.h>
-#include <rapidjson/prettywriter.h>
-#include <rapidjson/reader.h>
-
-#ifdef PLATFORM_WCHAR
-typedef rapidjson::UTF16<> rjs_UTF_t;
-#else
-typedef rapidjson::UTF8<> rjs_UTF_t;
-#endif
+#include "libplatform/file.hpp"
+#include "libplatform/rapidjson_file.hpp"
 
 // This code is really shitty. I need to fix it later.
 
@@ -147,73 +138,67 @@ config::~config()
 bool config::read()
 {
 	char buffer[512];
-	FILE *fp;
 	config_parser p;
+	platform::file f;
 
-#ifdef PLATFORM_WCHAR
-	fp = _wfopen(m_data->filename.c_str(), L"r");
-#else
-	fp = fopen(m_data->filename.c_str(), "r");
-#endif
-	if(fp == NULL){
-		return 0;
+	const bool rc = f.open(
+		m_data->filename,
+		platform::file::io_mode::read,
+		platform::file::create_mode::open
+	);
+
+	if(!rc){
+		return false;
 	}
-	rapidjson::FileReadStream frs(fp, buffer, sizeof(buffer));
 
-	// Reading from UTF-8 into whatever.
-	rapidjson::GenericReader<rapidjson::UTF8<>, rjs_UTF_t> r;
+	platform::PlatformReadStream frs{f, buffer, sizeof(buffer)};
+	platform::Reader r;
 
 	rapidjson::ParseResult pr = r.Parse(frs, p);
-
-	fclose(fp);
 
 	if(pr.IsError()){
 		return false;
 	}
 
 	m_data->data = std::move(p.data);
-
 	return true;
 }
 
 bool config::write()
 {
 	char buffer[512];
-	FILE *fp;
+	platform::file f;
 
-#ifdef PLATFORM_WCHAR
-	fp = _wfopen(m_data->filename.c_str(), L"w");
-#else
-	fp = fopen(m_data->filename.c_str(), "w");
-#endif
+	const bool rc = f.open(
+		m_data->filename,
+		platform::file::io_mode::write,
+		platform::file::create_mode::trunc
+	);
 
-	if(fp == NULL){
+	if(!rc){
 		return false;
 	}
 
-	rapidjson::FileWriteStream fws(fp, buffer, sizeof(buffer));
-	rapidjson::PrettyWriter<rapidjson::FileWriteStream, rjs_UTF_t, rapidjson::UTF8<> > pw(fws);
+	platform::PlatformWriteStream pws{f, buffer, sizeof(buffer)};
+	platform::PrettyFileWriter pfw{pws};
 
-	pw.SetIndent('\t', 1);
+	pfw.SetIndent('\t', 1);
 
-	pw.StartObject();
+	pfw.StartObject();
 
 	for(const auto &kv : m_data->data){
-		pw.Key(kv.first.c_str(), kv.first.length());
+		pfw.Key(kv.first.c_str(), kv.first.length());
 		switch(kv.second.type){
 		case element_type::string_type:
-			pw.String(kv.second.strval.c_str());
+			pfw.String(kv.second.strval.c_str());
 			break;
 		case element_type::int_type:
-			pw.Int(kv.second.intval);
+			pfw.Int(kv.second.intval);
 			break;
 		}
 	}
 
-	pw.EndObject();
-	fws.Flush();
-
-	fclose(fp);
+	pfw.EndObject();
 
 	return true;
 }

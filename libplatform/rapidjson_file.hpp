@@ -1,7 +1,29 @@
 #include "file.hpp"
 #include <memory>
 
+#include <rapidjson/rapidjson.h>
+#include <rapidjson/reader.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/stream.h>
+#include <rapidjson/prettywriter.h>
+
+#include "platform_rjs.hpp"
+
+#include <cassert>
+
 // RapidJSON file reader and writer classes
+
+/*
+	Instead of using rapidjson::GenericReader and rapidjson::Writer use the typedefs
+	at the end of the file.
+
+	platform::PrettyFileWriter;
+	platform::FileWriter;
+	platform::Reader;
+
+	These are typedefs around the rapidjson types that will do the correct UTF 8/16
+	conversions for the native platform string size.
+*/
 
 namespace platform {
 
@@ -16,7 +38,10 @@ public:
 	)
 	:buffer(buffer_), buffer_size(buffer_size_),
 		count(0),file(file_)
-	{}
+	{
+		assert(file_.is_open());
+		assert(buffer_size > 4);
+	}
 
 	PlatformWriteStream(const PlatformWriteStream&) = delete;
 	PlatformWriteStream& operator=(const PlatformWriteStream&) = delete;
@@ -38,6 +63,13 @@ public:
 		}
 	}
 
+	// Not implemented
+	Ch Peek() const { assert(false); return 0; }
+	Ch Take() { assert(false); return 0; }
+	size_t Tell() const { assert(false); return 0; }
+	Ch* PutBegin() { assert(false); return 0; }
+	size_t PutEnd(Ch*) { assert(false); return 0; }
+
 private:
 	char *buffer;
 	size_t buffer_size;
@@ -45,9 +77,14 @@ private:
 	platform::file &file;
 };
 
+inline void PutUnsafe(PlatformWriteStream &stream, char c) {
+	stream.Put(c);
+}
+
 class PlatformReadStream {
 public:
 	typedef char Ch;
+
 	PlatformReadStream(
 		platform::file &file_,
 		char *buffer_,
@@ -62,6 +99,7 @@ public:
 		file(file_),
 		eof(false)
 	{
+		assert(file_.is_open());
 		next_byte();
 	}
 
@@ -87,10 +125,10 @@ public:
 		return result;
 	}
 
-	void Put(Ch) { RAPIDJSON_ASSERT(false); }
-	void Flush() { RAPIDJSON_ASSERT(false); }
-	Ch* PutBegin() { RAPIDJSON_ASSERT(false); return 0; }
-	size_t PutEnd(Ch*) { RAPIDJSON_ASSERT(false); return 0; }
+	void Put(Ch) { assert(false); }
+	void Flush() { assert(false); }
+	Ch* PutBegin() { assert(false); return 0; }
+	size_t PutEnd(Ch*) { assert(false); return 0; }
 
 private:
 
@@ -122,5 +160,9 @@ private:
 	platform::file &file;
 	bool eof;
 };
+
+typedef rapidjson::PrettyWriter<PlatformWriteStream, rjs_UTF_t, rapidjson::UTF8<> > PrettyFileWriter;
+typedef rapidjson::Writer<PlatformWriteStream, rjs_UTF_t, rapidjson::UTF8<> > FileWriter;
+typedef rapidjson::GenericReader<rapidjson::UTF8<>, rjs_UTF_t> Reader;
 
 }
