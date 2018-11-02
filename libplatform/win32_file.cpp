@@ -14,7 +14,7 @@ namespace platform {
 class file_private {
 public:
 	file_private()
-		:fp(INVALID_HANDLE_VALUE),is_error(false)
+		:fp(INVALID_HANDLE_VALUE), errcode(file::error::unknown)
 	{}
 	~file_private() {
 		if(fp != INVALID_HANDLE_VALUE){
@@ -22,8 +22,20 @@ public:
 		}
 	}
 
+	void clear_error() {
+		errcode = file::error::success;
+	}
+
+	void set_error() {
+		const DWORD last_error = GetLastError();
+		switch(last_error){
+		default:
+			errcode = file::error::unknown;
+		}
+	}
+
 	HANDLE fp;
-	bool is_error;
+	file::error errcode;
 };
 
 }
@@ -97,10 +109,17 @@ bool platform::file::open(const platform::char_t *filename, io_mode iomode, crea
 	);
 
 	if(m_data->fp == INVALID_HANDLE_VALUE){
+		m_data->set_error();
 		return false;
 	}
 
+	m_data->clear_error();
 	return true;
+}
+
+platform::file::error platform::file::last_error() const
+{
+	return m_data->errcode;
 }
 
 bool platform::file::is_open()
@@ -116,7 +135,7 @@ void platform::file::close()
 	}
 }
 
-size_t platform::file::tell()
+int64_t platform::file::tell()
 {
 	LARGE_INTEGER to_move;
 	LARGE_INTEGER location;
@@ -124,40 +143,69 @@ size_t platform::file::tell()
 	to_move.QuadPart = 0;
 
 	DWORD rc = SetFilePointerEx(m_data->fp, to_move, &location, FILE_CURRENT);
+	if(!rc){
+		m_data->set_error();
+		return -1;
+	}
+
+	m_data->clear_error();
 
 	return location.QuadPart;
 }
 
-size_t platform::file::length()
+int64_t platform::file::length()
 {
 	LARGE_INTEGER size;
 
-	if(GetFileSizeEx(m_data->fp, &size)){
-		return size.QuadPart;
+	const BOOL rc = GetFileSizeEx(m_data->fp, &size);
+	if(!rc){
+		m_data->set_error();
+		return -1;
 	}
 
-	return 0;
+	m_data->clear_error();
+	return size.QuadPart;
 }
 
-void platform::file::flush()
+bool platform::file::flush()
 {
-	FlushFileBuffers(m_data->fp);
+	const BOOL rc = FlushFileBuffers(m_data->fp);
+	if(!rc){
+		m_data->set_error();
+		return false;
+	}
+	m_data->clear_error();
+	return true;
 }
 
-void platform::file::truncate()
+bool platform::file::truncate()
 {
-	seek(0, platform::file::seek_dir::beg);
-	SetEndOfFile(m_data->fp);
+	auto src = seek(0, platform::file::seek_dir::beg);
+	if(src < 0){
+		return false;
+	}
+	const BOOL rc = SetEndOfFile(m_data->fp);
+	if (!rc) {
+		m_data->set_error();
+		return false;
+	}
+	m_data->clear_error();
+	return true;
 }
 
-void platform::file::trim()
+bool platform::file::trim()
 {
-	SetEndOfFile(m_data->fp);
+	const BOOL rc = SetEndOfFile(m_data->fp);
+	if(!rc){
+		m_data->set_error();
+		return false;
+	}
+	m_data->clear_error();
+	return true;
 }
 
-size_t platform::file::seek(int64_t offset, platform::file::seek_dir seek_direction)
+int64_t platform::file::seek(int64_t offset, platform::file::seek_dir seek_direction)
 {
-	BOOL rc;
 	DWORD method;
 	LARGE_INTEGER size;
 	LARGE_INTEGER location;
@@ -176,27 +224,32 @@ size_t platform::file::seek(int64_t offset, platform::file::seek_dir seek_direct
 
 	size.QuadPart = offset;
 
-	rc = SetFilePointerEx(m_data->fp, size, &location, method);
+	const BOOL rc = SetFilePointerEx(m_data->fp, size, &location, method);
 
 	if(!rc){
-		// error
+		m_data->set_error();
+		return -1;
 	}
 
 	return location.QuadPart;
 }
 
-size_t platform::file::write_utf8(const platform::string_t &data)
+int64_t platform::file::write_utf8(const platform::string_t &data)
 {
 	return write_utf8(data.c_str(), data.length());
 }
 
-size_t platform::file::write_utf8(const platform::char_t *data, size_t length)
+int64_t platform::file::write_utf8(const platform::char_t *data, size_t length)
 {
 	if constexpr (sizeof(char) == sizeof(platform::char_t)){
 		BOOL rc = FALSE;
 		DWORD written = 0;
 		// UTF 8 strings
 		rc = WriteFile(m_data->fp, data, static_cast<DWORD>(length), &written, NULL);
+		if(!rc){
+			m_data->set_error();
+			return -1;
+		}
 		return written;
 	}
 	else if constexpr(sizeof(wchar_t) == sizeof(platform::char_t)){
@@ -209,7 +262,8 @@ size_t platform::file::write_utf8(const platform::char_t *data, size_t length)
 			NULL, NULL);
 
 		if(bufsize == 0){
-			return 0;
+			m_data->set_error();
+			return -1;
 		}
 
 		auto buffer = std::make_unique<char[]>(bufsize);
@@ -219,20 +273,30 @@ size_t platform::file::write_utf8(const platform::char_t *data, size_t length)
 			buffer.get(), static_cast<DWORD>(bufsize),
 			NULL, NULL);
 
-		WriteFile(m_data->fp, buffer.get(), static_cast<DWORD>(converted), &written, NULL);
+		if(converted == 0){
+			m_data->set_error();
+			return -1;
+		}
 
+		const BOOL rc = WriteFile(m_data->fp, buffer.get(), static_cast<DWORD>(converted), &written, NULL);
+		if(!rc){
+			m_data->set_error();
+			return -1;
+		}
+
+		m_data->clear_error();
 		return written;
 	}
 
 	return 0;
 }
 
-size_t platform::file::read_utf8(platform::string_t &data)
+int64_t platform::file::read_utf8(platform::string_t &data)
 {
 	if constexpr (sizeof(char) == sizeof(platform::char_t)){
 		auto file_length = length();
 		if(file_length == 0){
-			return 0;
+			return -1;
 		}
 
 		DWORD bytes_read = 0;
@@ -241,24 +305,27 @@ size_t platform::file::read_utf8(platform::string_t &data)
 
 		BOOL rc = ReadFile(m_data->fp, data.data(), static_cast<DWORD>(file_length), &bytes_read, NULL);
 		if(!rc){
-			return 0;
+			m_data->set_error();
+			return -1;
 		}
 
+		m_data->clear_error();
 		return bytes_read;
 	}
 	else if constexpr (sizeof(wchar_t) == sizeof(platform::char_t)) {
 		DWORD bytes_read;
 		BOOL rc;
-		const size_t fp_where = tell();
-		const size_t fp_len = length();
+		const int64_t fp_where = tell();
+		const int64_t fp_len = length();
 
-		const size_t to_read = fp_len - fp_where;
+		const int64_t to_read = fp_len - fp_where;
 
 		auto buffer = std::make_unique<char[]>(to_read);
 
 		rc = ReadFile(m_data->fp, buffer.get(), static_cast<DWORD>(to_read), &bytes_read, NULL);
 		if(!rc){
-			return 0;
+			m_data->set_error();
+			return -1;
 		}
 
 		const int sz = MultiByteToWideChar(
@@ -267,7 +334,8 @@ size_t platform::file::read_utf8(platform::string_t &data)
 			NULL, 0);
 
 		if(sz == 0){
-			return 0;
+			m_data->set_error();
+			return -1;
 		}
 
 		data.clear();
@@ -277,24 +345,39 @@ size_t platform::file::read_utf8(platform::string_t &data)
 			CP_UTF8, MB_ERR_INVALID_CHARS,
 			buffer.get(), bytes_read,
 			data.data(), sz);
+		if(written == 0){
+			m_data->set_error();
+			return -1;
+		}
 
+		m_data->clear_error();
 		return bytes_read;
 	}
 }
 
-size_t platform::file::write(const char *data, size_t length)
+int64_t platform::file::write(const char *data, size_t length)
 {
 	DWORD written = 0;
 
-	BOOL rc = WriteFile(m_data->fp, data, static_cast<DWORD>(length), &written, NULL);
+	const BOOL rc = WriteFile(m_data->fp, data, static_cast<DWORD>(length), &written, NULL);
+	if(!rc){
+		m_data->set_error();
+		return -1;
+	}
 
+	m_data->clear_error();
 	return written;
 }
 
-size_t platform::file::read(char *data, size_t length)
+int64_t platform::file::read(char *data, size_t length)
 {
 	DWORD read = 0;
-	BOOL rc = ReadFile(m_data->fp, data, static_cast<DWORD>(length), &read, NULL);
+	const BOOL rc = ReadFile(m_data->fp, data, static_cast<DWORD>(length), &read, NULL);
+	if (!rc) {
+		m_data->set_error();
+		return -1;
+	}
 
+	m_data->clear_error();
 	return read;
 }
