@@ -24,6 +24,7 @@ public:
 }
 
 platform::file::file()
+	:m_data(new file_private)
 {
 }
 
