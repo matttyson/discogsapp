@@ -59,10 +59,16 @@ public:
 	int per_page() const;
 	void set_per_page(int per_page);
 
+	// ---- DATABASE ----
+
 	// RELEASE
+	// GET /releases/{release_id}{?curr_abbr}
+	// https://www.discogs.com/developers/#page:database,header:database-release-get
+	// Get a release
 	pplx::task<discogs::parser::release *>
 	release(int release_id);
 
+	// ---- END DATABASE ----
 	// ---- COLLECTION ----
 
 	// COLLECTION
@@ -249,6 +255,17 @@ public:
 
 	// ---- END WANTLIST ----
 
+	// ---- IDENTITY ----
+	// IDENTITY
+	// GET /oauth/identity
+	// https://www.discogs.com/developers/#page:user-identity,header:user-identity-identity-get
+	// Retrieve basic information about the authenticated user.
+
+	pplx::task<discogs::parser::identity *>
+	identity();
+
+	// ---- END IDENTITY ----
+
 	// Configuration data for the OAuth system
 	// Supply the filled data struct, along with
 	// the logged in users tokens.
@@ -257,10 +274,6 @@ public:
 		const platform::string_t &access_token,
 		const platform::string_t &secret_token
 	);
-
-	// Returns the identity of the user when logged in with oauth.
-	pplx::task<discogs::parser::identity *>
-	identity();
 
 	// Just download a URL without processing, store the body as
 	// a string_t.  url_path is the URL path after the domain.
