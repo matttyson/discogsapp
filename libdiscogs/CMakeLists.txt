@@ -21,6 +21,7 @@ find_package(RapidJSON REQUIRED)
 target_include_directories(libdiscogs PRIVATE ${RAPIDJSON_INCLUDE_DIR})
 
 if(WIN32)
+	target_compile_definitions(libdiscogs PRIVATE RAPIDJSON_SSE42)
 	target_include_directories(libdiscogs PRIVATE ${CPPRESTSDK_INCLUDE_DIR})
 	target_compile_options(libdiscogs PRIVATE /permissive-)
 	# For linking against a static cpprestsdk on windows
