@@ -6,35 +6,9 @@
 #include "libplatform/file.hpp"
 #include "libplatform/rapidjson_file.hpp"
 
-// This code is really shitty. I need to fix it later.
+#include "config_parser.hpp"
 
 namespace discogs {
-
-enum class element_type {
-	string_type,
-	int_type,
-	none_type
-};
-
-struct element {
-
-	element(int i)
-		:strval(STR("")), intval(i), type(element_type::int_type)
-	{}
-	element(const platform::string_t &str)
-		:strval(str), intval(0), type(element_type::string_type)
-	{}
-	element(const platform::char_t *str, int length)
-		:strval(str, length), intval(0), type(element_type::string_type)
-	{}
-	element()
-		:type(element_type::none_type)
-	{}
-
-	platform::string_t strval;
-	int intval;
-	element_type type;
-};
 
 class config_private {
 public:
@@ -47,83 +21,6 @@ public:
 };
 
 
-class config_parser : public rapidjson::BaseReaderHandler<rjs_UTF_t, config_parser> {
-public:
-	bool Null();
-	bool Bool(bool b);
-	bool Int(int value);
-	bool Uint(unsigned int value);
-	bool Int64(int64_t value);
-	bool Uint64(uint64_t value);
-	bool Double(double value);
-	bool String(const Ch* str, rapidjson::SizeType length, bool copy);
-	bool Key(const Ch* str, rapidjson::SizeType length, bool copy);
-	bool StartObject();
-	bool EndObject(rapidjson::SizeType memberCount);
-	bool StartArray();
-	bool EndArray(rapidjson::SizeType elementCount);
-public:
-	platform::string_t current_key;
-	std::map<platform::string_t, element> data;
-};
-
-bool config_parser::Null()
-{
-	return false;
-}
-
-bool config_parser::Bool(bool b)
-{
-	return false;
-}
-bool config_parser::Int(int value)
-{
-	data.emplace(current_key, (int)value);
-	return true;
-}
-bool config_parser::Uint(unsigned int value)
-{
-	data.emplace(current_key, (int)value);
-	return true;
-}
-bool config_parser::Int64(int64_t value)
-{
-	return false;
-}
-bool config_parser::Uint64(uint64_t value)
-{
-	return false;
-}
-bool config_parser::Double(double value)
-{
-	return false;
-}
-bool config_parser::String(const Ch* str, rapidjson::SizeType length, bool copy)
-{
-	data.emplace(current_key, element(str, length));
-	return true;
-}
-bool config_parser::Key(const Ch* str, rapidjson::SizeType length, bool copy)
-{
-	current_key = ::platform::string_t(str, length);
-	return true;
-}
-bool config_parser::StartObject()
-{
-	return true;
-}
-bool config_parser::EndObject(rapidjson::SizeType memberCount)
-{
-	return true;
-}
-bool config_parser::StartArray()
-{
-	return false;
-}
-bool config_parser::EndArray(rapidjson::SizeType memberCount)
-{
-	return false;
-}
 
 config::config(const platform::string_t &filename)
 	:m_data(new config_private(filename))
@@ -188,11 +85,11 @@ bool config::write()
 
 	for(const auto &kv : m_data->data){
 		pfw.Key(kv.first.c_str(), kv.first.length());
-		switch(kv.second.type){
-		case element_type::string_type:
+		switch(kv.second.type_){
+		case element::type::string_type:
 			pfw.String(kv.second.strval.c_str());
 			break;
-		case element_type::int_type:
+		case element::type::int_type:
 			pfw.Int(kv.second.intval);
 			break;
 		}

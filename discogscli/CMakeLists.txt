@@ -13,6 +13,7 @@ add_executable (discogsapp
 	${CMAKE_CURRENT_LIST_DIR}/client_private.hpp
 	${CMAKE_CURRENT_LIST_DIR}/config.cpp
 	${CMAKE_CURRENT_LIST_DIR}/config.hpp
+	${CMAKE_CURRENT_LIST_DIR}/config_parser.hpp
 	${CMAKE_CURRENT_LIST_DIR}/oauth1_data.cpp
 	${CMAKE_CURRENT_LIST_DIR}/oauth1_data.hpp
 	${CMAKE_CURRENT_LIST_DIR}/rapidjson_pretty.hpp
