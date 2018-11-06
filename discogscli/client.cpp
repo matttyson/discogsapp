@@ -323,6 +323,14 @@ void client::login()
 {
 	const discogs::oauth1_data data = get_oauth_data();
 
+	if(
+		data.consumer_key.length() == 0 ||
+		data.consumer_secret.length() == 0)
+	{
+		dcout << STR("OAuth is not configured.  Please add your consumer key and secret to oauth1_data.cpp") << dendl;
+		return;
+	}
+
 	discogs::oauth1 auth(data, open_browser);
 
 	auto task = auth.authenticate();
