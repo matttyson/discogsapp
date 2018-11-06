@@ -396,20 +396,25 @@ void client::download()
 	platform::PrettyFileWriter pfw{ pws };
 	pfw.SetIndent('\t', 1);
 
-	// input chain
-	rapidjson::GenericStringStream<rjs_UTF_t> input{json_data.c_str()};
-	rapidjson::GenericReader<rjs_UTF_t, rjs_UTF_t> r;
+	// String stream that will read the document.
+	rapidjson::GenericStringStream<rjs_UTF_t> input{ json_data.c_str() };
 
-	// ouput chain
+	// The JSON parser object, will forward the input to the PrettyFileWriter.
 	rapid_pretty_parser<platform::PrettyFileWriter> pw{ pfw };
+
+	rapidjson::GenericReader<rjs_UTF_t, rjs_UTF_t> r;
 	rapidjson::ParseResult pr = r.Parse(input, pw);
+
+	if(pr.IsError()){
+		dcout << STR("JSON parse and reformat failed, writing out as unformatted");
+		file.truncate();
+		file.write_utf8(json_data);
+		return;
+	}
 
 	const auto sz = file.length();
 
-	file.close();
-
 	dcout << STR("Written ") << sz << STR(" bytes to ") << fname << dendl;
-
 }
 
 void client::apply_config()

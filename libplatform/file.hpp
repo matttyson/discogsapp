@@ -89,6 +89,7 @@ public:
 	bool is_open();
 
 	// Set the file to empty with a length of zero bytes.
+	// rewinds the file pointer to the beginning of the file.
 	bool truncate();
 
 	// Set the current file pointer location to be the end of the file.

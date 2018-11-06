@@ -134,6 +134,7 @@ bool platform::file::is_open()
 
 bool platform::file::truncate()
 {
+	seek(0, seek_dir::beg);
 	const int rc = ftruncate(m_data->fd, 0);
 	if (rc == -1) {
 		m_data->set_error();
