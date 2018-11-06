@@ -15,6 +15,7 @@ add_executable (discogsapp
 	${CMAKE_CURRENT_LIST_DIR}/config.hpp
 	${CMAKE_CURRENT_LIST_DIR}/oauth1_data.cpp
 	${CMAKE_CURRENT_LIST_DIR}/oauth1_data.hpp
+	${CMAKE_CURRENT_LIST_DIR}/rapidjson_pretty.hpp
 )
 
 target_link_libraries(discogsapp libdiscogs liboauth1 libplatform)

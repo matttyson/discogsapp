@@ -8,6 +8,13 @@
 
 #include "libdiscogs/libdiscogs.hpp"
 #include "liboauth1/oauth1.hpp"
+#include "libplatform/file.hpp"
+#include "libplatform/rapidjson_file.hpp"
+
+#include <rapidjson/stream.h>
+#include <rapidjson/stringbuffer.h>
+
+#include "rapidjson_pretty.hpp"
 
 #include <iostream>
 #include <string>
@@ -322,7 +329,6 @@ void client::identify()
 void client::login()
 {
 	const discogs::oauth1_data data = get_oauth_data();
-
 	if(
 		data.consumer_key.length() == 0 ||
 		data.consumer_secret.length() == 0)
@@ -357,12 +363,6 @@ void client::logout()
 
 void client::download()
 {
-	// TODO:  The output here will be whatever json
-	// the endpoint gives us, which will usally be
-	// one long string with no line breaks.
-	// I should use RapidJSON to format this
-	// so that it's written out in a pretty way.
-
 	auto result = m_rest->download_url(m_cmd_arg);
 
 	try {
@@ -373,19 +373,42 @@ void client::download()
 		return;
 	}
 
-	platform::string_t filename = STR("download.json");
+	const platform::char_t *fname = STR("download.json");
 
-	platform::dofstream file;
-	file.open(filename);
-
-	if(!file.is_open()){
-		dcout << STR("Error opening file") << dendl;
+	platform::file file;
+	bool rc = file.open(fname,
+		platform::file::io_mode::write,
+		platform::file::create_mode::trunc );
+	if(!rc){
+		dcout << STR("ERROR: Failed to open ") << fname;
 		return;
 	}
 
-	file << result.get();
+	const platform::string_t json_data = result.get();
 
-	dcout << STR("Written output to ") << filename << dendl;
+	// This will take the json we get from the website and run
+	// it through the rapidjson parser, and write it out again
+	// but with pretty formatting, so it's easier to read.
+
+	// File output routine.
+	char buf[1024];
+	platform::PlatformWriteStream pws{ file, buf, sizeof(buf) };
+	platform::PrettyFileWriter pfw{ pws };
+	pfw.SetIndent('\t', 1);
+
+	// input chain
+	rapidjson::GenericStringStream<rjs_UTF_t> input{json_data.c_str()};
+	rapidjson::GenericReader<rjs_UTF_t, rjs_UTF_t> r;
+
+	// ouput chain
+	rapid_pretty_parser<platform::PrettyFileWriter> pw{ pfw };
+	rapidjson::ParseResult pr = r.Parse(input, pw);
+
+	const auto sz = file.length();
+
+	file.close();
+
+	dcout << STR("Written ") << sz << STR(" bytes to ") << fname << dendl;
 
 }
 
