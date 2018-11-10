@@ -1,6 +1,10 @@
 add_library(libdiscogs STATIC
 	${CMAKE_CURRENT_LIST_DIR}/libdiscogs.cpp
+	${CMAKE_CURRENT_LIST_DIR}/libdiscogs_collection.cpp
+	${CMAKE_CURRENT_LIST_DIR}/libdiscogs_wantlist.cpp
+	${CMAKE_CURRENT_LIST_DIR}/libdiscogs_release.cpp
 	${CMAKE_CURRENT_LIST_DIR}/libdiscogs.hpp
+	${CMAKE_CURRENT_LIST_DIR}/libdiscogs_private.hpp
 )
 
 target_include_directories(libdiscogs PUBLIC .)

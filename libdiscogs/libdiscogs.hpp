@@ -1,4 +1,7 @@
-
+// TODO, I don't think I want libdiscogs itself using platform.
+// I'm including it to get the platform::string_t definition, but
+// there should be no other dependencies.  At the moment the only
+// dependencies I want to kee around are rapidjson and cpprestsdk
 #include "libplatform/platform.hpp"
 
 #include <cpprest/http_client.h>
