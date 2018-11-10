@@ -25,22 +25,22 @@
     "typemapping": {
         "integer": {
             "cpp_type": "int",
-            "constructor": "0"
+            "initializer": "0"
         },
         "string": {
             "cpp_type": "platform::string_t"
         },
         "boolean": {
             "cpp_type": "bool",
-            "constructor": "false"
+            "initializer": "false"
         },
         "float": {
             "cpp_type": "double",
-            "constructor": "0.0"
+            "initializer": "0.0"
         },
         "character": {
             "cpp_type": "char_t",
-            "constructor": "\\0"
+            "initializer": "\\0"
         }
     }
 }
