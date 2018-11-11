@@ -257,19 +257,11 @@ bool wantlist_parser::String(const Ch* value, rapidjson::SizeType length, bool c
 }
 bool wantlist_parser::Bool(bool value)
 {
-	switch(m_state){
-	default:
-		return false;
-	}
-	return true;
+	return false;
 }
 bool wantlist_parser::Double(double value)
 {
-	switch(m_state){
-	default:
-		return false;
-	}
-	return true;
+	return false;
 }
 bool wantlist_parser::Null()
 {

@@ -70,19 +70,11 @@ bool folder_response_parser::String(const Ch* value, rapidjson::SizeType length,
 }
 bool folder_response_parser::Bool(bool value)
 {
-	switch(m_state){
-	default:
-		return false;
-	}
-	return true;
+	return false;
 }
 bool folder_response_parser::Double(double value)
 {
-	switch(m_state){
-	default:
-		return false;
-	}
-	return true;
+	return false;
 }
 bool folder_response_parser::Null()
 {
@@ -134,22 +126,16 @@ bool folder_response_parser::StartArray()
 }
 bool folder_response_parser::EndArray(rapidjson::SizeType memberCount)
 {
-	switch(m_state){
-	}
 	return true;
 }
 
 bool folder_response_parser::StartObject()
 {
-	switch(m_state){
-	}
 	return true;
 }
 
 bool folder_response_parser::EndObject(rapidjson::SizeType memberCount)
 {
-	switch(m_state){
-	}
 	return true;
 }
 

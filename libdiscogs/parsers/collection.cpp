@@ -71,19 +71,11 @@ bool collection_parser::String(const Ch* value, rapidjson::SizeType length, bool
 }
 bool collection_parser::Bool(bool value)
 {
-	switch(m_state){
-	default:
-		return false;
-	}
-	return true;
+	return false;
 }
 bool collection_parser::Double(double value)
 {
-	switch(m_state){
-	default:
-		return false;
-	}
-	return true;
+	return false;
 }
 bool collection_parser::Null()
 {
@@ -166,8 +158,6 @@ bool collection_parser::StartObject()
 
 bool collection_parser::EndObject(rapidjson::SizeType memberCount)
 {
-	switch(m_state){
-	}
 	return true;
 }
 

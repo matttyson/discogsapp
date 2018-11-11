@@ -75,19 +75,11 @@ bool identity_parser::String(const Ch* value, rapidjson::SizeType length, bool c
 }
 bool identity_parser::Bool(bool value)
 {
-	switch(m_state){
-	default:
-		return false;
-	}
-	return true;
+	return false;
 }
 bool identity_parser::Double(double value)
 {
-	switch(m_state){
-	default:
-		return false;
-	}
-	return true;
+	return false;
 }
 bool identity_parser::Null()
 {
@@ -146,22 +138,16 @@ bool identity_parser::StartArray()
 }
 bool identity_parser::EndArray(rapidjson::SizeType memberCount)
 {
-	switch(m_state){
-	}
 	return true;
 }
 
 bool identity_parser::StartObject()
 {
-	switch(m_state){
-	}
 	return true;
 }
 
 bool identity_parser::EndObject(rapidjson::SizeType memberCount)
 {
-	switch(m_state){
-	}
 	return true;
 }
 

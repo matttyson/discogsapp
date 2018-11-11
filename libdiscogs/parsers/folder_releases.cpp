@@ -268,19 +268,11 @@ bool folder_releases_parser::String(const Ch* value, rapidjson::SizeType length,
 }
 bool folder_releases_parser::Bool(bool value)
 {
-	switch(m_state){
-	default:
-		return false;
-	}
-	return true;
+	return false;
 }
 bool folder_releases_parser::Double(double value)
 {
-	switch(m_state){
-	default:
-		return false;
-	}
-	return true;
+	return false;
 }
 bool folder_releases_parser::Null()
 {
