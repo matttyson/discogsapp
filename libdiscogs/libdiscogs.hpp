@@ -122,7 +122,7 @@ public:
 	// DELETE /users/{username}/collection/folders/{folder_id}
 	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder-delete
 	// Delete a folder from a user’s collection. A folder must be empty before it can be deleted.
-	pplx::task<void*>
+	pplx::task<bool>
 	collection_folder_delete(
 		const platform::string_t &username,
 		int folder_id

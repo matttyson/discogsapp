@@ -23,6 +23,8 @@ private:
 	void folder_list();
 	void folder_add();
 	void folder_get_meta();
+	void folder_delete();
+
 	void collections_list();
 
 	void test_parse();

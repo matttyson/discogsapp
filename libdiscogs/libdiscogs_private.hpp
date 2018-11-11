@@ -138,4 +138,19 @@ return_task_response(const pplx::task<http::http_response> &response)
 	});
 }
 
+static pplx::task<bool>
+return_bool_response(const pplx::task<http::http_response> &response)
+{
+	return
+		response.then([](http::http_response resp) -> bool {
+		const auto code = resp.status_code();
+
+		if (code == http::status_codes::NoContent) {
+			return true;
+		}
+
+		throw http::http_exception(resp.status_code(), resp.reason_phrase());
+	});
+}
+
 }

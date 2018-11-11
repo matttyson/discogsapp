@@ -105,3 +105,23 @@ discogs::rest::collection_folder(
 		discogs::parser::folder_response
 	>(response);
 }
+
+pplx::task<bool>
+discogs::rest::collection_folder_delete(
+	const platform::string_t &username,
+	int folder_id
+)
+{
+	uri_builder builder;
+
+	builder.append_path(STR("users"))
+		.append_path(username, true)
+		.append_path(STR("collection"))
+		.append_path(STR("folders"))
+		.append_path(platform::to_string_t(folder_id), false);
+
+	auto request = m_private->create_request(builder, http::methods::DEL);
+	auto response = m_private->m_client.request(request);
+
+	return return_bool_response(response);
+}

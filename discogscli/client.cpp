@@ -174,6 +174,21 @@ void client::folder_get_meta()
 	dcout << STR("URL:  ") << resp->resource_url << dendl;
 }
 
+void client::folder_delete()
+{
+	auto result = m_rest->collection_folder_delete(m_username, m_folder_id);
+
+	try {
+		result.wait();
+	}
+	catch (web::http::http_exception &e) {
+		print_exception(e);
+		return;
+	}
+
+	dcout << STR("deleted folder ") << m_folder_id << dendl;
+}
+
 void client::collections_list()
 {
 	auto result = m_rest->collection_folders(m_username);
@@ -506,6 +521,10 @@ int client::run(int argc, platform::char_t *argv[])
 
 	case ParserCommand::folder_get_meta:
 		folder_get_meta();
+		break;
+
+	case ParserCommand::folder_delete:
+		folder_delete();
 		break;
 
 	case ParserCommand::collection:
