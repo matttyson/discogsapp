@@ -17,6 +17,7 @@
 #include "include/release.hpp"
 #include "include/identity.hpp"
 #include "include/folder_response.hpp"
+#include "include/folder_collection_releases.hpp"
 
 #include "liboauth1/oauth1_data.hpp"
 
@@ -132,7 +133,7 @@ public:
 	// GET /users/{username}/collection/releases/{release_id}
 	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-release-get
 	// View the user’s collection folders which contain a specified release
-	pplx::task<void*>
+	pplx::task<discogs::parser::collection_release*>
 	collection_releases(
 		const platform::string_t &username,
 		int release_id

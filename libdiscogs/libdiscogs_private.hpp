@@ -15,6 +15,7 @@
 #include "parsers/folder_releases_parser.hpp"
 #include "include/folder_response.hpp"
 #include "parsers/folder_response_parser.hpp"
+#include "parsers/folder_collection_releases_parser.hpp"
 #include "include/wantlist.hpp"
 #include "parsers/wantlist_parser.hpp"
 #include "include/collection.hpp"

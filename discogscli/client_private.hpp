@@ -6,6 +6,7 @@ enum class ParserCommand {
 	folder_add,
 	folder_get_meta,
 	folder_delete,
+	folder_release,
 	wantlist,
 	wantlist_del,
 	wantlist_add,

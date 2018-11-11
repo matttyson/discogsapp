@@ -29,6 +29,7 @@ int client::process_args(int argc, platform::char_t *argv[])
 		(STR("folder-add"), STR("Add a folder"), cxxopts::value<cxxopts::String>())
 		(STR("folder-meta"), STR("Get folder metadata, requires username, folder-id"))
 		(STR("folder-del"), STR("Delete a folder, requires username, folder-id"))
+		(STR("folder-rel"), STR("Return a list of folders that contain the given release, requires release"))
 		(STR("collections"), STR("List all the collections for a user, requires username"))
 		(STR("wantlist"), STR("List the users wantlist, requires username"))
 		(STR("wantlist-add"), STR("Add a release to the wantlist, requires username, release"))
@@ -73,6 +74,11 @@ int client::process_args(int argc, platform::char_t *argv[])
 
 	if (r.count(STR("folder-del"))) {
 		m_command = ParserCommand::folder_delete;
+		command_count++;
+	}
+
+	if (r.count(STR("folder-rel"))) {
+		m_command = ParserCommand::folder_release;
 		command_count++;
 	}
 

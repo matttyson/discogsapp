@@ -189,6 +189,26 @@ void client::folder_delete()
 	dcout << STR("deleted folder ") << m_folder_id << dendl;
 }
 
+void client::folder_release()
+{
+	auto result = m_rest->collection_releases(m_username, m_release_id);
+
+	try {
+		result.wait();
+	}
+	catch (web::http::http_exception &e) {
+		print_exception(e);
+		return;
+	}
+
+	auto ptr = discogs::unique(result.get());
+
+	for(const auto &r : ptr->releases){
+		dcout << STR("Folder ID: ") << r.folder_id << dendl;
+		dcout << STR("Title:     ") << r.basic_information_.title << dendl;
+	}
+}
+
 void client::collections_list()
 {
 	auto result = m_rest->collection_folders(m_username);
@@ -525,6 +545,10 @@ int client::run(int argc, platform::char_t *argv[])
 
 	case ParserCommand::folder_delete:
 		folder_delete();
+		break;
+
+	case ParserCommand::folder_release:
+		folder_release();
 		break;
 
 	case ParserCommand::collection:

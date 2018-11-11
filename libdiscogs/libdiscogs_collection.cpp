@@ -125,3 +125,26 @@ discogs::rest::collection_folder_delete(
 
 	return return_bool_response(response);
 }
+
+pplx::task< discogs::parser::collection_release *>
+discogs::rest::collection_releases(
+	const platform::string_t &username,
+	int release_id
+)
+{
+	uri_builder builder;
+
+	builder.append_path(STR("users"))
+		.append_path(username, true)
+		.append_path(STR("collection"))
+		.append_path(STR("releases"))
+		.append_path(platform::to_string_t(release_id));
+
+	auto request = m_private->create_request(builder);
+	auto response = m_private->m_client.request(request);
+
+	return return_task_response<
+		parser::folder_collection_releases_parser,
+		discogs::parser::collection_release
+	>(response);
+}

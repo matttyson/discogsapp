@@ -24,6 +24,7 @@ private:
 	void folder_add();
 	void folder_get_meta();
 	void folder_delete();
+	void folder_release();
 
 	void collections_list();
 
