@@ -92,7 +92,7 @@ discogs::rest::collection_folder(
 	uri_builder builder;
 
 	builder.append_path(STR("users"))
-		.append_path(username)
+		.append_path(username, true)
 		.append_path(STR("collection"))
 		.append_path(STR("folders"))
 		.append_path(platform::to_string_t(folder_id));
