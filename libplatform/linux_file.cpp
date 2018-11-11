@@ -78,7 +78,7 @@ bool platform::file::open(const platform::char_t *filename, io_mode iomode, crea
 		flags |= O_WRONLY;
 		break;
 	case io_mode::readwrite:
-		flags |= O_WRONLY;
+		flags |= O_RDWR;
 		break;
 	}
 
@@ -96,7 +96,7 @@ bool platform::file::open(const platform::char_t *filename, io_mode iomode, crea
 		break;
 	}
 
-	const int fd = ::open(filename, flags);
+	const int fd = ::open(filename, flags, S_IRUSR | S_IWUSR);
 
 	if(fd == -1){
 		m_data->set_error();
