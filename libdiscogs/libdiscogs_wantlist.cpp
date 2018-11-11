@@ -22,7 +22,7 @@ discogs::rest::wantlist(
 
 	builder.append_query(STR("sort"), STR("title"));
 
-	auto request = create_request(builder);
+	auto request = m_private->create_request(builder);
 
 	auto response = m_private->m_client.request(request);
 
@@ -50,7 +50,7 @@ discogs::rest::wantlist_delete(
 		.append_path(STR("wants"))
 		.append_path(platform::to_string_t(release_id));
 
-	auto request = create_request(builder, http::methods::DEL);
+	auto request = m_private->create_request(builder, http::methods::DEL);
 
 	auto result = m_private->m_client.request(request);
 
@@ -79,7 +79,7 @@ discogs::rest::wantlist_add(
 		.append_path(STR("wants"))
 		.append_path(platform::to_string_t(release_id));
 
-	auto request = create_request(builder, http::methods::PUT);
+	auto request = m_private->create_request(builder, http::methods::PUT);
 
 	auto result = m_private->m_client.request(request);
 
@@ -127,7 +127,7 @@ discogs::rest::wantlist_update(
 
 	writer.EndObject();
 
-	auto request = create_request(builder, http::methods::POST);
+	auto request = m_private->create_request(builder, http::methods::POST);
 	request.set_body(std::move(sb.str), json_content_type);
 
 	auto result = m_private->m_client.request(request);

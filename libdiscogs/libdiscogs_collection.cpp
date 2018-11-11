@@ -11,7 +11,7 @@ discogs::rest::collection_folders(const platform::string_t & username)
 		.append_path(STR("collection"))
 		.append_path(STR("folders"));
 
-	auto request = create_request(builder);
+	auto request = m_private->create_request(builder);
 
 	auto response = m_private->m_client.request(request);
 
@@ -39,7 +39,7 @@ discogs::rest::collection_folder_add(
 		.append_path(STR("collection"))
 		.append_path(STR("folders"));
 
-	auto request = create_request(builder, web::http::methods::POST);
+	auto request = m_private->create_request(builder, web::http::methods::POST);
 
 	Utf8StdStringBuffer sb;
 	Utf8StdStringWriter writer{sb};
@@ -87,7 +87,7 @@ discogs::rest::collection_folder_releases(
 		builder.append_query(STR("page"), page_id);
 	}
 
-	auto request = create_request(builder);
+	auto request = m_private->create_request(builder);
 
 	auto z = m_private->m_client.request(request);
 	return z.then(do_basic_get)
@@ -115,7 +115,7 @@ discogs::rest::collection_folder(
 		.append_path(STR("folders"))
 		.append_path(platform::to_string_t(folder_id));
 
-	auto request = create_request(builder);
+	auto request = m_private->create_request(builder);
 	auto response = m_private->m_client.request(request);
 
 	return return_task_response<

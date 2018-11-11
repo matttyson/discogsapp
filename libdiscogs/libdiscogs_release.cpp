@@ -10,7 +10,7 @@ discogs::rest::release(int release_id)
 	builder.append_path(STR("releases"))
 		.append_path(platform::to_string_t(release_id));
 
-	auto request = create_request(builder);
+	auto request = m_private->create_request(builder);
 	auto response = m_private->m_client.request(request);
 
 	return response.then(do_basic_get)

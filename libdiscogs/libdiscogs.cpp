@@ -65,20 +65,6 @@ void discogs::rest::oauth_configure(
 	);
 }
 
-http::http_request discogs::rest::create_request(
-	const uri_builder &url,
-	const http::method &method
-)
-{
-	http::http_request request(method);
-	request.set_request_uri(url.to_string());
-
-	request.headers().add(STR("User-Agent"), m_private->m_user_agent);
-	request.headers().add(STR("Accept"),
-		STR("application/vnd.discogs.v2.discogs+json"));
-
-	return request;
-}
 
 pplx::task<discogs::parser::identity *>
 discogs::rest::identity()
@@ -88,7 +74,7 @@ discogs::rest::identity()
 	builder.append_path(STR("oauth"))
 		.append_path(STR("identity"));
 
-	auto request = create_request(builder);
+	auto request = m_private->create_request(builder);
 	auto response = m_private->m_client.request(request);
 
 	return response.then(do_basic_get)
@@ -109,8 +95,26 @@ discogs::rest::download_url(const platform::string_t &url_path)
 	uri_builder builder;
 	builder.append_path(url_path);
 
-	auto request = create_request(builder);
+	auto request = m_private->create_request(builder);
 	auto response = m_private->m_client.request(request);
 
 	return response.then(do_basic_get);
+}
+
+
+// No longer a class method.  Just a standalone function
+// to create a request with the variables we need already set.
+http::http_request discogs::rest_private::create_request(
+	const uri_builder &url,
+	const http::method &method
+)
+{
+	http::http_request request(method);
+	request.set_request_uri(url.to_string());
+
+	request.headers().add(STR("User-Agent"), this->m_user_agent);
+	request.headers().add(STR("Accept"),
+		STR("application/vnd.discogs.v2.discogs+json"));
+
+	return request;
 }

@@ -287,12 +287,6 @@ public:
 	download_url(const platform::string_t &url_path);
 
 private:
-	web::http::http_request create_request(
-		const web::uri_builder &url,
-		const web::http::method &method = web::http::methods::GET
-	);
-
-private:
 	std::unique_ptr<discogs::rest_private> m_private;
 };
 

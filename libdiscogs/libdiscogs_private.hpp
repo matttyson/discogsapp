@@ -64,6 +64,13 @@ public:
 		:m_per_page(per_page), m_user_agent(user_agent), m_base_url(base_url), m_client(base_url)
 	{}
 
+
+	http::http_request create_request(
+		const web::http::uri_builder &url,
+		const web::http::method &method = web::http::methods::GET
+	);
+
+
 	int m_per_page;
 	platform::string_t m_user_agent;
 	platform::string_t m_base_url;
@@ -130,6 +137,5 @@ return_task_response(const pplx::task<http::http_response> &response)
 		);
 	});
 }
-
 
 }
