@@ -27,6 +27,44 @@ discogs::rest::collection_folders(const platform::string_t & username)
 	});
 }
 
+pplx::task<discogs::parser::folder_response *>
+discogs::rest::collection_folder_add(
+	const platform::string_t &username,
+	const platform::string_t &folder_name
+)
+{
+	uri_builder builder;
+	builder.append_path(STR("users"))
+		.append_path(username)
+		.append_path(STR("collection"))
+		.append_path(STR("folders"));
+
+	auto request = create_request(builder, web::http::methods::POST);
+
+	Utf8StdStringBuffer sb;
+	Utf8StdStringWriter writer{sb};
+
+	writer.StartObject();
+	writer.Key(STR("name"), 4);
+	writer.String(folder_name);
+	writer.EndObject();
+
+	request.set_body(std::move(sb.str), json_content_type);
+
+	auto result = m_private->m_client.request(request);
+
+	return result.then(do_basic_get)
+		.then(do_basic_parse<parser::folder_response_parser>)
+		.then([](std::shared_ptr<parser::folder_response_parser> p) ->
+		pplx::task<parser::folder_response *>
+	{
+		return pplx::task_from_result(
+			new discogs::parser::folder_response(std::move(p->folder_response))
+		);
+	});
+
+}
+
 pplx::task<discogs::parser::folder_releases *>
 discogs::rest::collection_folder_releases(
 	const platform::string_t & username,
@@ -62,3 +100,4 @@ discogs::rest::collection_folder_releases(
 		);
 	});
 }
+

@@ -1,0 +1,35 @@
+{
+    "namespace": [ "discogs", "parser" ],
+    "parser_classname": "folder_response_parser",
+    "filename": "folder_response",
+    "link": "https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder",
+    "description": "Response from a folder post operation",
+    "document": {
+        "json_name": null,
+        "data_type": "folder_response",
+        "impl_name": "folder_response"
+    },
+    "classes": [
+        {
+            "class_name": "folder_response",
+            "definition": [
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "count",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "name",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                }
+            ]
+        }
+    ]
+}

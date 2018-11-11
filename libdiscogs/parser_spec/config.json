@@ -13,7 +13,8 @@
         "folder_releases.json",
         "wantlist.json",
         "collection.json",
-        "identify.json"
+        "identify.json",
+        "folder_post_response.json"
     ],
     "strcmp": "platform::strcmp",
     "hdr_extension": "hpp",

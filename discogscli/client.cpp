@@ -134,6 +134,26 @@ void client::folder_list()
 	}
 }
 
+void client::folder_add()
+{
+	auto result = m_rest->collection_folder_add(m_username, m_cmd_arg);
+
+	try {
+		result.wait();
+	}
+	catch (web::http::http_exception &e) {
+		print_exception(e);
+		return;
+	}
+
+	auto resp = discogs::unique(result.get());
+
+	dcout << STR("Created folder") << dendl;
+	dcout << STR("ID:   ") << resp->id << dendl;
+	dcout << STR("Name: ") << resp->name << dendl;
+	dcout << STR("URL:  ") << resp->resource_url << dendl;
+}
+
 void client::collections_list()
 {
 	auto result = m_rest->collection_folders(m_username);
@@ -458,6 +478,10 @@ int client::run(int argc, platform::char_t *argv[])
 
 	case ParserCommand::folder_list:
 		folder_list();
+		break;
+
+	case ParserCommand::folder_add:
+		folder_add();
 		break;
 
 	case ParserCommand::collection:

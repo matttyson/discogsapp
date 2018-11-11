@@ -21,6 +21,7 @@ public:
 private:
 	int process_args(int argc, platform::char_t *argv[]);
 	void folder_list();
+	void folder_add();
 	void collections_list();
 
 	void test_parse();

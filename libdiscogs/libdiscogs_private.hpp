@@ -13,6 +13,8 @@
 
 #include "include/folder_releases.hpp"
 #include "parsers/folder_releases_parser.hpp"
+#include "include/folder_response.hpp"
+#include "parsers/folder_response_parser.hpp"
 #include "include/wantlist.hpp"
 #include "parsers/wantlist_parser.hpp"
 #include "include/collection.hpp"
@@ -75,6 +77,9 @@ static pplx::task<utility::string_t>
 do_basic_get(http::http_response response)
 {
 	if (response.status_code() == http::status_codes::OK) {
+		return (response.extract_string());
+	}
+	else if (response.status_code() == http::status_codes::Created){
 		return (response.extract_string());
 	}
 

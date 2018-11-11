@@ -26,6 +26,7 @@ int client::process_args(int argc, platform::char_t *argv[])
 		(STR("whoami"), STR("Print out information about who you are authenticated as"))
 		(STR("download"), STR("Download a URL from discogs"), cxxopts::value<cxxopts::String>())
 		(STR("folder-list"), STR("List all the items in a folder, requires username, folder-id"))
+		(STR("folder-add"), STR("Add a folder"), cxxopts::value<cxxopts::String>())
 		(STR("collections"), STR("List all the collections for a user, requires username"))
 		(STR("wantlist"), STR("List the users wantlist, requires username"))
 		(STR("wantlist-add"), STR("Add a release to the wantlist, requires username, release"))
@@ -54,6 +55,12 @@ int client::process_args(int argc, platform::char_t *argv[])
 	// Grab program commands
 	if (r.count(STR("folder-list"))) {
 		m_command = ParserCommand::folder_list;
+		command_count++;
+	}
+
+	if (r.count(STR("folder-add"))) {
+		m_command = ParserCommand::folder_add;
+		m_cmd_arg = r[STR("folder-add")].as<cxxopts::String>();
 		command_count++;
 	}
 

@@ -16,6 +16,7 @@
 #include "include/wantlist.hpp"
 #include "include/release.hpp"
 #include "include/identity.hpp"
+#include "include/folder_response.hpp"
 
 #include "liboauth1/oauth1_data.hpp"
 
@@ -85,7 +86,7 @@ public:
 	// POST /users/{username}/collection/folders
 	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-post
 	// Create a new folder in a user’s collection
-	pplx::task<bool>
+	pplx::task<discogs::parser::folder_response *>
 	collection_folder_add(
 		const platform::string_t &username,
 		const platform::string_t &folder_name
