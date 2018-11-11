@@ -71,7 +71,7 @@ void client::folder_list()
 	int page_id = 1;
 
 	do {
-		auto foo = m_rest->collection_folder_releases(m_username, m_folder_id, page_id);
+		auto foo = m_rest->collection_folder_releases(m_username, platform::to_string_t(m_folder_id), page_id);
 
 		try {
 			foo.wait();
@@ -137,6 +137,26 @@ void client::folder_list()
 void client::folder_add()
 {
 	auto result = m_rest->collection_folder_add(m_username, m_cmd_arg);
+
+	try {
+		result.wait();
+	}
+	catch (web::http::http_exception &e) {
+		print_exception(e);
+		return;
+	}
+
+	auto resp = discogs::unique(result.get());
+
+	dcout << STR("Created folder") << dendl;
+	dcout << STR("ID:   ") << resp->id << dendl;
+	dcout << STR("Name: ") << resp->name << dendl;
+	dcout << STR("URL:  ") << resp->resource_url << dendl;
+}
+
+void client::folder_get_meta()
+{
+	auto result = m_rest->collection_folder(m_username, m_folder_id);
 
 	try {
 		result.wait();
@@ -482,6 +502,10 @@ int client::run(int argc, platform::char_t *argv[])
 
 	case ParserCommand::folder_add:
 		folder_add();
+		break;
+
+	case ParserCommand::folder_get_meta:
+		folder_get_meta();
 		break;
 
 	case ParserCommand::collection:

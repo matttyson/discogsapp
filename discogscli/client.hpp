@@ -22,6 +22,7 @@ private:
 	int process_args(int argc, platform::char_t *argv[]);
 	void folder_list();
 	void folder_add();
+	void folder_get_meta();
 	void collections_list();
 
 	void test_parse();
@@ -49,11 +50,11 @@ private:
 	// Arguments
 	int m_release_id;
 	int m_rating;
+	int m_folder_id;
 
 	discogs::config m_cfg;
 
 	platform::string_t m_username;
-	platform::string_t m_folder_id;
 	platform::string_t m_notes;
 	platform::string_t m_cmd_arg;
 };

@@ -115,4 +115,21 @@ do_basic_parse(utility::string_t str)
 }
 
 
+template <typename PARSER, typename RESPONSE>
+static pplx::task<RESPONSE *>
+return_task_response(const pplx::task<http::http_response> &response)
+{
+	return response.then(do_basic_get)
+		.then(do_basic_parse<PARSER>)
+		.then([](pplx::task<std::shared_ptr<PARSER>> task_p) ->
+			pplx::task<RESPONSE *>
+	{
+		auto p = task_p.get();
+		return pplx::task_from_result(
+			new RESPONSE(std::move(p->RESULT))
+		);
+	});
+}
+
+
 }

@@ -59,7 +59,7 @@ discogs::rest::collection_folder_add(
 		pplx::task<parser::folder_response *>
 	{
 		return pplx::task_from_result(
-			new discogs::parser::folder_response(std::move(p->folder_response))
+			new discogs::parser::folder_response(std::move(p->RESULT))
 		);
 	});
 
@@ -101,3 +101,25 @@ discogs::rest::collection_folder_releases(
 	});
 }
 
+pplx::task<discogs::parser::folder_response *>
+discogs::rest::collection_folder(
+	const platform::string_t &username,
+	int folder_id
+)
+{
+	uri_builder builder;
+
+	builder.append_path(STR("users"))
+		.append_path(username)
+		.append_path(STR("collection"))
+		.append_path(STR("folders"))
+		.append_path(platform::to_string_t(folder_id));
+
+	auto request = create_request(builder);
+	auto response = m_private->m_client.request(request);
+
+	return return_task_response<
+		parser::folder_response_parser,
+		discogs::parser::folder_response
+	>(response);
+}

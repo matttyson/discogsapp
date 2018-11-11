@@ -96,7 +96,7 @@ public:
 	// GET /users/{username}/collection/folders/{folder_id}
 	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-folder-get
 	// Retrieve metadata about a folder in a user’s collection
-	pplx::task<void*>
+	pplx::task<discogs::parser::folder_response*>
 	collection_folder(
 		const platform::string_t &username,
 		int folder_id

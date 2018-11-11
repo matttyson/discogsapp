@@ -40,11 +40,11 @@ bool folder_response_parser::Number(int value)
 {
 	switch(m_state){
 	case StateKey::folder_response_id:
-		folder_response.id = value;
+		RESULT.id = value;
 		m_state = StateKey::folder_response;
 		break;
 	case StateKey::folder_response_count:
-		folder_response.count = value;
+		RESULT.count = value;
 		m_state = StateKey::folder_response;
 		break;
 	default:
@@ -56,11 +56,11 @@ bool folder_response_parser::String(const Ch* value, rapidjson::SizeType length,
 {
 	switch(m_state){
 	case StateKey::folder_response_name:
-		folder_response.name = ::platform::string_t(value, length);
+		RESULT.name = ::platform::string_t(value, length);
 		m_state = StateKey::folder_response;
 		break;
 	case StateKey::folder_response_resource_url:
-		folder_response.resource_url = ::platform::string_t(value, length);
+		RESULT.resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::folder_response;
 		break;
 	default:

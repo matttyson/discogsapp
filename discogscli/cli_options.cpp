@@ -27,6 +27,7 @@ int client::process_args(int argc, platform::char_t *argv[])
 		(STR("download"), STR("Download a URL from discogs"), cxxopts::value<cxxopts::String>())
 		(STR("folder-list"), STR("List all the items in a folder, requires username, folder-id"))
 		(STR("folder-add"), STR("Add a folder"), cxxopts::value<cxxopts::String>())
+		(STR("folder-meta"), STR("Get folder metadata, requires username, folder-id"))
 		(STR("collections"), STR("List all the collections for a user, requires username"))
 		(STR("wantlist"), STR("List the users wantlist, requires username"))
 		(STR("wantlist-add"), STR("Add a release to the wantlist, requires username, release"))
@@ -37,7 +38,7 @@ int client::process_args(int argc, platform::char_t *argv[])
 
 	options.add_options(STR("Ancillary"))
 		(STR("u,username"), STR("A username to query"), cxxopts::value<cxxopts::String>())
-		(STR("f,folder-id"), STR("The ID of the folder to process"), cxxopts::value<cxxopts::String>())
+		(STR("f,folder-id"), STR("The ID of the folder to process"), cxxopts::value<int>())
 		(STR("r,release"), STR("Release ID"), cxxopts::value<int>())
 		(STR("n,note"), STR("Notes"), cxxopts::value<cxxopts::String>())
 		(STR("a,rating"), STR("Rating number"), cxxopts::value<int>())
@@ -61,6 +62,11 @@ int client::process_args(int argc, platform::char_t *argv[])
 	if (r.count(STR("folder-add"))) {
 		m_command = ParserCommand::folder_add;
 		m_cmd_arg = r[STR("folder-add")].as<cxxopts::String>();
+		command_count++;
+	}
+
+	if (r.count(STR("folder-meta"))) {
+		m_command = ParserCommand::folder_get_meta;
 		command_count++;
 	}
 
@@ -127,7 +133,7 @@ int client::process_args(int argc, platform::char_t *argv[])
 	}
 
 	if (r.count(STR("folder-id"))) {
-		m_folder_id = r[STR("folder-id")].as<cxxopts::String>();
+		m_folder_id = r[STR("folder-id")].as<int>();
 	}
 
 	if (r.count(STR("release"))) {
