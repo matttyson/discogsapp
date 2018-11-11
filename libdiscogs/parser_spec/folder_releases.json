@@ -14,7 +14,7 @@
     "document": {
         "json_name": null,
         "data_type": "folder_releases",
-        "impl_name": "folder_release"
+        "impl_name": "RESULT"
     },
     "classes": [
         {

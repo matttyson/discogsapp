@@ -41,11 +41,11 @@ bool collection_parser::Number(int value)
 {
 	switch(m_state){
 	case StateKey::folder_list_folders_id:
-		folder_list_.folders.back().id = value;
+		RESULT.folders.back().id = value;
 		m_state = StateKey::folder_list_folders;
 		break;
 	case StateKey::folder_list_folders_count:
-		folder_list_.folders.back().count = value;
+		RESULT.folders.back().count = value;
 		m_state = StateKey::folder_list_folders;
 		break;
 	default:
@@ -57,11 +57,11 @@ bool collection_parser::String(const Ch* value, rapidjson::SizeType length, bool
 {
 	switch(m_state){
 	case StateKey::folder_list_folders_resource_url:
-		folder_list_.folders.back().resource_url = ::platform::string_t(value, length);
+		RESULT.folders.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::folder_list_folders;
 		break;
 	case StateKey::folder_list_folders_name:
-		folder_list_.folders.back().name = ::platform::string_t(value, length);
+		RESULT.folders.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::folder_list_folders;
 		break;
 	default:
@@ -158,7 +158,7 @@ bool collection_parser::StartObject()
 {
 	switch(m_state){
 	case StateKey::folder_list_folders:
-		folder_list_.folders.emplace_back();
+		RESULT.folders.emplace_back();
 		break;
 	}
 	return true;

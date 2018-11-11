@@ -87,63 +87,63 @@ bool folder_releases_parser::Number(int value)
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination_per_page:
-		folder_release.pages.per_page = value;
+		RESULT.pages.per_page = value;
 		m_state = StateKey::folder_releases_pagination;
 		break;
 	case StateKey::folder_releases_pagination_items:
-		folder_release.pages.items = value;
+		RESULT.pages.items = value;
 		m_state = StateKey::folder_releases_pagination;
 		break;
 	case StateKey::folder_releases_pagination_page:
-		folder_release.pages.page = value;
+		RESULT.pages.page = value;
 		m_state = StateKey::folder_releases_pagination;
 		break;
 	case StateKey::folder_releases_pagination_pages:
-		folder_release.pages.pages = value;
+		RESULT.pages.pages = value;
 		m_state = StateKey::folder_releases_pagination;
 		break;
 	case StateKey::folder_releases_releases_id:
-		folder_release.release_.back().id = value;
+		RESULT.release_.back().id = value;
 		m_state = StateKey::folder_releases_releases;
 		break;
 	case StateKey::folder_releases_releases_instance_id:
-		folder_release.release_.back().instance_id = value;
+		RESULT.release_.back().instance_id = value;
 		m_state = StateKey::folder_releases_releases;
 		break;
 	case StateKey::folder_releases_releases_rating:
-		folder_release.release_.back().rating = value;
+		RESULT.release_.back().rating = value;
 		m_state = StateKey::folder_releases_releases;
 		break;
 	case StateKey::folder_releases_releases_folder_id:
-		folder_release.release_.back().folder_id = value;
+		RESULT.release_.back().folder_id = value;
 		m_state = StateKey::folder_releases_releases;
 		break;
 	case StateKey::folder_releases_releases_notes_field_id:
-		folder_release.release_.back().notes.back().field_id = value;
+		RESULT.release_.back().notes.back().field_id = value;
 		m_state = StateKey::folder_releases_releases_notes;
 		break;
 	case StateKey::folder_releases_releases_basic_information_id:
-		folder_release.release_.back().basic_information_.id = value;
+		RESULT.release_.back().basic_information_.id = value;
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_master_id:
-		folder_release.release_.back().basic_information_.master_id = value;
+		RESULT.release_.back().basic_information_.master_id = value;
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_year:
-		folder_release.release_.back().basic_information_.year = value;
+		RESULT.release_.back().basic_information_.year = value;
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_id:
-		folder_release.release_.back().basic_information_.labels.back().id = value;
+		RESULT.release_.back().basic_information_.labels.back().id = value;
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_id:
-		folder_release.release_.back().basic_information_.artists.back().id = value;
+		RESULT.release_.back().basic_information_.artists.back().id = value;
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_notes_field_id:
-		folder_release.release_.back().basic_information_.notes.back().field_id = value;
+		RESULT.release_.back().basic_information_.notes.back().field_id = value;
 		m_state = StateKey::folder_releases_releases_basic_information_notes;
 		break;
 	default:
@@ -155,110 +155,110 @@ bool folder_releases_parser::String(const Ch* value, rapidjson::SizeType length,
 {
 	switch(m_state){
 	case StateKey::folder_releases_pagination_urls_next:
-		folder_release.pages.links.next = ::platform::string_t(value, length);
+		RESULT.pages.links.next = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_pagination_urls;
 		break;
 	case StateKey::folder_releases_pagination_urls_last:
-		folder_release.pages.links.last = ::platform::string_t(value, length);
+		RESULT.pages.links.last = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_pagination_urls;
 		break;
 	case StateKey::folder_releases_pagination_urls_first:
-		folder_release.pages.links.first = ::platform::string_t(value, length);
+		RESULT.pages.links.first = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_pagination_urls;
 		break;
 	case StateKey::folder_releases_pagination_urls_prev:
-		folder_release.pages.links.prev = ::platform::string_t(value, length);
+		RESULT.pages.links.prev = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_pagination_urls;
 		break;
 	case StateKey::folder_releases_releases_date_added:
-		folder_release.release_.back().date_added = ::platform::string_t(value, length);
+		RESULT.release_.back().date_added = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases;
 		break;
 	case StateKey::folder_releases_releases_notes_value:
-		folder_release.release_.back().notes.back().value = ::platform::string_t(value, length);
+		RESULT.release_.back().notes.back().value = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_notes;
 		break;
 	case StateKey::folder_releases_releases_basic_information_thumb:
-		folder_release.release_.back().basic_information_.thumb = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.thumb = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_title:
-		folder_release.release_.back().basic_information_.title = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.title = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_cover_image:
-		folder_release.release_.back().basic_information_.cover_image = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.cover_image = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_resource_url:
-		folder_release.release_.back().basic_information_.resource_url = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_master_url:
-		folder_release.release_.back().basic_information_.master_url = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.master_url = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_name:
-		folder_release.release_.back().basic_information_.labels.back().name = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.labels.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_entity_type:
-		folder_release.release_.back().basic_information_.labels.back().entity_type = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.labels.back().entity_type = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_catno:
-		folder_release.release_.back().basic_information_.labels.back().catno = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.labels.back().catno = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_resource_url:
-		folder_release.release_.back().basic_information_.labels.back().resource_url = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.labels.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels_entity_type_name:
-		folder_release.release_.back().basic_information_.labels.back().entity_type_name = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.labels.back().entity_type_name = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_labels;
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats_name:
-		folder_release.release_.back().basic_information_.formats.back().name = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.formats.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_formats;
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats_qty:
-		folder_release.release_.back().basic_information_.formats.back().qty = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.formats.back().qty = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_formats;
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats_text:
-		folder_release.release_.back().basic_information_.formats.back().text = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.formats.back().text = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_formats;
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats_descriptions:
-		folder_release.release_.back().basic_information_.formats.back().descriptions.emplace_back(value, length);
+		RESULT.release_.back().basic_information_.formats.back().descriptions.emplace_back(value, length);
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_join:
-		folder_release.release_.back().basic_information_.artists.back().join = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.artists.back().join = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_name:
-		folder_release.release_.back().basic_information_.artists.back().name = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.artists.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_anv:
-		folder_release.release_.back().basic_information_.artists.back().anv = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.artists.back().anv = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_tracks:
-		folder_release.release_.back().basic_information_.artists.back().tracks = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.artists.back().tracks = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_role:
-		folder_release.release_.back().basic_information_.artists.back().role = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.artists.back().role = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists_resource_url:
-		folder_release.release_.back().basic_information_.artists.back().resource_url = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.artists.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_artists;
 		break;
 	case StateKey::folder_releases_releases_basic_information_notes_value:
-		folder_release.release_.back().basic_information_.notes.back().value = ::platform::string_t(value, length);
+		RESULT.release_.back().basic_information_.notes.back().value = ::platform::string_t(value, length);
 		m_state = StateKey::folder_releases_releases_basic_information_notes;
 		break;
 	default:
@@ -727,22 +727,22 @@ bool folder_releases_parser::StartObject()
 {
 	switch(m_state){
 	case StateKey::folder_releases_releases:
-		folder_release.release_.emplace_back();
+		RESULT.release_.emplace_back();
 		break;
 	case StateKey::folder_releases_releases_notes:
-		folder_release.release_.back().notes.emplace_back();
+		RESULT.release_.back().notes.emplace_back();
 		break;
 	case StateKey::folder_releases_releases_basic_information_labels:
-		folder_release.release_.back().basic_information_.labels.emplace_back();
+		RESULT.release_.back().basic_information_.labels.emplace_back();
 		break;
 	case StateKey::folder_releases_releases_basic_information_formats:
-		folder_release.release_.back().basic_information_.formats.emplace_back();
+		RESULT.release_.back().basic_information_.formats.emplace_back();
 		break;
 	case StateKey::folder_releases_releases_basic_information_artists:
-		folder_release.release_.back().basic_information_.artists.emplace_back();
+		RESULT.release_.back().basic_information_.artists.emplace_back();
 		break;
 	case StateKey::folder_releases_releases_basic_information_notes:
-		folder_release.release_.back().basic_information_.notes.emplace_back();
+		RESULT.release_.back().basic_information_.notes.emplace_back();
 		break;
 	}
 	return true;

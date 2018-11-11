@@ -10,7 +10,7 @@
     "document": {
         "json_name": null,
         "data_type": "folder_list",
-        "impl_name": "folder_list_"
+        "impl_name": "RESULT"
     },
     "classes": [
         {
