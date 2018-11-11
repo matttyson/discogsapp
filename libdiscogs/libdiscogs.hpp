@@ -60,6 +60,12 @@ public:
 	);
 	~rest();
 
+	rest(const rest &rhs) = delete;
+	rest& operator=(const rest &rhs) = delete;
+
+	rest(rest &&rhs) noexcept = delete;
+	rest& operator=(rest &&rhs) noexcept = delete;
+
 	int per_page() const;
 	void set_per_page(int per_page);
 
