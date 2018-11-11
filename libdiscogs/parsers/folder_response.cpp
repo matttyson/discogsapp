@@ -14,22 +14,22 @@ enum class StateKey {
 
 bool folder_response_parser::Int(int value)
 {
-    return Number((int)value);
+	return Number((int)value);
 }
 
 bool folder_response_parser::Uint(unsigned int value)
 {
-    return Number((int)value);
+	return Number((int)value);
 }
 
 bool folder_response_parser::Int64(int64_t i)
 {
-    return false;
+	return false;
 }
 
 bool folder_response_parser::Uint64(uint64_t i)
 {
-    return false;
+	return false;
 }
 
 bool folder_response_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)

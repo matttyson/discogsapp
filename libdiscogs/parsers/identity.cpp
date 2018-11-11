@@ -15,22 +15,22 @@ enum class StateKey {
 
 bool identity_parser::Int(int value)
 {
-    return Number((int)value);
+	return Number((int)value);
 }
 
 bool identity_parser::Uint(unsigned int value)
 {
-    return Number((int)value);
+	return Number((int)value);
 }
 
 bool identity_parser::Int64(int64_t i)
 {
-    return false;
+	return false;
 }
 
 bool identity_parser::Uint64(uint64_t i)
 {
-    return false;
+	return false;
 }
 
 bool identity_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)

@@ -31,8 +31,8 @@ public:
 	bool EndArray(rapidjson::SizeType elementCount);
 	bool RawNumber(const Ch * str, rapidjson::SizeType length, bool copy);
 public:
-    bool Number(int value);
-    StateKey m_state;
+	bool Number(int value);
+	StateKey m_state;
 	release release_;
 };
 

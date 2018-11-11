@@ -58,22 +58,22 @@ enum class StateKey {
 
 bool folder_collection_releases_parser::Int(int value)
 {
-    return Number((int)value);
+	return Number((int)value);
 }
 
 bool folder_collection_releases_parser::Uint(unsigned int value)
 {
-    return Number((int)value);
+	return Number((int)value);
 }
 
 bool folder_collection_releases_parser::Int64(int64_t i)
 {
-    return false;
+	return false;
 }
 
 bool folder_collection_releases_parser::Uint64(uint64_t i)
 {
-    return false;
+	return false;
 }
 
 bool folder_collection_releases_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
