@@ -153,79 +153,79 @@ bool release_parser::Number(int value)
 {
 	switch(m_state){
 	case StateKey::release_year:
-		release_.year = value;
+		RESULT.year = value;
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_id:
-		release_.id = value;
+		RESULT.id = value;
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_num_for_sale:
-		release_.num_for_sale = value;
+		RESULT.num_for_sale = value;
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_master_id:
-		release_.master_id = value;
+		RESULT.master_id = value;
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_format_quantity:
-		release_.format_quantity = value;
+		RESULT.format_quantity = value;
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_estimated_weight:
-		release_.estimated_weight = value;
+		RESULT.estimated_weight = value;
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_community_want:
-		release_.community_.want = value;
+		RESULT.community_.want = value;
 		m_state = StateKey::release_community;
 		break;
 	case StateKey::release_community_have:
-		release_.community_.have = value;
+		RESULT.community_.have = value;
 		m_state = StateKey::release_community;
 		break;
 	case StateKey::release_community_rating_count:
-		release_.community_.rating_.count = value;
+		RESULT.community_.rating_.count = value;
 		m_state = StateKey::release_community_rating;
 		break;
 	case StateKey::release_series_id:
-		release_.series_.back().id = value;
+		RESULT.series_.back().id = value;
 		m_state = StateKey::release_series;
 		break;
 	case StateKey::release_videos_duration:
-		release_.videos.back().duration = value;
+		RESULT.videos.back().duration = value;
 		m_state = StateKey::release_videos;
 		break;
 	case StateKey::release_labels_id:
-		release_.labels.back().id = value;
+		RESULT.labels.back().id = value;
 		m_state = StateKey::release_labels;
 		break;
 	case StateKey::release_artists_id:
-		release_.artists.back().id = value;
+		RESULT.artists.back().id = value;
 		m_state = StateKey::release_artists;
 		break;
 	case StateKey::release_images_height:
-		release_.images.back().height = value;
+		RESULT.images.back().height = value;
 		m_state = StateKey::release_images;
 		break;
 	case StateKey::release_images_width:
-		release_.images.back().width = value;
+		RESULT.images.back().width = value;
 		m_state = StateKey::release_images;
 		break;
 	case StateKey::release_tracklist_artists_id:
-		release_.tracklist.back().artists.back().id = value;
+		RESULT.tracklist.back().artists.back().id = value;
 		m_state = StateKey::release_tracklist_artists;
 		break;
 	case StateKey::release_tracklist_extraartists_id:
-		release_.tracklist.back().extraartists.back().id = value;
+		RESULT.tracklist.back().extraartists.back().id = value;
 		m_state = StateKey::release_tracklist_extraartists;
 		break;
 	case StateKey::release_extraartists_id:
-		release_.extra_artists.back().id = value;
+		RESULT.extra_artists.back().id = value;
 		m_state = StateKey::release_extraartists;
 		break;
 	case StateKey::release_companies_id:
-		release_.companies.back().id = value;
+		RESULT.companies.back().id = value;
 		m_state = StateKey::release_companies;
 		break;
 	default:
@@ -237,316 +237,316 @@ bool release_parser::String(const Ch* value, rapidjson::SizeType length, bool co
 {
 	switch(m_state){
 	case StateKey::release_artists_sort:
-		release_.artists_sort = ::platform::string_t(value, length);
+		RESULT.artists_sort = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_country:
-		release_.country = ::platform::string_t(value, length);
+		RESULT.country = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_notes:
-		release_.notes = ::platform::string_t(value, length);
+		RESULT.notes = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_thumb:
-		release_.thumb = ::platform::string_t(value, length);
+		RESULT.thumb = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_title:
-		release_.title = ::platform::string_t(value, length);
+		RESULT.title = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_date_changed:
-		release_.date_changed = ::platform::string_t(value, length);
+		RESULT.date_changed = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_status:
-		release_.status = ::platform::string_t(value, length);
+		RESULT.status = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_released_formatted:
-		release_.released_formatted = ::platform::string_t(value, length);
+		RESULT.released_formatted = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_master_url:
-		release_.master_url = ::platform::string_t(value, length);
+		RESULT.master_url = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_released:
-		release_.released = ::platform::string_t(value, length);
+		RESULT.released = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_date_added:
-		release_.date_added = ::platform::string_t(value, length);
+		RESULT.date_added = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_uri:
-		release_.uri = ::platform::string_t(value, length);
+		RESULT.uri = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_resource_url:
-		release_.resource_url = ::platform::string_t(value, length);
+		RESULT.resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_data_quality:
-		release_.data_quality = ::platform::string_t(value, length);
+		RESULT.data_quality = ::platform::string_t(value, length);
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_community_status:
-		release_.community_.status = ::platform::string_t(value, length);
+		RESULT.community_.status = ::platform::string_t(value, length);
 		m_state = StateKey::release_community;
 		break;
 	case StateKey::release_community_data_quality:
-		release_.community_.data_quality = ::platform::string_t(value, length);
+		RESULT.community_.data_quality = ::platform::string_t(value, length);
 		m_state = StateKey::release_community;
 		break;
 	case StateKey::release_community_submitter_username:
-		release_.community_.sumbitter_.username = ::platform::string_t(value, length);
+		RESULT.community_.sumbitter_.username = ::platform::string_t(value, length);
 		m_state = StateKey::release_community_submitter;
 		break;
 	case StateKey::release_community_submitter_resource_url:
-		release_.community_.sumbitter_.resource_url = ::platform::string_t(value, length);
+		RESULT.community_.sumbitter_.resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::release_community_submitter;
 		break;
 	case StateKey::release_community_contributors_username:
-		release_.community_.contributors.back().username = ::platform::string_t(value, length);
+		RESULT.community_.contributors.back().username = ::platform::string_t(value, length);
 		m_state = StateKey::release_community_contributors;
 		break;
 	case StateKey::release_community_contributors_resource_url:
-		release_.community_.contributors.back().resource_url = ::platform::string_t(value, length);
+		RESULT.community_.contributors.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::release_community_contributors;
 		break;
 	case StateKey::release_series_name:
-		release_.series_.back().name = ::platform::string_t(value, length);
+		RESULT.series_.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::release_series;
 		break;
 	case StateKey::release_series_entity_type:
-		release_.series_.back().entity_type = ::platform::string_t(value, length);
+		RESULT.series_.back().entity_type = ::platform::string_t(value, length);
 		m_state = StateKey::release_series;
 		break;
 	case StateKey::release_series_catno:
-		release_.series_.back().catno = ::platform::string_t(value, length);
+		RESULT.series_.back().catno = ::platform::string_t(value, length);
 		m_state = StateKey::release_series;
 		break;
 	case StateKey::release_series_resource_url:
-		release_.series_.back().resource_url = ::platform::string_t(value, length);
+		RESULT.series_.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::release_series;
 		break;
 	case StateKey::release_series_entity_type_name:
-		release_.series_.back().entity_type_name = ::platform::string_t(value, length);
+		RESULT.series_.back().entity_type_name = ::platform::string_t(value, length);
 		m_state = StateKey::release_series;
 		break;
 	case StateKey::release_styles:
-		release_.styles.emplace_back(value, length);
+		RESULT.styles.emplace_back(value, length);
 		break;
 	case StateKey::release_genres:
-		release_.genres.emplace_back(value, length);
+		RESULT.genres.emplace_back(value, length);
 		break;
 	case StateKey::release_videos_description:
-		release_.videos.back().description = ::platform::string_t(value, length);
+		RESULT.videos.back().description = ::platform::string_t(value, length);
 		m_state = StateKey::release_videos;
 		break;
 	case StateKey::release_videos_title:
-		release_.videos.back().title = ::platform::string_t(value, length);
+		RESULT.videos.back().title = ::platform::string_t(value, length);
 		m_state = StateKey::release_videos;
 		break;
 	case StateKey::release_videos_uri:
-		release_.videos.back().uri = ::platform::string_t(value, length);
+		RESULT.videos.back().uri = ::platform::string_t(value, length);
 		m_state = StateKey::release_videos;
 		break;
 	case StateKey::release_labels_name:
-		release_.labels.back().name = ::platform::string_t(value, length);
+		RESULT.labels.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::release_labels;
 		break;
 	case StateKey::release_labels_entity_type:
-		release_.labels.back().entity_type = ::platform::string_t(value, length);
+		RESULT.labels.back().entity_type = ::platform::string_t(value, length);
 		m_state = StateKey::release_labels;
 		break;
 	case StateKey::release_labels_catno:
-		release_.labels.back().catno = ::platform::string_t(value, length);
+		RESULT.labels.back().catno = ::platform::string_t(value, length);
 		m_state = StateKey::release_labels;
 		break;
 	case StateKey::release_labels_resource_url:
-		release_.labels.back().resource_url = ::platform::string_t(value, length);
+		RESULT.labels.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::release_labels;
 		break;
 	case StateKey::release_labels_entity_type_name:
-		release_.labels.back().entity_type_name = ::platform::string_t(value, length);
+		RESULT.labels.back().entity_type_name = ::platform::string_t(value, length);
 		m_state = StateKey::release_labels;
 		break;
 	case StateKey::release_artists_join:
-		release_.artists.back().join = ::platform::string_t(value, length);
+		RESULT.artists.back().join = ::platform::string_t(value, length);
 		m_state = StateKey::release_artists;
 		break;
 	case StateKey::release_artists_name:
-		release_.artists.back().name = ::platform::string_t(value, length);
+		RESULT.artists.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::release_artists;
 		break;
 	case StateKey::release_artists_anv:
-		release_.artists.back().anv = ::platform::string_t(value, length);
+		RESULT.artists.back().anv = ::platform::string_t(value, length);
 		m_state = StateKey::release_artists;
 		break;
 	case StateKey::release_artists_tracks:
-		release_.artists.back().tracks = ::platform::string_t(value, length);
+		RESULT.artists.back().tracks = ::platform::string_t(value, length);
 		m_state = StateKey::release_artists;
 		break;
 	case StateKey::release_artists_role:
-		release_.artists.back().role = ::platform::string_t(value, length);
+		RESULT.artists.back().role = ::platform::string_t(value, length);
 		m_state = StateKey::release_artists;
 		break;
 	case StateKey::release_artists_resource_url:
-		release_.artists.back().resource_url = ::platform::string_t(value, length);
+		RESULT.artists.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::release_artists;
 		break;
 	case StateKey::release_images_uri:
-		release_.images.back().uri = ::platform::string_t(value, length);
+		RESULT.images.back().uri = ::platform::string_t(value, length);
 		m_state = StateKey::release_images;
 		break;
 	case StateKey::release_images_resource_url:
-		release_.images.back().resource_url = ::platform::string_t(value, length);
+		RESULT.images.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::release_images;
 		break;
 	case StateKey::release_images_type:
-		release_.images.back().type = ::platform::string_t(value, length);
+		RESULT.images.back().type = ::platform::string_t(value, length);
 		m_state = StateKey::release_images;
 		break;
 	case StateKey::release_images_uri150:
-		release_.images.back().uri150 = ::platform::string_t(value, length);
+		RESULT.images.back().uri150 = ::platform::string_t(value, length);
 		m_state = StateKey::release_images;
 		break;
 	case StateKey::release_tracklist_duration:
-		release_.tracklist.back().duration = ::platform::string_t(value, length);
+		RESULT.tracklist.back().duration = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist;
 		break;
 	case StateKey::release_tracklist_position:
-		release_.tracklist.back().position = ::platform::string_t(value, length);
+		RESULT.tracklist.back().position = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist;
 		break;
 	case StateKey::release_tracklist_type_:
-		release_.tracklist.back().type_ = ::platform::string_t(value, length);
+		RESULT.tracklist.back().type_ = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist;
 		break;
 	case StateKey::release_tracklist_title:
-		release_.tracklist.back().title = ::platform::string_t(value, length);
+		RESULT.tracklist.back().title = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist;
 		break;
 	case StateKey::release_tracklist_artists_join:
-		release_.tracklist.back().artists.back().join = ::platform::string_t(value, length);
+		RESULT.tracklist.back().artists.back().join = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist_artists;
 		break;
 	case StateKey::release_tracklist_artists_name:
-		release_.tracklist.back().artists.back().name = ::platform::string_t(value, length);
+		RESULT.tracklist.back().artists.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist_artists;
 		break;
 	case StateKey::release_tracklist_artists_anv:
-		release_.tracklist.back().artists.back().anv = ::platform::string_t(value, length);
+		RESULT.tracklist.back().artists.back().anv = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist_artists;
 		break;
 	case StateKey::release_tracklist_artists_tracks:
-		release_.tracklist.back().artists.back().tracks = ::platform::string_t(value, length);
+		RESULT.tracklist.back().artists.back().tracks = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist_artists;
 		break;
 	case StateKey::release_tracklist_artists_role:
-		release_.tracklist.back().artists.back().role = ::platform::string_t(value, length);
+		RESULT.tracklist.back().artists.back().role = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist_artists;
 		break;
 	case StateKey::release_tracklist_artists_resource_url:
-		release_.tracklist.back().artists.back().resource_url = ::platform::string_t(value, length);
+		RESULT.tracklist.back().artists.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist_artists;
 		break;
 	case StateKey::release_tracklist_extraartists_join:
-		release_.tracklist.back().extraartists.back().join = ::platform::string_t(value, length);
+		RESULT.tracklist.back().extraartists.back().join = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist_extraartists;
 		break;
 	case StateKey::release_tracklist_extraartists_name:
-		release_.tracklist.back().extraartists.back().name = ::platform::string_t(value, length);
+		RESULT.tracklist.back().extraartists.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist_extraartists;
 		break;
 	case StateKey::release_tracklist_extraartists_anv:
-		release_.tracklist.back().extraartists.back().anv = ::platform::string_t(value, length);
+		RESULT.tracklist.back().extraartists.back().anv = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist_extraartists;
 		break;
 	case StateKey::release_tracklist_extraartists_tracks:
-		release_.tracklist.back().extraartists.back().tracks = ::platform::string_t(value, length);
+		RESULT.tracklist.back().extraartists.back().tracks = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist_extraartists;
 		break;
 	case StateKey::release_tracklist_extraartists_role:
-		release_.tracklist.back().extraartists.back().role = ::platform::string_t(value, length);
+		RESULT.tracklist.back().extraartists.back().role = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist_extraartists;
 		break;
 	case StateKey::release_tracklist_extraartists_resource_url:
-		release_.tracklist.back().extraartists.back().resource_url = ::platform::string_t(value, length);
+		RESULT.tracklist.back().extraartists.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::release_tracklist_extraartists;
 		break;
 	case StateKey::release_extraartists_join:
-		release_.extra_artists.back().join = ::platform::string_t(value, length);
+		RESULT.extra_artists.back().join = ::platform::string_t(value, length);
 		m_state = StateKey::release_extraartists;
 		break;
 	case StateKey::release_extraartists_name:
-		release_.extra_artists.back().name = ::platform::string_t(value, length);
+		RESULT.extra_artists.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::release_extraartists;
 		break;
 	case StateKey::release_extraartists_anv:
-		release_.extra_artists.back().anv = ::platform::string_t(value, length);
+		RESULT.extra_artists.back().anv = ::platform::string_t(value, length);
 		m_state = StateKey::release_extraartists;
 		break;
 	case StateKey::release_extraartists_tracks:
-		release_.extra_artists.back().tracks = ::platform::string_t(value, length);
+		RESULT.extra_artists.back().tracks = ::platform::string_t(value, length);
 		m_state = StateKey::release_extraartists;
 		break;
 	case StateKey::release_extraartists_role:
-		release_.extra_artists.back().role = ::platform::string_t(value, length);
+		RESULT.extra_artists.back().role = ::platform::string_t(value, length);
 		m_state = StateKey::release_extraartists;
 		break;
 	case StateKey::release_extraartists_resource_url:
-		release_.extra_artists.back().resource_url = ::platform::string_t(value, length);
+		RESULT.extra_artists.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::release_extraartists;
 		break;
 	case StateKey::release_companies_name:
-		release_.companies.back().name = ::platform::string_t(value, length);
+		RESULT.companies.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::release_companies;
 		break;
 	case StateKey::release_companies_entity_type:
-		release_.companies.back().entity_type = ::platform::string_t(value, length);
+		RESULT.companies.back().entity_type = ::platform::string_t(value, length);
 		m_state = StateKey::release_companies;
 		break;
 	case StateKey::release_companies_catno:
-		release_.companies.back().catno = ::platform::string_t(value, length);
+		RESULT.companies.back().catno = ::platform::string_t(value, length);
 		m_state = StateKey::release_companies;
 		break;
 	case StateKey::release_companies_resource_url:
-		release_.companies.back().resource_url = ::platform::string_t(value, length);
+		RESULT.companies.back().resource_url = ::platform::string_t(value, length);
 		m_state = StateKey::release_companies;
 		break;
 	case StateKey::release_companies_entity_type_name:
-		release_.companies.back().entity_type_name = ::platform::string_t(value, length);
+		RESULT.companies.back().entity_type_name = ::platform::string_t(value, length);
 		m_state = StateKey::release_companies;
 		break;
 	case StateKey::release_formats_name:
-		release_.formats.back().name = ::platform::string_t(value, length);
+		RESULT.formats.back().name = ::platform::string_t(value, length);
 		m_state = StateKey::release_formats;
 		break;
 	case StateKey::release_formats_qty:
-		release_.formats.back().qty = ::platform::string_t(value, length);
+		RESULT.formats.back().qty = ::platform::string_t(value, length);
 		m_state = StateKey::release_formats;
 		break;
 	case StateKey::release_formats_text:
-		release_.formats.back().text = ::platform::string_t(value, length);
+		RESULT.formats.back().text = ::platform::string_t(value, length);
 		m_state = StateKey::release_formats;
 		break;
 	case StateKey::release_formats_descriptions:
-		release_.formats.back().descriptions.emplace_back(value, length);
+		RESULT.formats.back().descriptions.emplace_back(value, length);
 		break;
 	case StateKey::release_identifiers_type:
-		release_.identifiers.back().type = ::platform::string_t(value, length);
+		RESULT.identifiers.back().type = ::platform::string_t(value, length);
 		m_state = StateKey::release_identifiers;
 		break;
 	case StateKey::release_identifiers_value:
-		release_.identifiers.back().value = ::platform::string_t(value, length);
+		RESULT.identifiers.back().value = ::platform::string_t(value, length);
 		m_state = StateKey::release_identifiers;
 		break;
 	case StateKey::release_identifiers_description:
-		release_.identifiers.back().description = ::platform::string_t(value, length);
+		RESULT.identifiers.back().description = ::platform::string_t(value, length);
 		m_state = StateKey::release_identifiers;
 		break;
 	default:
@@ -558,7 +558,7 @@ bool release_parser::Bool(bool value)
 {
 	switch(m_state){
 	case StateKey::release_videos_embed:
-		release_.videos.back().embed = value;
+		RESULT.videos.back().embed = value;
 		m_state = StateKey::release_videos;
 		break;
 	default:
@@ -570,11 +570,11 @@ bool release_parser::Double(double value)
 {
 	switch(m_state){
 	case StateKey::release_lowest_price:
-		release_.lowest_price = value;
+		RESULT.lowest_price = value;
 		m_state = StateKey::release;
 		break;
 	case StateKey::release_community_rating_average:
-		release_.community_.rating_.average = value;
+		RESULT.community_.rating_.average = value;
 		m_state = StateKey::release_community_rating;
 		break;
 	default:
@@ -1544,43 +1544,43 @@ bool release_parser::StartObject()
 {
 	switch(m_state){
 	case StateKey::release_community_contributors:
-		release_.community_.contributors.emplace_back();
+		RESULT.community_.contributors.emplace_back();
 		break;
 	case StateKey::release_series:
-		release_.series_.emplace_back();
+		RESULT.series_.emplace_back();
 		break;
 	case StateKey::release_videos:
-		release_.videos.emplace_back();
+		RESULT.videos.emplace_back();
 		break;
 	case StateKey::release_labels:
-		release_.labels.emplace_back();
+		RESULT.labels.emplace_back();
 		break;
 	case StateKey::release_artists:
-		release_.artists.emplace_back();
+		RESULT.artists.emplace_back();
 		break;
 	case StateKey::release_images:
-		release_.images.emplace_back();
+		RESULT.images.emplace_back();
 		break;
 	case StateKey::release_tracklist:
-		release_.tracklist.emplace_back();
+		RESULT.tracklist.emplace_back();
 		break;
 	case StateKey::release_tracklist_artists:
-		release_.tracklist.back().artists.emplace_back();
+		RESULT.tracklist.back().artists.emplace_back();
 		break;
 	case StateKey::release_tracklist_extraartists:
-		release_.tracklist.back().extraartists.emplace_back();
+		RESULT.tracklist.back().extraartists.emplace_back();
 		break;
 	case StateKey::release_extraartists:
-		release_.extra_artists.emplace_back();
+		RESULT.extra_artists.emplace_back();
 		break;
 	case StateKey::release_companies:
-		release_.companies.emplace_back();
+		RESULT.companies.emplace_back();
 		break;
 	case StateKey::release_formats:
-		release_.formats.emplace_back();
+		RESULT.formats.emplace_back();
 		break;
 	case StateKey::release_identifiers:
-		release_.identifiers.emplace_back();
+		RESULT.identifiers.emplace_back();
 		break;
 	}
 	return true;

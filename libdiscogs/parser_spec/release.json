@@ -13,7 +13,7 @@
     "document": {
         "json_name": null,
         "data_type": "release",
-        "impl_name": "release_"
+        "impl_name": "RESULT"
     },
     "classes": [
         {

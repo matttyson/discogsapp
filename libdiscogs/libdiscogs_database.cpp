@@ -13,16 +13,10 @@ discogs::rest::release(int release_id)
 	auto request = m_private->create_request(builder);
 	auto response = m_private->m_client.request(request);
 
-	return response.then(do_basic_get)
-		.then(do_basic_parse<discogs::parser::release_parser>)
-		.then([](pplx::task<std::shared_ptr<discogs::parser::release_parser>> task_p) ->
-			pplx::task<discogs::parser::release *>
-	{
-		auto p = task_p.get();
-		return pplx::task_from_result(
-			new discogs::parser::release(std::move(p->release_))
-		);
-	});
+	return return_task_response<
+		discogs::parser::release_parser,
+		discogs::parser::release
+	>(response);
 }
 
 pplx::task<discogs::result::master *>

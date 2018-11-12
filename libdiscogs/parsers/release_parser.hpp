@@ -33,7 +33,7 @@ public:
 public:
 	bool Number(int value);
 	StateKey m_state;
-	release release_;
+	release RESULT;
 };
 
 } // namespace discogs
