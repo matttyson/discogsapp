@@ -39,6 +39,7 @@ int client::process_args(int argc, platform::char_t *argv[])
 		(STR("wantlist-del"), STR("Delete an item from the wantlist, requires username, release"))
 		(STR("wantlist-upd"), STR("Update wantlist itemt, requires username, release [note, rating]"))
 		(STR("release-print"), STR("Print out a release, requires release"))
+		(STR("master-print"), STR("Print out a master"), cxxopts::value<cxxopts::String>())
 		;
 
 	options.add_options(STR("Ancillary"))
@@ -128,6 +129,12 @@ int client::process_args(int argc, platform::char_t *argv[])
 
 	if(r.count(STR("release-print"))){
 		m_command = ParserCommand::release_print;
+		command_count++;
+	}
+
+	if(r.count(STR("master-print"))){
+		m_command = ParserCommand::master_print;
+		m_cmd_arg = r[STR("master-print")].as<cxxopts::String>();
 		command_count++;
 	}
 

@@ -1,0 +1,100 @@
+{
+    "namespace": [
+        "discogs",
+        "result"
+    ],
+    "filename": "master",
+    "parser_classname": "master_parser",
+    "link": "https://www.discogs.com/developers/#page:database,header:database-master-release",
+    "description": "MASTER RELEASE",
+    "import": [
+        "base_classes.json"
+    ],
+    "document": {
+        "json_name": null,
+        "data_type": "master",
+        "impl_name": "RESULT"
+    },
+    "classes": [
+        {
+            "class_name": "master",
+            "definition": [
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "year",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "num_for_sale",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "main_release",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "lowest_price",
+                    "data_type": "float"
+                },
+                {
+                    "json_name": "uri",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "title",
+                    "data_type": "string"
+                },
+
+                {
+                    "json_name": "versions_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "data_quality",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "main_release_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "styles",
+                    "data_type": "string",
+                    "array": true
+                },
+                {
+                    "json_name": "genres",
+                    "data_type": "string",
+                    "array": true
+                },
+                {
+                    "json_name": "images",
+                    "data_type": "image",
+                    "array": true
+                },
+                {
+                    "json_name": "videos",
+                    "data_type": "video",
+                    "array": true
+                },
+                {
+                    "json_name": "artists",
+                    "data_type": "artist",
+                    "array": true
+                },
+                {
+                    "json_name": "tracklist",
+                    "data_type": "track",
+                    "array": true
+                }
+            ]
+        }
+    ]
+}

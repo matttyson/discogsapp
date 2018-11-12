@@ -424,6 +424,59 @@ void client::release_print()
 	}
 }
 
+void client::master_print()
+{
+	int master_id = std::stoi(m_cmd_arg);
+	auto result = m_rest->master(master_id);
+
+	try {
+		result.wait();
+	}
+	catch (web::http::http_exception &e) {
+		print_exception(e);
+	}
+
+	auto m = discogs::unique(result.get());
+
+	bool first = true;
+	dcout << STR("Printing Master ") << m->id << dendl << dendl;
+	for(const auto &a: m->artists){
+		dcout << STR("Artist: ") << a.name << dendl;
+	}
+	dcout << STR("Title:  ") << m->title << dendl;
+	dcout << STR("Year:   ") << m->year << dendl;
+	dcout << STR("Genres: ");
+	for(const auto &g: m->genres){
+		if(!first){
+			dcout << STR(", ");
+		}
+		first = false;
+		dcout << g;
+	}
+	dcout << dendl;
+
+	dcout << STR("Styles: ");
+	first = true;
+	for (const auto &s : m->styles) {
+		if (!first) {
+			dcout << STR(", ");
+		}
+		first = false;
+		dcout << s;
+	}
+	dcout << dendl;
+
+	dcout << STR("Titles:") << dendl;
+	for(const auto &t : m->tracklist){
+		dcout << STR("  ") << t.position
+			<< STR(" - ") << t.title;
+		if (t.duration.length() > 0) {
+			dcout << STR(" [") << t.duration << STR(']');
+		}
+		dcout << dendl;
+	}
+}
+
 void client::identify()
 {
 	auto result = m_rest->identity();
@@ -628,6 +681,10 @@ int client::run(int argc, platform::char_t *argv[])
 
 	case ParserCommand::release_print:
 		release_print();
+		break;
+
+	case ParserCommand::master_print:
+		master_print();
 		break;
 
 	case ParserCommand::identify:

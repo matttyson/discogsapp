@@ -15,6 +15,7 @@
 #include "include/collection.hpp"
 #include "include/wantlist.hpp"
 #include "include/release.hpp"
+#include "include/master.hpp"
 #include "include/identity.hpp"
 #include "include/folder_response.hpp"
 #include "include/folder_collection_releases.hpp"
@@ -83,6 +84,14 @@ public:
 	// Get a release
 	pplx::task<discogs::parser::release *>
 	release(int release_id);
+
+	// MASTER RELEASE
+	// GET /masters/{master_id}
+	// https://www.discogs.com/developers/#page:database,header:database-master-release
+	// Get a master release
+
+	pplx::task<discogs::result::master *>
+	master(int master_id);
 
 	// ---- END DATABASE ----
 	// ---- COLLECTION ----

@@ -34,6 +34,7 @@ private:
 	void test_parse();
 
 	void release_print();
+	void master_print();
 
 	void wantlist_list();
 	void wantlist_delete();

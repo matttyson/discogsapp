@@ -18,6 +18,7 @@
 #include "parsers/wantlist_parser.hpp"
 #include "parsers/collection_parser.hpp"
 #include "parsers/release_parser.hpp"
+#include "parsers/master_parser.hpp"
 #include "parsers/identity_parser.hpp"
 
 #include <pplx/pplxtasks.h>
