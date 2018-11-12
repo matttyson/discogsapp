@@ -1,15 +1,15 @@
 // TODO, I don't think I want libdiscogs itself using platform.
 // I'm including it to get the platform::string_t definition, but
 // there should be no other dependencies.  At the moment the only
-// dependencies I want to kee around are rapidjson and cpprestsdk
+// dependencies I want to keep around are rapidjson and cpprestsdk
 #include "libplatform/platform.hpp"
 
 #include <cpprest/http_client.h>
 #include <pplx/pplxtasks.h>
 
-// I want to remove http_client.h so the cpprestsdk isn't visible outside this
-// header file.  I need to create a new set of exceptions so the cpprestk
-// exception defintions aren't needed.
+// Since this is using the cpprestsdk, this api can throw any
+// of the exceptions that the cpprestsdk uses.  I'm going to need
+// to document those somehow.
 
 #include "include/folder_releases.hpp"
 #include "include/collection.hpp"
