@@ -28,6 +28,7 @@ private:
 
 	void collections_list();
 	void collection_add();
+	void collection_upd();
 
 	void test_parse();
 
@@ -55,6 +56,7 @@ private:
 	int m_release_id;
 	int m_rating;
 	int m_folder_id;
+	int m_instance_id;
 
 	discogs::config m_cfg;
 

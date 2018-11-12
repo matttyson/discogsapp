@@ -170,13 +170,14 @@ public:
 	// POST /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}
 	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-change-rating-of-release-post
 	// Change the rating on a release and/or move the instance to another folder.
-	pplx::task<void*>
+	pplx::task<bool>
 	collection_change_rating_of_release(
 		const platform::string_t &username,
 		int folder_id,
 		int release_id,
 		int instance_id,
-		int rating = -1
+		int rating = -1,
+		int new_folder_id = -1
 	);
 
 	// DELETE INSTANCE FROM FOLDER

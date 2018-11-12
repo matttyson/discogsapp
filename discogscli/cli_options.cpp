@@ -32,6 +32,7 @@ int client::process_args(int argc, platform::char_t *argv[])
 		(STR("folder-rel"), STR("Return a list of folders that contain the given release, requires release"))
 		(STR("collections"), STR("List all the collections for a user, requires username"))
 		(STR("collection-add"), STR("Add a release to a collection folder, requires username, folder-id, release-id"))
+		(STR("collection-upd"), STR("Update a release in your collection, username, folder, release, instance"))
 		(STR("wantlist"), STR("List the users wantlist, requires username"))
 		(STR("wantlist-add"), STR("Add a release to the wantlist, requires username, release"))
 		(STR("wantlist-del"), STR("Delete an item from the wantlist, requires username, release"))
@@ -42,6 +43,7 @@ int client::process_args(int argc, platform::char_t *argv[])
 	options.add_options(STR("Ancillary"))
 		(STR("u,username"), STR("A username to query"), cxxopts::value<cxxopts::String>())
 		(STR("f,folder-id"), STR("The ID of the folder to process"), cxxopts::value<int>())
+		(STR("i,instance"), STR("The ID of the instance"), cxxopts::value<int>())
 		(STR("r,release"), STR("Release ID"), cxxopts::value<int>())
 		(STR("n,note"), STR("Notes"), cxxopts::value<cxxopts::String>())
 		(STR("a,rating"), STR("Rating number"), cxxopts::value<int>())
@@ -90,6 +92,11 @@ int client::process_args(int argc, platform::char_t *argv[])
 
 	if(r.count(STR("collection-add"))){
 		m_command = ParserCommand::collection_add;
+		command_count++;
+	}
+
+	if (r.count(STR("collection-upd"))) {
+		m_command = ParserCommand::collection_upd;
 		command_count++;
 	}
 
@@ -152,6 +159,10 @@ int client::process_args(int argc, platform::char_t *argv[])
 
 	if (r.count(STR("folder-id"))) {
 		m_folder_id = r[STR("folder-id")].as<int>();
+	}
+
+	if (r.count(STR("instance"))) {
+		m_instance_id = r[STR("instance")].as<int>();
 	}
 
 	if (r.count(STR("release"))) {

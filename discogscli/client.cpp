@@ -247,6 +247,27 @@ void client::collection_add()
 	dcout << STR("resource_url: ") << c->resource_url << dendl;
 }
 
+void client::collection_upd()
+{
+	auto result = m_rest->collection_change_rating_of_release(
+		m_username,
+		m_folder_id,
+		m_release_id,
+		m_instance_id,
+		m_rating
+	);
+
+	try {
+		result.wait();
+	}
+	catch (web::http::http_exception &e) {
+		print_exception(e);
+		return;
+	}
+
+	dcout << STR("Collection updated") << dendl;
+}
+
 void client::wantlist_list()
 {
 	int page_id = 1;
@@ -559,6 +580,10 @@ int client::run(int argc, platform::char_t *argv[])
 
 	case ParserCommand::collection_add:
 		collection_add();
+		break;
+
+	case ParserCommand::collection_upd:
+		collection_upd();
 		break;
 
 	case ParserCommand::wantlist:

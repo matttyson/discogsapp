@@ -3,6 +3,7 @@
 enum class ParserCommand {
 	collection,
 	collection_add,
+	collection_upd,
 	folder_list,
 	folder_add,
 	folder_get_meta,
