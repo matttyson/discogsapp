@@ -477,6 +477,28 @@ void client::master_print()
 	}
 }
 
+void client::search()
+{
+	std::vector<std::pair<platform::string_t, platform::string_t>> args;
+
+	args.emplace_back(STR("artist"), STR("Chicane"));
+
+	auto result = m_rest->search(0, args);
+
+	try {
+		result.wait();
+	}
+	catch (web::http::http_exception &e) {
+		print_exception(e);
+	}
+
+	auto search = discogs::unique(result.get());
+
+	for(const auto &r : search->results){
+		dcout << r.title << dendl;
+	}
+}
+
 void client::identify()
 {
 	auto result = m_rest->identity();

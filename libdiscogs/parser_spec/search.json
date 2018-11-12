@@ -1,0 +1,135 @@
+{
+    "namespace": [
+        "discogs",
+        "result"
+    ],
+    "filename": "search",
+    "parser_classname": "search_parser",
+    "link": "https://www.discogs.com/developers/#page:database,header:database-search",
+    "description": "SEARCH",
+    "import": [
+        "base_classes.json",
+        "paginate.json"
+    ],
+    "document": {
+        "json_name": null,
+        "data_type": "search_results",
+        "impl_name": "RESULT"
+    },
+    "classes": [
+        {
+            "class_name": "mini_community",
+            "definition": [
+                {
+                    "json_name": "have",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "want",
+                    "data_type": "integer"
+                }
+            ]
+        },
+        {
+            "class_name": "result",
+            "definition": [
+                {
+                    "json_name": "id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "master_id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "thumb",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "title",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "country",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "type",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "uri",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "catno",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "year",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "cover_image",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "master_url",
+                    "data_type": "string"
+                },
+                {
+                    "json_name": "barcode",
+                    "data_type": "string",
+                    "array": true
+                },
+                {
+                    "json_name": "format",
+                    "data_type": "string",
+                    "array": true
+                },
+                {
+                    "json_name": "label",
+                    "data_type": "string",
+                    "array": true
+                },
+                {
+                    "json_name": "style",
+                    "data_type": "string",
+                    "array": true
+                },
+                {
+                    "json_name": "genre",
+                    "data_type": "string",
+                    "array": true
+                },
+                {
+                    "json_name": "community",
+                    "data_type": "mini_community"
+                },
+                {
+                    "json_name": "user_data",
+                    "data_type": "user_data"
+                }
+            ]
+        },
+        {
+            "class_name": "search_results",
+            "definition": [
+                {
+                    "json_name": "pagination",
+                    "data_type": "pagination",
+                    "impl_name": "pages"
+                },
+                {
+                    "json_name": "results",
+                    "data_type": "result",
+                    "array": true
+                }
+            ]
+        }
+    ]
+}

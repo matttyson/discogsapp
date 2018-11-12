@@ -35,3 +35,25 @@ discogs::rest::master(int master_id)
 		discogs::result::master
 	>(response);
 }
+
+pplx::task<discogs::result::search_results *>
+discogs::rest::search(int page_id,
+	const std::vector<std::pair<platform::string_t, platform::string_t>> &args)
+{
+	uri_builder builder;
+
+	builder.append_path(STR("database"))
+		.append_path(STR("search"));
+
+	for(const auto &t : args) {
+		builder.append_query(t.first, t.second);
+	}
+
+	auto request = m_private->create_request(builder);
+	auto response = m_private->m_client.request(request);
+
+	return return_task_response<
+		result::search_parser,
+		result::search_results
+	>(response);
+}

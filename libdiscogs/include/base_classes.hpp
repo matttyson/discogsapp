@@ -7,6 +7,20 @@ namespace discogs {
 namespace parser {
 namespace common {
 
+class user_data {
+public:
+	user_data():in_collection(false),in_wantlist(false){}
+	~user_data(){}
+	user_data(const user_data &rhs) = default;
+	user_data(user_data &&rhs) noexcept = default;
+	user_data& operator=(const user_data &rhs) = default;
+	user_data& operator=(user_data &&rhs) noexcept = default;
+
+	bool in_collection;
+	bool in_wantlist;
+};
+
+
 class contributor {
 public:
 	contributor(){}

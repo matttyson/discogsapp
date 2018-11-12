@@ -20,6 +20,7 @@
 #include "include/folder_response.hpp"
 #include "include/folder_collection_releases.hpp"
 #include "include/collection_add_response.hpp"
+#include "include/search.hpp"
 
 #include "liboauth1/oauth1_data.hpp"
 
@@ -92,6 +93,19 @@ public:
 
 	pplx::task<discogs::result::master *>
 	master(int master_id);
+
+	// SEARCH
+	// GET /database/search?q=
+	// https://www.discogs.com/developers/#page:database,header:database-search
+	// Issue a search query
+
+	// To use this API please read the discogs documentation
+	// Supply a vector of string pairs of "argument", "value"
+	// as described in the API docs
+	pplx::task<discogs::result::search_results *>
+	search(int page_id,
+		const std::vector<std::pair<platform::string_t,platform::string_t>> &);
+
 
 	// ---- END DATABASE ----
 	// ---- COLLECTION ----

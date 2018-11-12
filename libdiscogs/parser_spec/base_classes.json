@@ -8,6 +8,19 @@
     "header": "base_classes",
     "classes": [
         {
+            "class_name": "user_data",
+            "definition": [
+                {
+                    "json_name": "in_collection",
+                    "data_type": "boolean"
+                },
+                {
+                    "json_name": "in_wantlist",
+                    "data_type": "boolean"
+                }
+            ]
+        },
+        {
             "class_name": "contributor",
             "definition": [
                 {

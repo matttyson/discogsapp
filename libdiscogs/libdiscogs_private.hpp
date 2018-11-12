@@ -20,6 +20,7 @@
 #include "parsers/release_parser.hpp"
 #include "parsers/master_parser.hpp"
 #include "parsers/identity_parser.hpp"
+#include "parsers/search_parser.hpp"
 
 #include <pplx/pplxtasks.h>
 

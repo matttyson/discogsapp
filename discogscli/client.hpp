@@ -36,6 +36,8 @@ private:
 	void release_print();
 	void master_print();
 
+	void search();
+
 	void wantlist_list();
 	void wantlist_delete();
 	void wantlist_add();
