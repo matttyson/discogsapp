@@ -80,9 +80,6 @@ void client::folder_list()
 			print_exception(e);
 			return;
 		}
-		catch (std::exception &e) {
-			return;
-		}
 
 		auto c = discogs::unique(foo.get());
 
@@ -220,9 +217,6 @@ void client::collections_list()
 		print_exception(e);
 		return;
 	}
-	catch(std::exception &e){
-		return;
-	}
 
 	auto c = discogs::unique(result.get());
 
@@ -270,9 +264,6 @@ void client::wantlist_list()
 			print_exception(e);
 			return;
 		}
-		catch (std::exception &e){
-			return;
-		}
 
 		auto c = discogs::unique(result.get());
 
@@ -311,9 +302,6 @@ void client::wantlist_delete()
 		print_exception(e);
 		return;
 	}
-	catch(std::exception &e){
-		return;
-	}
 }
 
 void client::wantlist_add()
@@ -329,9 +317,6 @@ void client::wantlist_add()
 		print_exception(e);
 		return;
 	}
-	catch(std::exception &e){
-		return;
-	}
 }
 
 void client::wantlist_update()
@@ -345,9 +330,6 @@ void client::wantlist_update()
 	}
 	catch (web::http::http_exception &e) {
 		print_exception(e);
-		return;
-	}
-	catch(std::exception &e){
 		return;
 	}
 }
@@ -408,7 +390,7 @@ void client::identify()
 	try {
 		result.wait();
 	}
-	catch (const web::http::http_exception &e) {
+	catch (const web::http::http_exception &) {
 		dcout << STR("You are not logged in") << dendl;
 		return;
 	}

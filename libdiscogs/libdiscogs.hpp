@@ -34,6 +34,10 @@
 
 	Therefore it's reccomended you wrap the raw ptr from this API
 	into either a std::unique_ptr or std::shared_ptr as you prefer.
+
+	This is also bad, because it forces the user to care about the
+	result from task.get().  If it's not handled then there
+	will be a memory leak.
 */
 
 namespace discogs {
