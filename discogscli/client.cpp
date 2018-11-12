@@ -268,6 +268,26 @@ void client::collection_upd()
 	dcout << STR("Collection updated") << dendl;
 }
 
+void client::collection_del()
+{
+	auto result = m_rest->collection_delete_instance_from_folder(
+		m_username,
+		m_folder_id,
+		m_release_id,
+		m_instance_id
+	);
+
+	try {
+		result.wait();
+	}
+	catch (web::http::http_exception &e) {
+		print_exception(e);
+		return;
+	}
+
+	dcout << STR("Release ") << m_release_id << STR(" deleted from folder ") << m_folder_id << dendl;
+}
+
 void client::wantlist_list()
 {
 	int page_id = 1;
@@ -584,6 +604,10 @@ int client::run(int argc, platform::char_t *argv[])
 
 	case ParserCommand::collection_upd:
 		collection_upd();
+		break;
+
+	case ParserCommand::collection_del:
+		collection_del();
 		break;
 
 	case ParserCommand::wantlist:

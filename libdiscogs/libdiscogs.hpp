@@ -184,7 +184,7 @@ public:
 	// DELETE /users/{username}/collection/folders/{folder_id}/releases/{release_id}/instances/{instance_id}
 	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-delete-instance-from-folder-delete
 	// Remove an instance of a release from a user’s collection folder
-	pplx::task<void*>
+	pplx::task<bool>
 	collection_delete_instance_from_folder(
 		const platform::string_t &username,
 		int folder_id,

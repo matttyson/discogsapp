@@ -222,3 +222,29 @@ discogs::rest::collection_change_rating_of_release(
 
 	return return_bool_response(response);
 }
+
+pplx::task<bool>
+discogs::rest::collection_delete_instance_from_folder(
+	const platform::string_t &username,
+	int folder_id,
+	int release_id,
+	int instance_id
+)
+{
+	uri_builder builder;
+
+	builder.append_path(STR("users"))
+		.append_path(username, true)
+		.append_path(STR("collection"))
+		.append_path(STR("folders"))
+		.append_path(platform::to_string_t(folder_id))
+		.append_path(STR("releases"))
+		.append_path(platform::to_string_t(release_id))
+		.append_path(STR("instances"))
+		.append_path(platform::to_string_t(instance_id));
+
+	auto request = m_private->create_request(builder, web::http::methods::DEL);
+	auto response = m_private->m_client.request(request);
+
+	return return_bool_response(response);
+}

@@ -29,6 +29,7 @@ private:
 	void collections_list();
 	void collection_add();
 	void collection_upd();
+	void collection_del();
 
 	void test_parse();
 

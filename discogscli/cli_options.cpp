@@ -33,6 +33,7 @@ int client::process_args(int argc, platform::char_t *argv[])
 		(STR("collections"), STR("List all the collections for a user, requires username"))
 		(STR("collection-add"), STR("Add a release to a collection folder, requires username, folder-id, release-id"))
 		(STR("collection-upd"), STR("Update a release in your collection, username, folder, release, instance"))
+		(STR("collection-del"), STR("Delete an item from a collection, username, folder, released, instance"))
 		(STR("wantlist"), STR("List the users wantlist, requires username"))
 		(STR("wantlist-add"), STR("Add a release to the wantlist, requires username, release"))
 		(STR("wantlist-del"), STR("Delete an item from the wantlist, requires username, release"))
@@ -97,6 +98,11 @@ int client::process_args(int argc, platform::char_t *argv[])
 
 	if (r.count(STR("collection-upd"))) {
 		m_command = ParserCommand::collection_upd;
+		command_count++;
+	}
+
+	if (r.count(STR("collection-del"))) {
+		m_command = ParserCommand::collection_del;
 		command_count++;
 	}
 
