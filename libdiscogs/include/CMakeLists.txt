@@ -5,6 +5,7 @@ target_sources(libdiscogs PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}/folder_releases.hpp
 	${CMAKE_CURRENT_LIST_DIR}/folder_response.hpp
 	${CMAKE_CURRENT_LIST_DIR}/folder_collection_releases.hpp
+	${CMAKE_CURRENT_LIST_DIR}/collection_add_response.hpp
 	${CMAKE_CURRENT_LIST_DIR}/paginate.hpp
 	${CMAKE_CURRENT_LIST_DIR}/parser_common.hpp
 	${CMAKE_CURRENT_LIST_DIR}/release.hpp

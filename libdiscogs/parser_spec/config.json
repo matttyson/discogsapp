@@ -15,7 +15,8 @@
         "collection.json",
         "identify.json",
         "folder_post_response.json",
-        "folder_collection_releases.json"
+        "folder_collection_releases.json",
+        "collection_add_to_folder.json"
     ],
     "strcmp": "platform::strcmp",
     "hdr_extension": "hpp",

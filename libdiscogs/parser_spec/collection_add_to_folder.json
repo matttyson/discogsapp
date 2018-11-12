@@ -1,0 +1,30 @@
+{
+    "namespace": [
+        "discogs",
+        "parser"
+    ],
+    "parser_classname": "collection_add_response_parser",
+    "filename": "collection_add_response",
+    "link": "https://www.discogs.com/developers/#page:user-collection,header:user-collection-collection-items-by-folder",
+    "description": "COLLECTION ITEMS BY FOLDER",
+    "document": {
+        "json_name": null,
+        "data_type": "collection_add_response",
+        "impl_name": "RESULT"
+    },
+    "classes": [
+        {
+            "class_name": "collection_add_response",
+            "definition": [
+                {
+                    "json_name": "instance_id",
+                    "data_type": "integer"
+                },
+                {
+                    "json_name": "resource_url",
+                    "data_type": "string"
+                }
+            ]
+        }
+    ]
+}

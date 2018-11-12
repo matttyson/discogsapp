@@ -233,6 +233,26 @@ void client::collections_list()
 	}
 }
 
+void client::collection_add()
+{
+	auto result = m_rest->collection_add_to_folder(
+		m_username, m_folder_id, m_release_id);
+
+	try {
+		result.wait();
+	}
+	catch (web::http::http_exception &e) {
+		print_exception(e);
+		return;
+	}
+
+	auto c = discogs::unique(result.get());
+
+	dcout << STR("Added to collection") << dendl;
+	dcout << STR("instance_id : ") << c->instance_id << dendl;
+	dcout << STR("resource_url: ") << c->resource_url << dendl;
+}
+
 void client::wantlist_list()
 {
 	int page_id = 1;
@@ -553,6 +573,10 @@ int client::run(int argc, platform::char_t *argv[])
 
 	case ParserCommand::collection:
 		collections_list();
+		break;
+
+	case ParserCommand::collection_add:
+		collection_add();
 		break;
 
 	case ParserCommand::wantlist:

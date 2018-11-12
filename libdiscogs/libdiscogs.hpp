@@ -18,6 +18,7 @@
 #include "include/identity.hpp"
 #include "include/folder_response.hpp"
 #include "include/folder_collection_releases.hpp"
+#include "include/collection_add_response.hpp"
 
 #include "liboauth1/oauth1_data.hpp"
 
@@ -154,7 +155,7 @@ public:
 	// POST /users/{username}/collection/folders/{folder_id}/releases/{release_id}
 	// https://www.discogs.com/developers/#page:user-collection,header:user-collection-add-to-collection-folder-post
 	// Add a release to a folder in a user’s collection
-	pplx::task<void*>
+	pplx::task<discogs::parser::collection_add_response *>
 	collection_add_to_folder(
 		const platform::string_t &username,
 		int folder_id,

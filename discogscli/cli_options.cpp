@@ -31,6 +31,7 @@ int client::process_args(int argc, platform::char_t *argv[])
 		(STR("folder-del"), STR("Delete a folder, requires username, folder-id"))
 		(STR("folder-rel"), STR("Return a list of folders that contain the given release, requires release"))
 		(STR("collections"), STR("List all the collections for a user, requires username"))
+		(STR("collection-add"), STR("Add a release to a collection folder, requires username, folder-id, release-id"))
 		(STR("wantlist"), STR("List the users wantlist, requires username"))
 		(STR("wantlist-add"), STR("Add a release to the wantlist, requires username, release"))
 		(STR("wantlist-del"), STR("Delete an item from the wantlist, requires username, release"))
@@ -84,6 +85,11 @@ int client::process_args(int argc, platform::char_t *argv[])
 
 	if(r.count(STR("collections"))){
 		m_command = ParserCommand::collection;
+		command_count++;
+	}
+
+	if(r.count(STR("collection-add"))){
+		m_command = ParserCommand::collection_add;
 		command_count++;
 	}
 

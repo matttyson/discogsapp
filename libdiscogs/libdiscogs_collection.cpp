@@ -148,3 +148,29 @@ discogs::rest::collection_releases(
 		discogs::parser::collection_release
 	>(response);
 }
+
+pplx::task<discogs::parser::collection_add_response *>
+discogs::rest::collection_add_to_folder(
+	const platform::string_t &username,
+	int folder_id,
+	int release_id
+)
+{
+	uri_builder builder;
+
+	builder.append_path(STR("users"))
+		.append_path(username, true)
+		.append_path(STR("collection"))
+		.append_path(STR("folders"))
+		.append_path(platform::to_string_t(folder_id))
+		.append_path(STR("releases"))
+		.append_path(platform::to_string_t(release_id));
+
+	auto request = m_private->create_request(builder, http::methods::POST);
+	auto response = m_private->m_client.request(request);
+
+	return return_task_response<
+		parser::collection_add_response_parser,
+		discogs::parser::collection_add_response
+	>(response);
+}

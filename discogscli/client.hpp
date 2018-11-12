@@ -27,6 +27,7 @@ private:
 	void folder_release();
 
 	void collections_list();
+	void collection_add();
 
 	void test_parse();
 
