@@ -483,7 +483,7 @@ void client::search()
 
 	args.emplace_back(STR("artist"), STR("Chicane"));
 
-	auto result = m_rest->search(0, args);
+	auto result = m_rest->search(args);
 
 	try {
 		result.wait();

@@ -37,8 +37,9 @@ discogs::rest::master(int master_id)
 }
 
 pplx::task<discogs::result::search_results *>
-discogs::rest::search(int page_id,
-	const std::vector<std::pair<platform::string_t, platform::string_t>> &args)
+discogs::rest::search(
+	const std::vector<std::pair<platform::string_t, platform::string_t>> &args,
+	int page_id)
 {
 	uri_builder builder;
 
@@ -47,6 +48,10 @@ discogs::rest::search(int page_id,
 
 	for(const auto &t : args) {
 		builder.append_query(t.first, t.second);
+	}
+
+	if(page_id > -1){
+		builder.append_query(STR("page_id"), page_id);
 	}
 
 	auto request = m_private->create_request(builder);

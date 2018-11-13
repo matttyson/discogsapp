@@ -103,8 +103,10 @@ public:
 	// Supply a vector of string pairs of "argument", "value"
 	// as described in the API docs
 	pplx::task<discogs::result::search_results *>
-	search(int page_id,
-		const std::vector<std::pair<platform::string_t,platform::string_t>> &);
+	search(
+		const std::vector<std::pair<platform::string_t,platform::string_t>> &terms,
+		int page_id = -1
+	);
 
 
 	// ---- END DATABASE ----
