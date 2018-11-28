@@ -47,10 +47,51 @@ public:
 
 typedef StdStringBuffer<rapidjson::UTF8<> > Utf8StdStringBuffer;
 
+
+// https://github.com/Tencent/rapidjson/issues/852
+// The upstream implementation of RawNumber writes out a quoted string which is a bit daft.
+// Note that this implementation has no input validation, so we'd have to trust the user not
+// to do something daft like supply something that isn't a number
+template<
+	typename OutputStream,
+	typename SourceEncoding = rapidjson::UTF8<>,
+	typename TargetEncoding = rapidjson::UTF8<>,
+	typename StackAllocator = rapidjson::CrtAllocator,
+	unsigned writeFlags = rapidjson::kWriteDefaultFlags>
+class FixedRawNumberWriter : public rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags> {
+public:
+	explicit
+	FixedRawNumberWriter(OutputStream &os, StackAllocator* stackAllocator = 0, size_t levelDepth = rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>::kDefaultLevelDepth)
+	:rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>(os, stackAllocator, levelDepth)
+	{
+	}
+
+	explicit
+	FixedRawNumberWriter(StackAllocator* stackAllocator = 0, size_t levelDepth = rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>::kDefaultLevelDepth)
+	:rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>(stackAllocator, levelDepth)
+	{
+	}
+
+#if RAPIDJSON_HAS_CXX11_RVALUE_REFS
+	FixedRawNumberWriter(FixedRawNumberWriter&& rhs) :
+	rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>(rhs)
+	{
+	}
+#endif
+
+	bool RawNumber(const rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>::Ch* str, rapidjson::SizeType length, bool copy = false) {
+		RAPIDJSON_ASSERT(str != 0);
+		(void)copy;
+		rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>::Prefix(rapidjson::kNumberType);
+		return rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>::EndValue(rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>::WriteRawValue(str, length));
+	}
+};
+
+
 #ifdef PLATFORM_WCHAR
-typedef rapidjson::Writer<Utf8StdStringBuffer, rapidjson::UTF16<>, rapidjson::UTF8<>> Utf8StdStringWriter;
+typedef FixedRawNumberWriter<Utf8StdStringBuffer, rapidjson::UTF16<>, rapidjson::UTF8<>> Utf8StdStringWriter;
 #else
-typedef rapidjson::Writer<Utf8StdStringBuffer, rapidjson::UTF8<>, rapidjson::UTF8<>> Utf8StdStringWriter;
+typedef FixedRawNumberWriter<Utf8StdStringBuffer, rapidjson::UTF8<>, rapidjson::UTF8<>> Utf8StdStringWriter;
 #endif
 
 extern const std::string json_content_type;
