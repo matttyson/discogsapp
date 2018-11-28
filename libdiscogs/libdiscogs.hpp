@@ -77,6 +77,10 @@ public:
 	int per_page() const;
 	void set_per_page(int per_page);
 
+	const static platform::string_t empty;
+
+	typedef std::vector<std::pair<platform::string_t,platform::string_t>> string_list;
+
 	// ---- DATABASE ----
 
 	// RELEASE
@@ -110,6 +114,137 @@ public:
 
 
 	// ---- END DATABASE ----
+	// ---- MARKETPLACE ----
+
+	// INVENTORY
+	// GET /users/{username}/inventory{?status,sort,sort_order}
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-inventory-get
+	// Get a seller’s inventory
+	pplx::task<void*>
+	market_get(
+		const platform::string_t &username,
+		const platform::string_t &status = empty,
+		const platform::string_t &sort = empty,
+		const platform::string_t &sort_order = empty
+	);
+
+	// LISTING
+	// GET /marketplace/listings/{listing_id}{?curr_abbr}
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing-get
+	// The Listing resource allows you to view Marketplace listings
+
+	pplx::task<void*>
+	market_listing(
+		int listing_id,
+		const platform::string_t &curr_abbr = empty
+	);
+
+	// LISTING
+	// POST /marketplace/listings/{listing_id}{?curr_abbr}
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing-post
+	// Edit the data associated with a listing
+
+	// TODO: add the extra arguments
+	pplx::task<void*>
+	market_listing_update(
+		int listing_id,
+		int release_id,
+		const platform::string_t &condition,
+		const platform::string_t &price
+	);
+
+	// LISTING
+	// DELETE /marketplace/listings/{listing_id}
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing-delete
+	// Permanently remove a listing from the Marketplace
+	pplx::task<void*>
+	market_listing_delete(int listing_id);
+
+	// NEW LISTING
+	// POST /marketplace/listings{?release_id,condition,sleeve_condition,price,comments,allow_offers,status,external_id,location,weight,format_quantity}
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-new-listing-post
+	// Create a Marketplace listing
+	pplx::task<void*>
+	market_listing_new(
+		int release_id,
+		const platform::string_t &condition,
+		const platform::string_t &price
+		// TODO extra arguments
+	);
+
+	// ORDER
+	// GET /marketplace/orders/{order_id}
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-order-get
+	// View the data associated with an order
+	pplx::task<void*>
+	market_order(int order_id);
+
+	// ORDER
+	// POST /marketplace/orders/{order_id}
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-order-post
+	// Edit the data associated with an order
+	pplx::task<void*>
+	market_order_update(
+		int order_id
+		// TODO extra arguments
+	);
+
+	// LIST ORDERS
+	// GET /marketplace/orders{?status,sort,sort_order}
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-list-orders-get
+	// Returns a list of the authenticated user’s orders
+	pplx::task<void*>
+	market_list_orders(
+		const platform::string_t &status = empty,
+		const platform::string_t &sort = empty,
+		const platform::string_t &sort_order = empty
+	);
+
+	// LIST ORDER MESSAGES
+	// GET /marketplace/orders/{order_id}/messages
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-list-order-messages-get
+	// Returns a list of the order’s messages with the most recent first
+	pplx::task<void*>
+	market_list_order_messages(int order_id);
+
+	// LIST ORDER MESSAGES
+	// POST /marketplace/orders/{order_id}/messages
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-list-order-messages-post
+	// Adds a new message to the order’s message log
+	// While message and status are each optional, one or both must be present
+	pplx::task<void*>
+	market_list_order_messages(
+		int order_id,
+		const platform::string_t &message = empty,
+		const platform::string_t &status = empty
+	);
+
+	// FEE
+	// GET /marketplace/fee/{price}
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-fee-get
+	// The Fee resource allows you to quickly calculate the fee for selling an item on the Marketplace
+	pplx::task<void*>
+	market_fee(const platform::string_t &price);
+
+	// FEE WITH CURRENCY
+	// GET /marketplace/fee/{price}/{currency}
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-fee-with-currency-get
+	// The Fee resource allows you to quickly calculate the fee for selling an item on the Marketplace given a particular currency
+	pplx::task<void*>
+	market_fee_currency(
+		const platform::string_t &price,
+		const platform::string_t &currency
+	);
+
+	// PRICE SUGGESTIONS
+	// GET /marketplace/price_suggestions/{release_id}
+	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-price-suggestions-get
+	// Retrieve price suggestions for the provided Release ID
+	pplx::task<void*>
+	market_price_suggestions(int release_id);
+
+
+	// ---- END MARKETPLACE ----
 	// ---- COLLECTION ----
 
 	// COLLECTION
