@@ -59,31 +59,32 @@ template<
 	typename StackAllocator = rapidjson::CrtAllocator,
 	unsigned writeFlags = rapidjson::kWriteDefaultFlags>
 class FixedRawNumberWriter : public rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags> {
+	using super_class = rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>;
 public:
 	explicit
-	FixedRawNumberWriter(OutputStream &os, StackAllocator* stackAllocator = 0, size_t levelDepth = rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>::kDefaultLevelDepth)
-	:rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>(os, stackAllocator, levelDepth)
+	FixedRawNumberWriter(OutputStream &os, StackAllocator* stackAllocator = 0, size_t levelDepth = super_class::kDefaultLevelDepth)
+	:super_class(os, stackAllocator, levelDepth)
 	{
 	}
 
 	explicit
-	FixedRawNumberWriter(StackAllocator* stackAllocator = 0, size_t levelDepth = rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>::kDefaultLevelDepth)
-	:rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>(stackAllocator, levelDepth)
+	FixedRawNumberWriter(StackAllocator* stackAllocator = 0, size_t levelDepth = super_class::kDefaultLevelDepth)
+	:super_class(stackAllocator, levelDepth)
 	{
 	}
 
 #if RAPIDJSON_HAS_CXX11_RVALUE_REFS
-	FixedRawNumberWriter(FixedRawNumberWriter&& rhs) :
-	rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>(rhs)
+	FixedRawNumberWriter(FixedRawNumberWriter&& rhs)
+	:super_class(rhs)
 	{
 	}
 #endif
 
-	bool RawNumber(const rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>::Ch* str, rapidjson::SizeType length, bool copy = false) {
+	bool RawNumber(const super_class::Ch* str, rapidjson::SizeType length, bool copy = false) {
 		RAPIDJSON_ASSERT(str != 0);
 		(void)copy;
-		rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>::Prefix(rapidjson::kNumberType);
-		return rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>::EndValue(rapidjson::Writer<OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags>::WriteRawValue(str, length));
+		super_class::Prefix(rapidjson::kNumberType);
+		return super_class::EndValue(super_class::WriteRawValue(str, length));
 	}
 };
 
