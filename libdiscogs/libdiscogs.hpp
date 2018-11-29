@@ -21,6 +21,7 @@
 #include "include/folder_collection_releases.hpp"
 #include "include/collection_add_response.hpp"
 #include "include/search.hpp"
+#include "include/market_get.hpp"
 
 #include "liboauth1/oauth1_data.hpp"
 
@@ -120,7 +121,7 @@ public:
 	// GET /users/{username}/inventory{?status,sort,sort_order}
 	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-inventory-get
 	// Get a seller’s inventory
-	pplx::task<void*>
+	pplx::task<discogs::parser::market_listing*>
 	market_get(
 		const platform::string_t &username,
 		const platform::string_t &status = empty,

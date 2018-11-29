@@ -10,6 +10,8 @@
 
 namespace discogs {
 
+const platform::string_t rest::empty(STR(""));
+
 const std::string json_content_type = std::string("application/json; charset=utf-8", 31);
 
 }

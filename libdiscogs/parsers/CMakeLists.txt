@@ -9,6 +9,7 @@ target_sources(libdiscogs PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/identity.cpp
 	${CMAKE_CURRENT_LIST_DIR}/master.cpp
 	${CMAKE_CURRENT_LIST_DIR}/search.cpp
+	${CMAKE_CURRENT_LIST_DIR}/market_get.cpp
 
 
 	${CMAKE_CURRENT_LIST_DIR}/folder_releases_parser.hpp
@@ -21,4 +22,5 @@ target_sources(libdiscogs PRIVATE
 	${CMAKE_CURRENT_LIST_DIR}/identity_parser.hpp
 	${CMAKE_CURRENT_LIST_DIR}/master_parser.hpp
 	${CMAKE_CURRENT_LIST_DIR}/search_parser.hpp
+	${CMAKE_CURRENT_LIST_DIR}/market_get_parser.hpp
 )

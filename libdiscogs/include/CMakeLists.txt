@@ -13,4 +13,5 @@ target_sources(libdiscogs PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}/identity.hpp
 	${CMAKE_CURRENT_LIST_DIR}/master.hpp
 	${CMAKE_CURRENT_LIST_DIR}/release.hpp
+	${CMAKE_CURRENT_LIST_DIR}/market_get.hpp
 )
