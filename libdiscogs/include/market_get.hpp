@@ -12,21 +12,21 @@ namespace parser {
 
 class price {
 public:
-	price():value(0.0){}
+	price(){}
 	~price(){}
 	price(const price &rhs) = default;
 	price(price &&rhs) noexcept = default;
 	price& operator=(const price &rhs) = default;
 	price& operator=(price &&rhs) noexcept = default;
 
-	double value;
+	platform::string_t value;
 	platform::string_t currency;
 };
 
 
 class seller_stats {
 public:
-	seller_stats():total(0),stars(0.0){}
+	seller_stats():total(0){}
 	~seller_stats(){}
 	seller_stats(const seller_stats &rhs) = default;
 	seller_stats(seller_stats &&rhs) noexcept = default;
@@ -35,7 +35,7 @@ public:
 
 	int total;
 	platform::string_t rating;
-	double stars;
+	platform::string_t stars;
 };
 
 
@@ -114,7 +114,7 @@ public:
 
 class converted_shipping_price {
 public:
-	converted_shipping_price():curr_id(0),value(0.0){}
+	converted_shipping_price():curr_id(0){}
 	~converted_shipping_price(){}
 	converted_shipping_price(const converted_shipping_price &rhs) = default;
 	converted_shipping_price(converted_shipping_price &&rhs) noexcept = default;
@@ -124,13 +124,13 @@ public:
 	int curr_id;
 	platform::string_t curr_abbr;
 	platform::string_t formatted;
-	double value;
+	platform::string_t value;
 };
 
 
 class original_shipping_price {
 public:
-	original_shipping_price():curr_id(0),value(0.0){}
+	original_shipping_price():curr_id(0){}
 	~original_shipping_price(){}
 	original_shipping_price(const original_shipping_price &rhs) = default;
 	original_shipping_price(original_shipping_price &&rhs) noexcept = default;
@@ -140,14 +140,14 @@ public:
 	int curr_id;
 	platform::string_t curr_abbr;
 	platform::string_t formatted;
-	double value;
+	platform::string_t value;
 	converted_shipping_price converted;
 };
 
 
 class shipping_price {
 public:
-	shipping_price():value(0.0){}
+	shipping_price(){}
 	~shipping_price(){}
 	shipping_price(const shipping_price &rhs) = default;
 	shipping_price(shipping_price &&rhs) noexcept = default;
@@ -155,7 +155,7 @@ public:
 	shipping_price& operator=(shipping_price &&rhs) noexcept = default;
 
 	platform::string_t currency;
-	double value;
+	platform::string_t value;
 };
 
 

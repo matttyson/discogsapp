@@ -75,75 +75,6 @@ bool folder_collection_releases_parser::Uint64(uint64_t i)
 {
 	return false;
 }
-
-bool folder_collection_releases_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
-{
-	return false;
-}
-bool folder_collection_releases_parser::Number(int value)
-{
-	switch(m_state){
-	case StateKey::collection_release_pagination_per_page:
-		RESULT.pages.per_page = value;
-		m_state = StateKey::collection_release_pagination;
-		break;
-	case StateKey::collection_release_pagination_items:
-		RESULT.pages.items = value;
-		m_state = StateKey::collection_release_pagination;
-		break;
-	case StateKey::collection_release_pagination_page:
-		RESULT.pages.page = value;
-		m_state = StateKey::collection_release_pagination;
-		break;
-	case StateKey::collection_release_pagination_pages:
-		RESULT.pages.pages = value;
-		m_state = StateKey::collection_release_pagination;
-		break;
-	case StateKey::collection_release_releases_id:
-		RESULT.releases.back().id = value;
-		m_state = StateKey::collection_release_releases;
-		break;
-	case StateKey::collection_release_releases_instance_id:
-		RESULT.releases.back().instance_id = value;
-		m_state = StateKey::collection_release_releases;
-		break;
-	case StateKey::collection_release_releases_rating:
-		RESULT.releases.back().rating = value;
-		m_state = StateKey::collection_release_releases;
-		break;
-	case StateKey::collection_release_releases_folder_id:
-		RESULT.releases.back().folder_id = value;
-		m_state = StateKey::collection_release_releases;
-		break;
-	case StateKey::collection_release_releases_basic_information_id:
-		RESULT.releases.back().basic_information_.id = value;
-		m_state = StateKey::collection_release_releases_basic_information;
-		break;
-	case StateKey::collection_release_releases_basic_information_master_id:
-		RESULT.releases.back().basic_information_.master_id = value;
-		m_state = StateKey::collection_release_releases_basic_information;
-		break;
-	case StateKey::collection_release_releases_basic_information_year:
-		RESULT.releases.back().basic_information_.year = value;
-		m_state = StateKey::collection_release_releases_basic_information;
-		break;
-	case StateKey::collection_release_releases_basic_information_labels_id:
-		RESULT.releases.back().basic_information_.labels.back().id = value;
-		m_state = StateKey::collection_release_releases_basic_information_labels;
-		break;
-	case StateKey::collection_release_releases_basic_information_artists_id:
-		RESULT.releases.back().basic_information_.artists.back().id = value;
-		m_state = StateKey::collection_release_releases_basic_information_artists;
-		break;
-	case StateKey::collection_release_releases_basic_information_notes_field_id:
-		RESULT.releases.back().basic_information_.notes.back().field_id = value;
-		m_state = StateKey::collection_release_releases_basic_information_notes;
-		break;
-	default:
-		return false;
-	}
-	return true;
-}
 bool folder_collection_releases_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
@@ -263,6 +194,75 @@ bool folder_collection_releases_parser::Double(double value)
 {
 	return false;
 }
+bool folder_collection_releases_parser::Number(int value)
+{
+	switch(m_state){
+	case StateKey::collection_release_pagination_per_page:
+		RESULT.pages.per_page = value;
+		m_state = StateKey::collection_release_pagination;
+		break;
+	case StateKey::collection_release_pagination_items:
+		RESULT.pages.items = value;
+		m_state = StateKey::collection_release_pagination;
+		break;
+	case StateKey::collection_release_pagination_page:
+		RESULT.pages.page = value;
+		m_state = StateKey::collection_release_pagination;
+		break;
+	case StateKey::collection_release_pagination_pages:
+		RESULT.pages.pages = value;
+		m_state = StateKey::collection_release_pagination;
+		break;
+	case StateKey::collection_release_releases_id:
+		RESULT.releases.back().id = value;
+		m_state = StateKey::collection_release_releases;
+		break;
+	case StateKey::collection_release_releases_instance_id:
+		RESULT.releases.back().instance_id = value;
+		m_state = StateKey::collection_release_releases;
+		break;
+	case StateKey::collection_release_releases_rating:
+		RESULT.releases.back().rating = value;
+		m_state = StateKey::collection_release_releases;
+		break;
+	case StateKey::collection_release_releases_folder_id:
+		RESULT.releases.back().folder_id = value;
+		m_state = StateKey::collection_release_releases;
+		break;
+	case StateKey::collection_release_releases_basic_information_id:
+		RESULT.releases.back().basic_information_.id = value;
+		m_state = StateKey::collection_release_releases_basic_information;
+		break;
+	case StateKey::collection_release_releases_basic_information_master_id:
+		RESULT.releases.back().basic_information_.master_id = value;
+		m_state = StateKey::collection_release_releases_basic_information;
+		break;
+	case StateKey::collection_release_releases_basic_information_year:
+		RESULT.releases.back().basic_information_.year = value;
+		m_state = StateKey::collection_release_releases_basic_information;
+		break;
+	case StateKey::collection_release_releases_basic_information_labels_id:
+		RESULT.releases.back().basic_information_.labels.back().id = value;
+		m_state = StateKey::collection_release_releases_basic_information_labels;
+		break;
+	case StateKey::collection_release_releases_basic_information_artists_id:
+		RESULT.releases.back().basic_information_.artists.back().id = value;
+		m_state = StateKey::collection_release_releases_basic_information_artists;
+		break;
+	case StateKey::collection_release_releases_basic_information_notes_field_id:
+		RESULT.releases.back().basic_information_.notes.back().field_id = value;
+		m_state = StateKey::collection_release_releases_basic_information_notes;
+		break;
+	default:
+		return false;
+	}
+	return true;
+}
+bool folder_collection_releases_parser::RawNumber(const Ch*, rapidjson::SizeType, bool)
+{
+	return false;
+}
+
 bool folder_collection_releases_parser::Null()
 {
 	switch(m_state){

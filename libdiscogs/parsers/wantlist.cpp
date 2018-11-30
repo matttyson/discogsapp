@@ -75,67 +75,6 @@ bool wantlist_parser::Uint64(uint64_t i)
 {
 	return false;
 }
-
-bool wantlist_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
-{
-	return false;
-}
-bool wantlist_parser::Number(int value)
-{
-	switch(m_state){
-	case StateKey::wantlist_pagination_per_page:
-		wantlist_.pages.per_page = value;
-		m_state = StateKey::wantlist_pagination;
-		break;
-	case StateKey::wantlist_pagination_items:
-		wantlist_.pages.items = value;
-		m_state = StateKey::wantlist_pagination;
-		break;
-	case StateKey::wantlist_pagination_page:
-		wantlist_.pages.page = value;
-		m_state = StateKey::wantlist_pagination;
-		break;
-	case StateKey::wantlist_pagination_pages:
-		wantlist_.pages.pages = value;
-		m_state = StateKey::wantlist_pagination;
-		break;
-	case StateKey::wantlist_wants_rating:
-		wantlist_.want_.back().rating = value;
-		m_state = StateKey::wantlist_wants;
-		break;
-	case StateKey::wantlist_wants_id:
-		wantlist_.want_.back().id = value;
-		m_state = StateKey::wantlist_wants;
-		break;
-	case StateKey::wantlist_wants_basic_information_id:
-		wantlist_.want_.back().basic_information_.id = value;
-		m_state = StateKey::wantlist_wants_basic_information;
-		break;
-	case StateKey::wantlist_wants_basic_information_master_id:
-		wantlist_.want_.back().basic_information_.master_id = value;
-		m_state = StateKey::wantlist_wants_basic_information;
-		break;
-	case StateKey::wantlist_wants_basic_information_year:
-		wantlist_.want_.back().basic_information_.year = value;
-		m_state = StateKey::wantlist_wants_basic_information;
-		break;
-	case StateKey::wantlist_wants_basic_information_labels_id:
-		wantlist_.want_.back().basic_information_.labels.back().id = value;
-		m_state = StateKey::wantlist_wants_basic_information_labels;
-		break;
-	case StateKey::wantlist_wants_basic_information_artists_id:
-		wantlist_.want_.back().basic_information_.artists.back().id = value;
-		m_state = StateKey::wantlist_wants_basic_information_artists;
-		break;
-	case StateKey::wantlist_wants_basic_information_notes_field_id:
-		wantlist_.want_.back().basic_information_.notes.back().field_id = value;
-		m_state = StateKey::wantlist_wants_basic_information_notes;
-		break;
-	default:
-		return false;
-	}
-	return true;
-}
 bool wantlist_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
@@ -263,6 +202,67 @@ bool wantlist_parser::Double(double value)
 {
 	return false;
 }
+bool wantlist_parser::Number(int value)
+{
+	switch(m_state){
+	case StateKey::wantlist_pagination_per_page:
+		wantlist_.pages.per_page = value;
+		m_state = StateKey::wantlist_pagination;
+		break;
+	case StateKey::wantlist_pagination_items:
+		wantlist_.pages.items = value;
+		m_state = StateKey::wantlist_pagination;
+		break;
+	case StateKey::wantlist_pagination_page:
+		wantlist_.pages.page = value;
+		m_state = StateKey::wantlist_pagination;
+		break;
+	case StateKey::wantlist_pagination_pages:
+		wantlist_.pages.pages = value;
+		m_state = StateKey::wantlist_pagination;
+		break;
+	case StateKey::wantlist_wants_rating:
+		wantlist_.want_.back().rating = value;
+		m_state = StateKey::wantlist_wants;
+		break;
+	case StateKey::wantlist_wants_id:
+		wantlist_.want_.back().id = value;
+		m_state = StateKey::wantlist_wants;
+		break;
+	case StateKey::wantlist_wants_basic_information_id:
+		wantlist_.want_.back().basic_information_.id = value;
+		m_state = StateKey::wantlist_wants_basic_information;
+		break;
+	case StateKey::wantlist_wants_basic_information_master_id:
+		wantlist_.want_.back().basic_information_.master_id = value;
+		m_state = StateKey::wantlist_wants_basic_information;
+		break;
+	case StateKey::wantlist_wants_basic_information_year:
+		wantlist_.want_.back().basic_information_.year = value;
+		m_state = StateKey::wantlist_wants_basic_information;
+		break;
+	case StateKey::wantlist_wants_basic_information_labels_id:
+		wantlist_.want_.back().basic_information_.labels.back().id = value;
+		m_state = StateKey::wantlist_wants_basic_information_labels;
+		break;
+	case StateKey::wantlist_wants_basic_information_artists_id:
+		wantlist_.want_.back().basic_information_.artists.back().id = value;
+		m_state = StateKey::wantlist_wants_basic_information_artists;
+		break;
+	case StateKey::wantlist_wants_basic_information_notes_field_id:
+		wantlist_.want_.back().basic_information_.notes.back().field_id = value;
+		m_state = StateKey::wantlist_wants_basic_information_notes;
+		break;
+	default:
+		return false;
+	}
+	return true;
+}
+bool wantlist_parser::RawNumber(const Ch*, rapidjson::SizeType, bool)
+{
+	return false;
+}
+
 bool wantlist_parser::Null()
 {
 	switch(m_state){

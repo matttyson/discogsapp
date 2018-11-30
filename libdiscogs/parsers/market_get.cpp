@@ -114,99 +114,6 @@ bool market_get_parser::Uint64(uint64_t i)
 {
 	return false;
 }
-
-bool market_get_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
-{
-	return false;
-}
-bool market_get_parser::Number(int value)
-{
-	switch(m_state){
-	case StateKey::market_listing_listings_id:
-		RESULT.listings.back().id = value;
-		m_state = StateKey::market_listing_listings;
-		break;
-	case StateKey::market_listing_listings_original_shipping_price_curr_id:
-		RESULT.listings.back().original_shipping_price_.curr_id = value;
-		m_state = StateKey::market_listing_listings_original_shipping_price;
-		break;
-	case StateKey::market_listing_listings_original_shipping_price_converted_curr_id:
-		RESULT.listings.back().original_shipping_price_.converted.curr_id = value;
-		m_state = StateKey::market_listing_listings_original_shipping_price_converted;
-		break;
-	case StateKey::market_listing_listings_seller_id:
-		RESULT.listings.back().seller_.id = value;
-		m_state = StateKey::market_listing_listings_seller;
-		break;
-	case StateKey::market_listing_listings_seller_uid:
-		RESULT.listings.back().seller_.uid = value;
-		m_state = StateKey::market_listing_listings_seller;
-		break;
-	case StateKey::market_listing_listings_seller_stats_total:
-		RESULT.listings.back().seller_.stats_.total = value;
-		m_state = StateKey::market_listing_listings_seller_stats;
-		break;
-	case StateKey::market_listing_listings_release_id:
-		RESULT.listings.back().release.id = value;
-		m_state = StateKey::market_listing_listings_release;
-		break;
-	case StateKey::market_listing_listings_release_year:
-		RESULT.listings.back().release.year = value;
-		m_state = StateKey::market_listing_listings_release;
-		break;
-	case StateKey::market_listing_listings_release_images_height:
-		RESULT.listings.back().release.images.back().height = value;
-		m_state = StateKey::market_listing_listings_release_images;
-		break;
-	case StateKey::market_listing_listings_release_images_width:
-		RESULT.listings.back().release.images.back().width = value;
-		m_state = StateKey::market_listing_listings_release_images;
-		break;
-	case StateKey::market_listing_listings_release_stats_user_in_collection:
-		RESULT.listings.back().release.stats.user.in_collection = value;
-		m_state = StateKey::market_listing_listings_release_stats_user;
-		break;
-	case StateKey::market_listing_listings_release_stats_user_in_wantlist:
-		RESULT.listings.back().release.stats.user.in_wantlist = value;
-		m_state = StateKey::market_listing_listings_release_stats_user;
-		break;
-	case StateKey::market_listing_listings_release_stats_community_in_collection:
-		RESULT.listings.back().release.stats.community.in_collection = value;
-		m_state = StateKey::market_listing_listings_release_stats_community;
-		break;
-	case StateKey::market_listing_listings_release_stats_community_in_wantlist:
-		RESULT.listings.back().release.stats.community.in_wantlist = value;
-		m_state = StateKey::market_listing_listings_release_stats_community;
-		break;
-	case StateKey::market_listing_listings_original_price_curr_id:
-		RESULT.listings.back().original_price_.curr_id = value;
-		m_state = StateKey::market_listing_listings_original_price;
-		break;
-	case StateKey::market_listing_listings_original_price_converted_curr_id:
-		RESULT.listings.back().original_price_.converted.curr_id = value;
-		m_state = StateKey::market_listing_listings_original_price_converted;
-		break;
-	case StateKey::market_listing_pagination_per_page:
-		RESULT.pages.per_page = value;
-		m_state = StateKey::market_listing_pagination;
-		break;
-	case StateKey::market_listing_pagination_items:
-		RESULT.pages.items = value;
-		m_state = StateKey::market_listing_pagination;
-		break;
-	case StateKey::market_listing_pagination_page:
-		RESULT.pages.page = value;
-		m_state = StateKey::market_listing_pagination;
-		break;
-	case StateKey::market_listing_pagination_pages:
-		RESULT.pages.pages = value;
-		m_state = StateKey::market_listing_pagination;
-		break;
-	default:
-		return false;
-	}
-	return true;
-}
 bool market_get_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
@@ -399,42 +306,133 @@ bool market_get_parser::Bool(bool value)
 	}
 	return true;
 }
-bool market_get_parser::Double(double value)
+bool market_get_parser::RawNumber(const Ch * value, rapidjson::SizeType length, bool)
 {
 	switch(m_state){
-	case StateKey::market_listing_listings_original_shipping_price_value:
-		RESULT.listings.back().original_shipping_price_.value = value;
+	case StateKey::market_listing_listings_id:
+		RESULT.listings.back().id = str_to_int(value, length);
+		m_state = StateKey::market_listing_listings;
+		break;
+	case StateKey::market_listing_listings_original_shipping_price_curr_id:
+		RESULT.listings.back().original_shipping_price_.curr_id = str_to_int(value, length);
 		m_state = StateKey::market_listing_listings_original_shipping_price;
 		break;
+	case StateKey::market_listing_listings_original_shipping_price_value:
+		RESULT.listings.back().original_shipping_price_.value = ::platform::string_t(value, length);
+		m_state = StateKey::market_listing_listings_original_shipping_price;
+		break;
+	case StateKey::market_listing_listings_original_shipping_price_converted_curr_id:
+		RESULT.listings.back().original_shipping_price_.converted.curr_id = str_to_int(value, length);
+		m_state = StateKey::market_listing_listings_original_shipping_price_converted;
+		break;
 	case StateKey::market_listing_listings_original_shipping_price_converted_value:
-		RESULT.listings.back().original_shipping_price_.converted.value = value;
+		RESULT.listings.back().original_shipping_price_.converted.value = ::platform::string_t(value, length);
 		m_state = StateKey::market_listing_listings_original_shipping_price_converted;
 		break;
 	case StateKey::market_listing_listings_price_value:
-		RESULT.listings.back().price_.value = value;
+		RESULT.listings.back().price_.value = ::platform::string_t(value, length);
 		m_state = StateKey::market_listing_listings_price;
 		break;
 	case StateKey::market_listing_listings_shipping_price_value:
-		RESULT.listings.back().shipping_price_.value = value;
+		RESULT.listings.back().shipping_price_.value = ::platform::string_t(value, length);
 		m_state = StateKey::market_listing_listings_shipping_price;
 		break;
-	case StateKey::market_listing_listings_seller_stats_stars:
-		RESULT.listings.back().seller_.stats_.stars = value;
+	case StateKey::market_listing_listings_seller_id:
+		RESULT.listings.back().seller_.id = str_to_int(value, length);
+		m_state = StateKey::market_listing_listings_seller;
+		break;
+	case StateKey::market_listing_listings_seller_uid:
+		RESULT.listings.back().seller_.uid = str_to_int(value, length);
+		m_state = StateKey::market_listing_listings_seller;
+		break;
+	case StateKey::market_listing_listings_seller_stats_total:
+		RESULT.listings.back().seller_.stats_.total = str_to_int(value, length);
 		m_state = StateKey::market_listing_listings_seller_stats;
 		break;
-	case StateKey::market_listing_listings_original_price_value:
-		RESULT.listings.back().original_price_.value = value;
+	case StateKey::market_listing_listings_seller_stats_stars:
+		RESULT.listings.back().seller_.stats_.stars = ::platform::string_t(value, length);
+		m_state = StateKey::market_listing_listings_seller_stats;
+		break;
+	case StateKey::market_listing_listings_release_id:
+		RESULT.listings.back().release.id = str_to_int(value, length);
+		m_state = StateKey::market_listing_listings_release;
+		break;
+	case StateKey::market_listing_listings_release_year:
+		RESULT.listings.back().release.year = str_to_int(value, length);
+		m_state = StateKey::market_listing_listings_release;
+		break;
+	case StateKey::market_listing_listings_release_images_height:
+		RESULT.listings.back().release.images.back().height = str_to_int(value, length);
+		m_state = StateKey::market_listing_listings_release_images;
+		break;
+	case StateKey::market_listing_listings_release_images_width:
+		RESULT.listings.back().release.images.back().width = str_to_int(value, length);
+		m_state = StateKey::market_listing_listings_release_images;
+		break;
+	case StateKey::market_listing_listings_release_stats_user_in_collection:
+		RESULT.listings.back().release.stats.user.in_collection = str_to_int(value, length);
+		m_state = StateKey::market_listing_listings_release_stats_user;
+		break;
+	case StateKey::market_listing_listings_release_stats_user_in_wantlist:
+		RESULT.listings.back().release.stats.user.in_wantlist = str_to_int(value, length);
+		m_state = StateKey::market_listing_listings_release_stats_user;
+		break;
+	case StateKey::market_listing_listings_release_stats_community_in_collection:
+		RESULT.listings.back().release.stats.community.in_collection = str_to_int(value, length);
+		m_state = StateKey::market_listing_listings_release_stats_community;
+		break;
+	case StateKey::market_listing_listings_release_stats_community_in_wantlist:
+		RESULT.listings.back().release.stats.community.in_wantlist = str_to_int(value, length);
+		m_state = StateKey::market_listing_listings_release_stats_community;
+		break;
+	case StateKey::market_listing_listings_original_price_curr_id:
+		RESULT.listings.back().original_price_.curr_id = str_to_int(value, length);
 		m_state = StateKey::market_listing_listings_original_price;
 		break;
-	case StateKey::market_listing_listings_original_price_converted_value:
-		RESULT.listings.back().original_price_.converted.value = value;
+	case StateKey::market_listing_listings_original_price_value:
+		RESULT.listings.back().original_price_.value = ::platform::string_t(value, length);
+		m_state = StateKey::market_listing_listings_original_price;
+		break;
+	case StateKey::market_listing_listings_original_price_converted_curr_id:
+		RESULT.listings.back().original_price_.converted.curr_id = str_to_int(value, length);
 		m_state = StateKey::market_listing_listings_original_price_converted;
+		break;
+	case StateKey::market_listing_listings_original_price_converted_value:
+		RESULT.listings.back().original_price_.converted.value = ::platform::string_t(value, length);
+		m_state = StateKey::market_listing_listings_original_price_converted;
+		break;
+	case StateKey::market_listing_pagination_per_page:
+		RESULT.pages.per_page = str_to_int(value, length);
+		m_state = StateKey::market_listing_pagination;
+		break;
+	case StateKey::market_listing_pagination_items:
+		RESULT.pages.items = str_to_int(value, length);
+		m_state = StateKey::market_listing_pagination;
+		break;
+	case StateKey::market_listing_pagination_page:
+		RESULT.pages.page = str_to_int(value, length);
+		m_state = StateKey::market_listing_pagination;
+		break;
+	case StateKey::market_listing_pagination_pages:
+		RESULT.pages.pages = str_to_int(value, length);
+		m_state = StateKey::market_listing_pagination;
 		break;
 	default:
 		return false;
 	}
 	return true;
 }
+
+bool market_get_parser::Number(int)
+{
+	return false;
+}
+
+bool market_get_parser::Double(double)
+{
+	return false;
+}
+
 bool market_get_parser::Null()
 {
 	switch(m_state){

@@ -32,23 +32,6 @@ bool identity_parser::Uint64(uint64_t i)
 {
 	return false;
 }
-
-bool identity_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
-{
-	return false;
-}
-bool identity_parser::Number(int value)
-{
-	switch(m_state){
-	case StateKey::identity_id:
-		identity_.id = value;
-		m_state = StateKey::identity;
-		break;
-	default:
-		return false;
-	}
-	return true;
-}
 bool identity_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
@@ -81,6 +64,23 @@ bool identity_parser::Double(double value)
 {
 	return false;
 }
+bool identity_parser::Number(int value)
+{
+	switch(m_state){
+	case StateKey::identity_id:
+		identity_.id = value;
+		m_state = StateKey::identity;
+		break;
+	default:
+		return false;
+	}
+	return true;
+}
+bool identity_parser::RawNumber(const Ch*, rapidjson::SizeType, bool)
+{
+	return false;
+}
+
 bool identity_parser::Null()
 {
 	switch(m_state){

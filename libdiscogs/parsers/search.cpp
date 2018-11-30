@@ -61,51 +61,6 @@ bool search_parser::Uint64(uint64_t i)
 {
 	return false;
 }
-
-bool search_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
-{
-	return false;
-}
-bool search_parser::Number(int value)
-{
-	switch(m_state){
-	case StateKey::search_results_pagination_per_page:
-		RESULT.pages.per_page = value;
-		m_state = StateKey::search_results_pagination;
-		break;
-	case StateKey::search_results_pagination_items:
-		RESULT.pages.items = value;
-		m_state = StateKey::search_results_pagination;
-		break;
-	case StateKey::search_results_pagination_page:
-		RESULT.pages.page = value;
-		m_state = StateKey::search_results_pagination;
-		break;
-	case StateKey::search_results_pagination_pages:
-		RESULT.pages.pages = value;
-		m_state = StateKey::search_results_pagination;
-		break;
-	case StateKey::search_results_results_id:
-		RESULT.results.back().id = value;
-		m_state = StateKey::search_results_results;
-		break;
-	case StateKey::search_results_results_master_id:
-		RESULT.results.back().master_id = value;
-		m_state = StateKey::search_results_results;
-		break;
-	case StateKey::search_results_results_community_have:
-		RESULT.results.back().community.have = value;
-		m_state = StateKey::search_results_results_community;
-		break;
-	case StateKey::search_results_results_community_want:
-		RESULT.results.back().community.want = value;
-		m_state = StateKey::search_results_results_community;
-		break;
-	default:
-		return false;
-	}
-	return true;
-}
 bool search_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
@@ -205,6 +160,51 @@ bool search_parser::Double(double value)
 {
 	return false;
 }
+bool search_parser::Number(int value)
+{
+	switch(m_state){
+	case StateKey::search_results_pagination_per_page:
+		RESULT.pages.per_page = value;
+		m_state = StateKey::search_results_pagination;
+		break;
+	case StateKey::search_results_pagination_items:
+		RESULT.pages.items = value;
+		m_state = StateKey::search_results_pagination;
+		break;
+	case StateKey::search_results_pagination_page:
+		RESULT.pages.page = value;
+		m_state = StateKey::search_results_pagination;
+		break;
+	case StateKey::search_results_pagination_pages:
+		RESULT.pages.pages = value;
+		m_state = StateKey::search_results_pagination;
+		break;
+	case StateKey::search_results_results_id:
+		RESULT.results.back().id = value;
+		m_state = StateKey::search_results_results;
+		break;
+	case StateKey::search_results_results_master_id:
+		RESULT.results.back().master_id = value;
+		m_state = StateKey::search_results_results;
+		break;
+	case StateKey::search_results_results_community_have:
+		RESULT.results.back().community.have = value;
+		m_state = StateKey::search_results_results_community;
+		break;
+	case StateKey::search_results_results_community_want:
+		RESULT.results.back().community.want = value;
+		m_state = StateKey::search_results_results_community;
+		break;
+	default:
+		return false;
+	}
+	return true;
+}
+bool search_parser::RawNumber(const Ch*, rapidjson::SizeType, bool)
+{
+	return false;
+}
+
 bool search_parser::Null()
 {
 	switch(m_state){

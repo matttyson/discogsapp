@@ -144,95 +144,6 @@ bool release_parser::Uint64(uint64_t i)
 {
 	return false;
 }
-
-bool release_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
-{
-	return false;
-}
-bool release_parser::Number(int value)
-{
-	switch(m_state){
-	case StateKey::release_year:
-		RESULT.year = value;
-		m_state = StateKey::release;
-		break;
-	case StateKey::release_id:
-		RESULT.id = value;
-		m_state = StateKey::release;
-		break;
-	case StateKey::release_num_for_sale:
-		RESULT.num_for_sale = value;
-		m_state = StateKey::release;
-		break;
-	case StateKey::release_master_id:
-		RESULT.master_id = value;
-		m_state = StateKey::release;
-		break;
-	case StateKey::release_format_quantity:
-		RESULT.format_quantity = value;
-		m_state = StateKey::release;
-		break;
-	case StateKey::release_estimated_weight:
-		RESULT.estimated_weight = value;
-		m_state = StateKey::release;
-		break;
-	case StateKey::release_community_want:
-		RESULT.community_.want = value;
-		m_state = StateKey::release_community;
-		break;
-	case StateKey::release_community_have:
-		RESULT.community_.have = value;
-		m_state = StateKey::release_community;
-		break;
-	case StateKey::release_community_rating_count:
-		RESULT.community_.rating_.count = value;
-		m_state = StateKey::release_community_rating;
-		break;
-	case StateKey::release_series_id:
-		RESULT.series_.back().id = value;
-		m_state = StateKey::release_series;
-		break;
-	case StateKey::release_videos_duration:
-		RESULT.videos.back().duration = value;
-		m_state = StateKey::release_videos;
-		break;
-	case StateKey::release_labels_id:
-		RESULT.labels.back().id = value;
-		m_state = StateKey::release_labels;
-		break;
-	case StateKey::release_artists_id:
-		RESULT.artists.back().id = value;
-		m_state = StateKey::release_artists;
-		break;
-	case StateKey::release_images_height:
-		RESULT.images.back().height = value;
-		m_state = StateKey::release_images;
-		break;
-	case StateKey::release_images_width:
-		RESULT.images.back().width = value;
-		m_state = StateKey::release_images;
-		break;
-	case StateKey::release_tracklist_artists_id:
-		RESULT.tracklist.back().artists.back().id = value;
-		m_state = StateKey::release_tracklist_artists;
-		break;
-	case StateKey::release_tracklist_extraartists_id:
-		RESULT.tracklist.back().extraartists.back().id = value;
-		m_state = StateKey::release_tracklist_extraartists;
-		break;
-	case StateKey::release_extraartists_id:
-		RESULT.extra_artists.back().id = value;
-		m_state = StateKey::release_extraartists;
-		break;
-	case StateKey::release_companies_id:
-		RESULT.companies.back().id = value;
-		m_state = StateKey::release_companies;
-		break;
-	default:
-		return false;
-	}
-	return true;
-}
 bool release_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
@@ -582,6 +493,95 @@ bool release_parser::Double(double value)
 	}
 	return true;
 }
+bool release_parser::Number(int value)
+{
+	switch(m_state){
+	case StateKey::release_year:
+		RESULT.year = value;
+		m_state = StateKey::release;
+		break;
+	case StateKey::release_id:
+		RESULT.id = value;
+		m_state = StateKey::release;
+		break;
+	case StateKey::release_num_for_sale:
+		RESULT.num_for_sale = value;
+		m_state = StateKey::release;
+		break;
+	case StateKey::release_master_id:
+		RESULT.master_id = value;
+		m_state = StateKey::release;
+		break;
+	case StateKey::release_format_quantity:
+		RESULT.format_quantity = value;
+		m_state = StateKey::release;
+		break;
+	case StateKey::release_estimated_weight:
+		RESULT.estimated_weight = value;
+		m_state = StateKey::release;
+		break;
+	case StateKey::release_community_want:
+		RESULT.community_.want = value;
+		m_state = StateKey::release_community;
+		break;
+	case StateKey::release_community_have:
+		RESULT.community_.have = value;
+		m_state = StateKey::release_community;
+		break;
+	case StateKey::release_community_rating_count:
+		RESULT.community_.rating_.count = value;
+		m_state = StateKey::release_community_rating;
+		break;
+	case StateKey::release_series_id:
+		RESULT.series_.back().id = value;
+		m_state = StateKey::release_series;
+		break;
+	case StateKey::release_videos_duration:
+		RESULT.videos.back().duration = value;
+		m_state = StateKey::release_videos;
+		break;
+	case StateKey::release_labels_id:
+		RESULT.labels.back().id = value;
+		m_state = StateKey::release_labels;
+		break;
+	case StateKey::release_artists_id:
+		RESULT.artists.back().id = value;
+		m_state = StateKey::release_artists;
+		break;
+	case StateKey::release_images_height:
+		RESULT.images.back().height = value;
+		m_state = StateKey::release_images;
+		break;
+	case StateKey::release_images_width:
+		RESULT.images.back().width = value;
+		m_state = StateKey::release_images;
+		break;
+	case StateKey::release_tracklist_artists_id:
+		RESULT.tracklist.back().artists.back().id = value;
+		m_state = StateKey::release_tracklist_artists;
+		break;
+	case StateKey::release_tracklist_extraartists_id:
+		RESULT.tracklist.back().extraartists.back().id = value;
+		m_state = StateKey::release_tracklist_extraartists;
+		break;
+	case StateKey::release_extraartists_id:
+		RESULT.extra_artists.back().id = value;
+		m_state = StateKey::release_extraartists;
+		break;
+	case StateKey::release_companies_id:
+		RESULT.companies.back().id = value;
+		m_state = StateKey::release_companies;
+		break;
+	default:
+		return false;
+	}
+	return true;
+}
+bool release_parser::RawNumber(const Ch*, rapidjson::SizeType, bool)
+{
+	return false;
+}
+
 bool release_parser::Null()
 {
 	switch(m_state){

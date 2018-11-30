@@ -32,6 +32,7 @@ discogs::rest::market_get(
 
 	return return_task_response<
 		discogs::parser::market_get_parser,
-		discogs::parser::market_listing
+		discogs::parser::market_listing,
+		rjsNumberAsStringFlag
 	>(response);
 }

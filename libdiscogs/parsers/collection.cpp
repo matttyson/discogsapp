@@ -32,27 +32,6 @@ bool collection_parser::Uint64(uint64_t i)
 {
 	return false;
 }
-
-bool collection_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
-{
-	return false;
-}
-bool collection_parser::Number(int value)
-{
-	switch(m_state){
-	case StateKey::folder_list_folders_id:
-		RESULT.folders.back().id = value;
-		m_state = StateKey::folder_list_folders;
-		break;
-	case StateKey::folder_list_folders_count:
-		RESULT.folders.back().count = value;
-		m_state = StateKey::folder_list_folders;
-		break;
-	default:
-		return false;
-	}
-	return true;
-}
 bool collection_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
@@ -77,6 +56,27 @@ bool collection_parser::Double(double value)
 {
 	return false;
 }
+bool collection_parser::Number(int value)
+{
+	switch(m_state){
+	case StateKey::folder_list_folders_id:
+		RESULT.folders.back().id = value;
+		m_state = StateKey::folder_list_folders;
+		break;
+	case StateKey::folder_list_folders_count:
+		RESULT.folders.back().count = value;
+		m_state = StateKey::folder_list_folders;
+		break;
+	default:
+		return false;
+	}
+	return true;
+}
+bool collection_parser::RawNumber(const Ch*, rapidjson::SizeType, bool)
+{
+	return false;
+}
+
 bool collection_parser::Null()
 {
 	switch(m_state){

@@ -82,59 +82,6 @@ bool master_parser::Uint64(uint64_t i)
 {
 	return false;
 }
-
-bool master_parser::RawNumber(const Ch * str, rapidjson::SizeType length, bool copy)
-{
-	return false;
-}
-bool master_parser::Number(int value)
-{
-	switch(m_state){
-	case StateKey::master_id:
-		RESULT.id = value;
-		m_state = StateKey::master;
-		break;
-	case StateKey::master_year:
-		RESULT.year = value;
-		m_state = StateKey::master;
-		break;
-	case StateKey::master_num_for_sale:
-		RESULT.num_for_sale = value;
-		m_state = StateKey::master;
-		break;
-	case StateKey::master_main_release:
-		RESULT.main_release = value;
-		m_state = StateKey::master;
-		break;
-	case StateKey::master_images_height:
-		RESULT.images.back().height = value;
-		m_state = StateKey::master_images;
-		break;
-	case StateKey::master_images_width:
-		RESULT.images.back().width = value;
-		m_state = StateKey::master_images;
-		break;
-	case StateKey::master_videos_duration:
-		RESULT.videos.back().duration = value;
-		m_state = StateKey::master_videos;
-		break;
-	case StateKey::master_artists_id:
-		RESULT.artists.back().id = value;
-		m_state = StateKey::master_artists;
-		break;
-	case StateKey::master_tracklist_artists_id:
-		RESULT.tracklist.back().artists.back().id = value;
-		m_state = StateKey::master_tracklist_artists;
-		break;
-	case StateKey::master_tracklist_extraartists_id:
-		RESULT.tracklist.back().extraartists.back().id = value;
-		m_state = StateKey::master_tracklist_extraartists;
-		break;
-	default:
-		return false;
-	}
-	return true;
-}
 bool master_parser::String(const Ch* value, rapidjson::SizeType length, bool copy)
 {
 	switch(m_state){
@@ -313,6 +260,59 @@ bool master_parser::Double(double value)
 	}
 	return true;
 }
+bool master_parser::Number(int value)
+{
+	switch(m_state){
+	case StateKey::master_id:
+		RESULT.id = value;
+		m_state = StateKey::master;
+		break;
+	case StateKey::master_year:
+		RESULT.year = value;
+		m_state = StateKey::master;
+		break;
+	case StateKey::master_num_for_sale:
+		RESULT.num_for_sale = value;
+		m_state = StateKey::master;
+		break;
+	case StateKey::master_main_release:
+		RESULT.main_release = value;
+		m_state = StateKey::master;
+		break;
+	case StateKey::master_images_height:
+		RESULT.images.back().height = value;
+		m_state = StateKey::master_images;
+		break;
+	case StateKey::master_images_width:
+		RESULT.images.back().width = value;
+		m_state = StateKey::master_images;
+		break;
+	case StateKey::master_videos_duration:
+		RESULT.videos.back().duration = value;
+		m_state = StateKey::master_videos;
+		break;
+	case StateKey::master_artists_id:
+		RESULT.artists.back().id = value;
+		m_state = StateKey::master_artists;
+		break;
+	case StateKey::master_tracklist_artists_id:
+		RESULT.tracklist.back().artists.back().id = value;
+		m_state = StateKey::master_tracklist_artists;
+		break;
+	case StateKey::master_tracklist_extraartists_id:
+		RESULT.tracklist.back().extraartists.back().id = value;
+		m_state = StateKey::master_tracklist_extraartists;
+		break;
+	default:
+		return false;
+	}
+	return true;
+}
+bool master_parser::RawNumber(const Ch*, rapidjson::SizeType, bool)
+{
+	return false;
+}
+
 bool master_parser::Null()
 {
 	switch(m_state){

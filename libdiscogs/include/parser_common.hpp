@@ -13,4 +13,29 @@ typedef rapidjson::UTF16<> rjs_UTF_t;
 typedef rapidjson::UTF8<> rjs_UTF_t;
 #endif
 
+// Functions to convert from str to int/double
+// not ideal as these strings aren't guaranteed to be null terminated
+// it works though because we'll hit a non integer character at the end
+// of the number and that will stop the conversion process, so it's OK
+// for the most part.
+
+inline static int str_to_int(const platform::char_t *str, size_t)
+{
+#ifdef PLATFORM_WCHAR
+	return wcstol(str, 0, 10);
+#else
+	return strtol(str, 0, 10);
+#endif
+}
+
+inline static double str_to_double(const platform::char_t *str, size_t)
+{
+#ifdef PLATFORM_WCHAR
+	return wcstod(str, 0);
+#else
+	return strtod(str, 0);
+#endif
+}
+
+
 /* clang-format on */

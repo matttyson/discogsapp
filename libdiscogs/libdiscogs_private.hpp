@@ -3,6 +3,7 @@
 #include <rapidjson/rapidjson.h>
 #include <rapidjson/writer.h>
 #include <rapidjson/reader.h>
+#include <rapidjson/stream.h>
 
 #include "libplatform/platform_rjs.hpp"
 
@@ -89,6 +90,18 @@ public:
 };
 
 
+// When parsing numbers as strings, and we're using wide characters we need to parse
+// insitu or we only get the first charater. This appears to be a bug in rapidjson.
+// I've filed a bug upstream about this
+// https://github.com/Tencent/rapidjson/issues/1412
+constexpr rapidjson::ParseFlag rjsNumberAsStringFlag =
+	static_cast<rapidjson::ParseFlag>(
+		rapidjson::kParseDefaultFlags |
+		rapidjson::kParseNumbersAsStringsFlag |
+		rapidjson::kParseInsituFlag
+	);
+
+
 #ifdef PLATFORM_WCHAR
 typedef FixedRawNumberWriter<Utf8StdStringBuffer, rapidjson::UTF16<>, rapidjson::UTF8<>> Utf8StdStringWriter;
 #else
@@ -96,7 +109,6 @@ typedef FixedRawNumberWriter<Utf8StdStringBuffer, rapidjson::UTF8<>, rapidjson::
 #endif
 
 extern const std::string json_content_type;
-
 
 class rest_private {
 public:
@@ -133,24 +145,19 @@ do_basic_get(http::http_response response)
 	throw http::http_exception(response.status_code(), response.reason_phrase());
 }
 
-template <typename Parser>
+template <typename Parser,
+	rapidjson::ParseFlag PARSEFLAGS = rapidjson::kParseDefaultFlags>
 static pplx::task<std::shared_ptr<Parser>>
 do_basic_parse(utility::string_t str)
 {
 	std::shared_ptr<Parser> p = std::make_shared<Parser>();
-	rapidjson::GenericReader<
-		rjs_UTF_t, rjs_UTF_t> r;
-	rapidjson::GenericStringStream<rjs_UTF_t>
-		iss(str.c_str());
 
-	//	Code for insitu parsing - not using at the moment.
-	//	rapidjson::GenericInsituStringStream<rjs_UTF_t>
-	//		iss(const_cast<char_t*>(str.c_str()));
-	//	rapidjson::ParseResult pr = r.Parse<rapidjson::kParseInsituFlag>(iss, *p);
+	rapidjson::GenericReader<rjs_UTF_t, rjs_UTF_t> r;
 
-	rapidjson::ParseResult pr = r.Parse(iss, *p);
 
-	// TODO: Throw an exception here if nothing happens.
+	rapidjson::GenericInsituStringStream<rjs_UTF_t>
+		iss(const_cast<rjs_UTF_t::Ch*>(str.c_str()));
+	rapidjson::ParseResult pr = r.Parse<PARSEFLAGS>(iss, *p);
 
 	if (pr.IsError()) {
 		platform::dofstream file("parse_error.json");
@@ -162,12 +169,14 @@ do_basic_parse(utility::string_t str)
 }
 
 
-template <typename PARSER, typename RESPONSE>
+template <typename PARSER, typename RESPONSE,
+	rapidjson::ParseFlag PARSEFLAGS = rapidjson::kParseDefaultFlags
+>
 static pplx::task<RESPONSE *>
 return_task_response(const pplx::task<http::http_response> &response)
 {
 	return response.then(do_basic_get)
-		.then(do_basic_parse<PARSER>)
+		.then(do_basic_parse<PARSER, PARSEFLAGS>)
 		.then([](pplx::task<std::shared_ptr<PARSER>> task_p) ->
 			pplx::task<RESPONSE *>
 	{
