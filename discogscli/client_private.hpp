@@ -16,6 +16,7 @@ enum class ParserCommand {
 	wantlist_upd,
 	release_print,
 	master_print,
+	market_get,
 	login,
 	logout,
 	identify,

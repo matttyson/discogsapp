@@ -375,6 +375,30 @@ void client::wantlist_update()
 	}
 }
 
+void client::market_get()
+{
+	auto result =
+		m_rest->market_get(m_username);
+
+	try {
+		result.wait();
+	}
+	catch (web::http::http_exception &e) {
+		print_exception(e);
+	}
+
+	auto market_get = discogs::unique(result.get());
+
+	for(const auto &l : market_get->listings){
+		dcout << l.release.artist << STR(" - ") << l.release.title << dendl;
+		dcout << STR("  URL      : ") << l.uri << dendl;
+		dcout << STR("  In cart? : ") << (l.in_cart ? STR("Yes") : STR("No")) << dendl;
+		dcout << STR("  Price    : ") << l.original_price_.value << STR(' ') << l.original_price_.curr_abbr << dendl;
+		dcout << STR("  Price    : ") << l.original_price_.converted.value << STR(' ') << l.original_price_.converted.curr_abbr << dendl;
+		dcout << dendl;
+	}
+}
+
 void client::release_print()
 {
 	auto result =
@@ -707,6 +731,10 @@ int client::run(int argc, platform::char_t *argv[])
 
 	case ParserCommand::master_print:
 		master_print();
+		break;
+
+	case ParserCommand::market_get:
+		market_get();
 		break;
 
 	case ParserCommand::identify:

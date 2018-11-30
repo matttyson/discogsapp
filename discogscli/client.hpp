@@ -43,6 +43,8 @@ private:
 	void wantlist_add();
 	void wantlist_update();
 
+	void market_get();
+
 	void identify();
 
 	void login();
