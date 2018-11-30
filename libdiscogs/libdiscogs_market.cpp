@@ -17,6 +17,16 @@ discogs::rest::market_get(
 		.append_path(username, true)
 		.append_path(STR("inventory"));
 
+	if(status.length() > 0){
+		builder.append_query(STR("status"), status);
+	}
+	if(status.length() > 0){
+		builder.append_query(STR("sort"), sort);
+	}
+	if(status.length() > 0){
+		builder.append_query(STR("sort_order"), sort_order);
+	}
+
 	auto request = m_private->create_request(builder);
 	auto response = m_private->m_client.request(request);
 
