@@ -80,7 +80,7 @@ public:
 	}
 #endif
 
-	bool RawNumber(const super_class::Ch* str, rapidjson::SizeType length, bool copy = false) {
+	bool RawNumber(const typename super_class::Ch* str, rapidjson::SizeType length, bool copy = false) {
 		RAPIDJSON_ASSERT(str != 0);
 		(void)copy;
 		super_class::Prefix(rapidjson::kNumberType);
