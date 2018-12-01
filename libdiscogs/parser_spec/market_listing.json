@@ -1,0 +1,19 @@
+{
+    "namespace": [
+        "discogs",
+        "parser"
+    ],
+    "parser_classname": "market_listing_parser",
+    "filename": "market_listing",
+    "link": "https://www.discogs.com/developers/#page:marketplace,header:marketplace-inventory",
+    "description": "INVENTORY",
+    "import": [
+        "base_classes.json",
+        "market_classes.json"
+    ],
+    "document": {
+        "json_name": null,
+        "data_type": "listing",
+        "impl_name": "RESULT"
+    }
+}
