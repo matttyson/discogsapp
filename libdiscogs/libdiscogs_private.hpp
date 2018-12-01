@@ -122,6 +122,20 @@ public:
 		const web::http::method &method = web::http::methods::GET
 	);
 
+	Concurrency::task<web::http::http_response>
+	fetch_response(web::http::http_request &request){
+		return m_client.request(request);
+	}
+
+	Concurrency::task<web::http::http_response>
+	do_request(
+		const web::http::uri_builder &url,
+		const web::http::method &method = web::http::methods::GET
+	)
+	{
+		web::http::http_request request = create_request(url, method);
+		return m_client.request(request);
+	}
 
 	int m_per_page;
 	platform::string_t m_user_agent;

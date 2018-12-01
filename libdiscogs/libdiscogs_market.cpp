@@ -28,8 +28,7 @@ discogs::rest::market_get(
 		builder.append_query(STR("sort_order"), sort_order);
 	}
 
-	auto request = m_private->create_request(builder);
-	auto response = m_private->m_client.request(request);
+	auto response = m_private->do_request(builder);
 
 	return return_task_response<
 		discogs::parser::market_get_parser,
@@ -54,8 +53,7 @@ discogs::rest::market_listing(
 		builder.append_query(STR("curr_abbr"), curr_abbr);
 	}
 
-	auto request = m_private->create_request(builder);
-	auto response = m_private->m_client.request(request);
+	auto response = m_private->do_request(builder);
 
 	return return_task_response<
 		discogs::parser::market_listing_parser,
