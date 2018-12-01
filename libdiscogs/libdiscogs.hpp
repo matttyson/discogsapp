@@ -109,7 +109,7 @@ public:
 	// as described in the API docs
 	pplx::task<discogs::result::search_results *>
 	search(
-		const std::vector<std::pair<platform::string_t,platform::string_t>> &terms,
+		const string_list &terms,
 		int page_id = -1
 	);
 

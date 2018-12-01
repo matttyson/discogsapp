@@ -38,7 +38,7 @@ discogs::rest::master(int master_id)
 
 pplx::task<discogs::result::search_results *>
 discogs::rest::search(
-	const std::vector<std::pair<platform::string_t, platform::string_t>> &args,
+	const string_list &args,
 	int page_id)
 {
 	uri_builder builder;
