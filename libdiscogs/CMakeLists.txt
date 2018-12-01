@@ -33,5 +33,9 @@ if(WIN32)
 	set_property(TARGET libdiscogs APPEND PROPERTY COMPILE_DEFINITIONS _NO_ASYNCRTIMP)
 endif()
 
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
+	target_compile_options(libdiscogs PRIVATE -Wno-switch)
+endif()
+
 add_subdirectory(parsers)
 add_subdirectory(include)
