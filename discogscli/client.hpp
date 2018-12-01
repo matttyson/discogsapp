@@ -44,6 +44,7 @@ private:
 	void wantlist_update();
 
 	void market_get();
+	void market_listing();
 
 	void identify();
 

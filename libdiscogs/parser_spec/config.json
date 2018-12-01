@@ -19,7 +19,8 @@
         "collection_add_to_folder.json",
         "master.json",
         "search.json",
-        "market_get.json"
+        "market_get.json",
+        "market_listing.json"
     ],
     "strcmp": "platform::strcmp",
     "hdr_extension": "hpp",

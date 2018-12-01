@@ -41,6 +41,7 @@ int client::process_args(int argc, platform::char_t *argv[])
 		(STR("release-print"), STR("Print out a release, requires release"))
 		(STR("master-print"), STR("Print out a master"), cxxopts::value<cxxopts::String>())
 		(STR("market-get"), STR("Get a users listed market items, requires username"))
+		(STR("market-listing"), STR("Get information about one item on the market"), cxxopts::value<cxxopts::String>())
 		;
 
 	options.add_options(STR("Ancillary"))
@@ -162,6 +163,12 @@ int client::process_args(int argc, platform::char_t *argv[])
 
 	if(r.count(STR("market-get"))){
 		m_command = ParserCommand::market_get;
+		command_count++;
+	}
+
+	if (r.count(STR("market-listing"))) {
+		m_command = ParserCommand::market_listing;
+		m_cmd_arg = r[STR("market-listing")].as<cxxopts::String>();
 		command_count++;
 	}
 

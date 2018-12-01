@@ -2,6 +2,7 @@
 #include "libdiscogs_private.hpp"
 
 #include "parsers/market_get_parser.hpp"
+#include "parsers/market_listing_parser.hpp"
 
 pplx::task<discogs::parser::market_listing*>
 discogs::rest::market_get(
@@ -33,6 +34,32 @@ discogs::rest::market_get(
 	return return_task_response<
 		discogs::parser::market_get_parser,
 		discogs::parser::market_listing,
+		rjsNumberAsStringFlag
+	>(response);
+}
+
+pplx::task<discogs::parser::common::listing*>
+discogs::rest::market_listing(
+	int listing_id,
+	const platform::string_t &curr_abbr
+)
+{
+	uri_builder builder;
+
+	builder.append_path(STR("marketplace"))
+		.append_path(STR("listings"))
+		.append_path(platform::to_string_t(listing_id));
+
+	if(curr_abbr.length() > 0){
+		builder.append_query(STR("curr_abbr"), curr_abbr);
+	}
+
+	auto request = m_private->create_request(builder);
+	auto response = m_private->m_client.request(request);
+
+	return return_task_response<
+		discogs::parser::market_listing_parser,
+		discogs::parser::common::listing,
 		rjsNumberAsStringFlag
 	>(response);
 }

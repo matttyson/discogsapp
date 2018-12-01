@@ -134,7 +134,7 @@ public:
 	// https://www.discogs.com/developers/#page:marketplace,header:marketplace-listing-get
 	// The Listing resource allows you to view Marketplace listings
 
-	pplx::task<void*>
+	pplx::task<discogs::parser::common::listing*>
 	market_listing(
 		int listing_id,
 		const platform::string_t &curr_abbr = empty

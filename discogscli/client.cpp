@@ -399,6 +399,30 @@ void client::market_get()
 	}
 }
 
+void client::market_listing()
+{
+	const int arg = std::stoi(m_cmd_arg);
+
+	auto result =
+		m_rest->market_listing(arg);
+
+	try {
+		result.wait();
+	}
+	catch (web::http::http_exception &e) {
+		print_exception(e);
+	}
+
+	auto l = discogs::unique(result.get());
+
+	dcout << l->release.artist << STR(" - ") << l->release.title << dendl;
+	dcout << STR("  URL      : ") << l->uri << dendl;
+	dcout << STR("  In cart? : ") << (l->in_cart ? STR("Yes") : STR("No")) << dendl;
+	dcout << STR("  Price    : ") << l->original_price_.value << STR(' ') << l->original_price_.curr_abbr << dendl;
+	dcout << STR("  Price    : ") << l->original_price_.converted.value << STR(' ') << l->original_price_.converted.curr_abbr << dendl;
+	dcout << dendl;
+}
+
 void client::release_print()
 {
 	auto result =
@@ -735,6 +759,10 @@ int client::run(int argc, platform::char_t *argv[])
 
 	case ParserCommand::market_get:
 		market_get();
+		break;
+
+	case ParserCommand::market_listing:
+		market_listing();
 		break;
 
 	case ParserCommand::identify:
